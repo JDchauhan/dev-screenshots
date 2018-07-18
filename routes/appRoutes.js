@@ -10,6 +10,11 @@ module.exports = function (app) {
 
     app.post("/", screenshot.capture);
 
+    app.get("/download/:filename", function (req, res) {
+        var file = "../screenshot/downloads/" + req.params.filename;
+        res.download(file);
+    });
+
     // star routes
     app.get('*', function (req, res) {
         return responses.errorMsg(res, 404, "Not Found", "path not found.", null);

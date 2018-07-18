@@ -23,10 +23,8 @@ function getDevice(deviceName) {
 }
 
 function add(deviceName) {
-    console.log("hi")
     var currDevice = getDevice(deviceName);
     devices.push(currDevice);
-    console.log(currDevice);
 }
 
 function remove(deviceName) {
@@ -56,23 +54,34 @@ function filter() {
 
 function validateURL() {
     url = document.getElementById("url").value;
-    if(url === "") {
+    if (url === "") {
         return false;
     } else {
-        console.log(url)
         return true;
     }
 }
 
 function submit() {
+    document.getElementById("download").disabled = true;
     filter();
-    console.log(devices);
     if (devices.length === 0 || !validateURL()) {
         alert("Improper input");
     } else {
-        var xmlhttp = new XMLHttpRequest(); 
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var filename = JSON.parse(this.response).results.filename
+                document.getElementById("download").setAttribute("onclick",
+                    "window.open('download/" + filename + "','_blank')");
+                document.getElementById("download").disabled = false;
+                alert("Your file is ready click to download");
+            }
+        };
         xmlhttp.open("POST", "../");
         xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        xmlhttp.send(JSON.stringify({"devices": devices, "url": url }));
+        xmlhttp.send(JSON.stringify({
+            "devices": devices,
+            "url": url
+        }));
     }
 }

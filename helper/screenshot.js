@@ -73,7 +73,10 @@ module.exports.capture = function (req, res) {
                 rimraf('../screenshot/screenshots', function () {
                     console.log('done');
                 });
-                responses.successMsg(res, "your files are ready now");
+                var results = {
+                    "filename": "screenshots.zip"
+                };
+                responses.successMsg(res, results);
             }
         });
     }
