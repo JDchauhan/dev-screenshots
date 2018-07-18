@@ -13,6 +13,7 @@
     "ejs": "^2.6.1",
     "express": "^4.16.3",
     "file-system": "^2.2.2",
-    "puppeteer": "^1.6.0"
+    "puppeteer": "^1.6.0",
+    "zip-folder": "^1.0.0"
   }
 }
