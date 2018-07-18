@@ -2,6 +2,7 @@ var puppeteer = require('puppeteer');
 var fs = require('file-system');
 var responses = require('./responses');
 var zipFolder = require('zip-folder');
+var rimraf = require('rimraf');
 
 module.exports.capture = function (req, res) {
     if (req.body.devices === undefined || req.body.devices === null ||
@@ -48,8 +49,7 @@ module.exports.capture = function (req, res) {
     async function getScreenshots(device, url, page, browser) {
         var new_location = './screenshots/' + device.name + '(' + device.width + '-' + device.height + ')';
         fs.mkdir(new_location, function (err) {
-            if (err) {
-            }
+            if (err) {}
         });
 
         await page.screenshot({
@@ -70,8 +70,10 @@ module.exports.capture = function (req, res) {
                 console.log('oh no!', err);
                 return responses.errorMsg(res, 500, "Internal Server Error", "some error occured preparing your files.", null);
             } else {
+                rimraf('../screenshot/screenshots', function () {
+                    console.log('done');
+                });
                 responses.successMsg(res, "your files are ready now");
-                
             }
         });
     }
