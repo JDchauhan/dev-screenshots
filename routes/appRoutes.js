@@ -1,5 +1,7 @@
 'use strict';
 module.exports = function (app) {
+    var rimraf = require('rimraf');
+
     var screenshot = require('../helper/screenshot');
     var responses = require('../helper/responses');
 
@@ -13,6 +15,7 @@ module.exports = function (app) {
     app.get("/download/:filename", function (req, res) {
         var file = "../screenshot/downloads/" + req.params.filename;
         res.download(file);
+        rimraf('../screenshot/downloads/' + req.params.filename, function () {});
     });
 
     // star routes

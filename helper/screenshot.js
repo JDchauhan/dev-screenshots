@@ -70,9 +70,7 @@ module.exports.capture = function (req, res) {
                 console.log('oh no!', err);
                 return responses.errorMsg(res, 500, "Internal Server Error", "some error occured preparing your files.", null);
             } else {
-                rimraf('../screenshot/screenshots', function () {
-                    console.log('done');
-                });
+                rimraf('../screenshot/screenshots', function () {});
                 var results = {
                     "filename": "screenshots.zip"
                 };
