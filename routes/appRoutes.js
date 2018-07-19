@@ -1,6 +1,7 @@
 'use strict';
 module.exports = function (app) {
     var rimraf = require('rimraf');
+    var fs = require('fs');
 
     var screenshot = require('../helper/screenshot');
     var responses = require('../helper/responses');
@@ -14,8 +15,12 @@ module.exports = function (app) {
 
     app.get("/download/:filename", function (req, res) {
         var file = "../screenshot/downloads/" + req.params.filename;
-        res.download(file);
-        rimraf('../screenshot/downloads/' + req.params.filename, function () {});
+        if (fs.existsSync(file)) {
+            res.download(file);
+            rimraf(file, function () {});
+        }else{
+            return responses.errorMsg(res, 404, "Not Found", "file not found.", null);
+        }
     });
 
     // star routes
