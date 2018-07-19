@@ -8,7 +8,9 @@ module.exports = function (app) {
 
     // user Routes
     app.get("/", function (req, res) {
-        res.render("index");
+        res.render("index", {
+            error: false
+        });
     });
 
     app.post("/", screenshot.capture);
@@ -21,7 +23,11 @@ module.exports = function (app) {
                 rimraf(file, function () {}); //delete file after 5 minutes of first download 
             }, 300000); //5 * 60 * 1000 // 5 min
         }else{
-            return responses.errorMsg(res, 404, "Not Found", "file not found.", null);
+            res.render("index", {
+                error: true,
+                errorValue: "File not found"
+            });
+            //return responses.errorMsg(res, 404, "Not Found", "file not found.", null);
         }
     });
 

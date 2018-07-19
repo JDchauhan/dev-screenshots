@@ -68,10 +68,8 @@ module.exports.capture = function (req, res) {
     async function getUrlAndResolutions(devices, url) {
         for (let device of devices) {
             let test = await setViewports(device, url);
-
-            if (test === "URLErr") {
-                return responses.errorMsg(res, 404, "Not Found", "site not found.", null);
-            }
+            if(test === "URLErr")
+                return responses.successMsg(res, "URLErr");
         }
 
         //zip the folder

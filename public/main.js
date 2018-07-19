@@ -65,16 +65,32 @@ function submit() {
     document.getElementById("download").disabled = true;
     filter();
     if (devices.length === 0 || !validateURL()) {
-        alert("Improper input");
+        document.getElementById("message").innerHTML =
+            '<div class="alert alert-danger alert-dismissible fade show">' +
+            '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+            '<strong>Error!</strong> Improper Input.' +
+            '</div>';
     } else {
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                var filename = JSON.parse(this.response).results.filename
-                document.getElementById("download").setAttribute("onclick",
-                    "window.open('download/" + filename + "','_self')");
-                document.getElementById("download").disabled = false;
-                alert("Your file is ready click to download");
+                if (JSON.parse(this.response).results === "URLErr"){
+                    document.getElementById("message").innerHTML =
+                        '<div class="alert alert-danger alert-dismissible fade show">' +
+                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                        '<strong>Error!</strong> Unreachable URL. Make sure you have typed correct URL including http/https' +
+                        '</div>';
+                }else {
+                    var filename = JSON.parse(this.response).results.filename;
+                    document.getElementById("download").setAttribute("onclick",
+                        "window.open('download/" + filename + "','_self')");
+                    document.getElementById("download").disabled = false;
+                    document.getElementById("message").innerHTML =
+                        '<div class="alert alert-success alert-dismissible fade show">' +
+                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                        '<strong>Success!</strong> File is ready, click on download button.' +
+                        '</div>';
+                }
             }
         };
         xmlhttp.open("POST", "../");
