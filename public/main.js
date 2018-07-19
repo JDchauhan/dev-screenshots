@@ -72,7 +72,7 @@ function submit() {
             if (this.readyState == 4 && this.status == 200) {
                 var filename = JSON.parse(this.response).results.filename
                 document.getElementById("download").setAttribute("onclick",
-                    "window.open('download/" + filename + "','_blank')");
+                    "window.open('download/" + filename + "','_self')");
                 document.getElementById("download").disabled = false;
                 alert("Your file is ready click to download");
             }

@@ -1,0 +1,31 @@
+body {
+    background: url('./header.jpg');
+    background-position: center center;
+    background-size: cover;
+}
+
+.nav-link {
+    color: #C8C3C3 !important;
+}
+
+.body-container {
+    position: fixed;
+    top: 30%;
+    left: 10%;
+}
+
+.spacing {
+    margin-top: 2%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.row {
+    color: #fff !important;
+    margin-top: 1%;
+}
+
+.btn-group {
+    margin-top: 2%;
+    margin-left: 30%;
+}

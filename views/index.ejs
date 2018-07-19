@@ -1,18 +1,103 @@
-<html>
+<html>  
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 
-<head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="/main.js"></script>
-</head>
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-<body>
-    <input type="text" name="url" id="url" placeholder="Enter your website URL here" />
-    <input type="checkbox" name="small" id="small" onchange='handleChange("small");' /> Small
-    <input type="checkbox" name="medium" id="medium" onchange='handleChange("medium");' /> Medium
-    <input type="checkbox" name="large" id="large" onchange='handleChange("large");' /> Large
-    <br/>
-    <input type="submit" onclick='submit();' />
-    <input type="button" id="download" name="download" disabled value="download" />
-</body>
+        <!-- Popper JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+        <script src="/main.js"></script>
+        <link rel="stylesheet" href="./main.css">
+    </head>
+
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <img src="/hexerve.png" alt="logo" style="width:40px;">
+                </a>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Hexerve Solutions</a>
+                            </li>
+                        </li>
+                        <li class="nav-item">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Dev Screenshots</a>
+                            </li>                    
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container body-container">
+            <!--searchbox-->
+            <div class="input-group mb-3 input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">URL</span>
+                </div>
+                <input type="text" class="form-control"
+                    name="url" id="url" placeholder="Enter your website URL here">
+            </div>
+
+            <!--checkbox grids-->
+            <div class="container spacing">
+                <div class="row">
+                    <div class="col-md-4">
+                        <input type="checkbox" name="small" id="small" onchange='handleChange("small");' /> Small            
+                    </div>
+                    <div class="col-md-4">
+                        <input type="checkbox" name="medium" id="medium" onchange='handleChange("medium");' /> Medium                    
+                    </div>
+                    <div class="col-md-4">
+                        <input type="checkbox" name="large" id="large" onchange='handleChange("large");' /> Large        
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-4">
+                        <input type="checkbox" name="small" id="small" onchange='handleChange("small");' /> Small            
+                    </div>
+                    <div class="col-md-4">
+                        <input type="checkbox" name="medium" id="medium" onchange='handleChange("medium");' /> Medium                    
+                    </div>
+                    <div class="col-md-4">
+                        <input type="checkbox" name="large" id="large" onchange='handleChange("large");' /> Large        
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <input type="checkbox" name="small" id="small" onchange='handleChange("small");' /> Small            
+                    </div>
+                    <div class="col-md-4">
+                        <input type="checkbox" name="medium" id="medium" onchange='handleChange("medium");' /> Medium                    
+                    </div>
+                    <div class="col-md-4">
+                        <input type="checkbox" name="large" id="large" onchange='handleChange("large");' /> Large        
+                    </div>
+                </div>
+                <div class="btn-group btn-group-lg">
+                    <button type="button" class="btn btn-success" onclick='submit();'>Generate</button>
+                    <button type="button" class="btn btn-info" id="download" name="download" 
+                        disabled value="download">Download</button>
+                </div>
+            </div>
+        </div>   
+    </body>
 </html>
