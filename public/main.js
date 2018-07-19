@@ -62,7 +62,10 @@ function validateURL() {
 }
 
 function submit() {
+    document.getElementById("")
     document.getElementById("download").disabled = true;
+    document.getElementById("submit").disabled = true;
+    document.getElementById("loader").style.display = "block";
     filter();
     if (devices.length === 0 || !validateURL()) {
         document.getElementById("message").innerHTML =
@@ -70,17 +73,23 @@ function submit() {
             '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
             '<strong>Error!</strong> Improper Input.' +
             '</div>';
+        document.getElementById("loader").style.display = "none";
+        document.getElementById("submit").disabled = false;
+    
     } else {
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                if (JSON.parse(this.response).results === "URLErr"){
+                if (JSON.parse(this.response).results === "URLErr") {
                     document.getElementById("message").innerHTML =
                         '<div class="alert alert-danger alert-dismissible fade show">' +
                         '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
                         '<strong>Error!</strong> Unreachable URL. Make sure you have typed correct URL including http/https' +
                         '</div>';
-                }else {
+                    document.getElementById("loader").style.display = "none";
+                    document.getElementById("submit").disabled = false;
+    
+                } else {
                     var filename = JSON.parse(this.response).results.filename;
                     document.getElementById("download").setAttribute("onclick",
                         "window.open('download/" + filename + "','_self')");
@@ -90,6 +99,9 @@ function submit() {
                         '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
                         '<strong>Success!</strong> File is ready, click on download button.' +
                         '</div>';
+                    document.getElementById("loader").style.display = "none";
+                    document.getElementById("submit").disabled = false;
+    
                 }
             }
         };
