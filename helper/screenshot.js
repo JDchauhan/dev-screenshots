@@ -35,7 +35,11 @@ module.exports.capture = function (req, res) {
         var browser = await puppeteer.launch();
         var page = await browser.newPage();
         await page.waitFor(500);
-        await page.goto(url);
+        try{
+            let test = await page.goto(url);
+        }catch(err){
+            return "URLErr"
+        }
 
         // Setting-up viewports 
         await page.setViewport({
@@ -61,7 +65,11 @@ module.exports.capture = function (req, res) {
 
     async function getUrlAndResolutions(devices, url) {
         for (let device of devices) {
-            await setViewports(device, url);
+            let test = await setViewports(device, url);
+        
+            if(test === "URLErr"){
+                return responses.errorMsg(res, 404, "Not Found", "site not found.", null);
+            }
         }
 
         //zip the folder
