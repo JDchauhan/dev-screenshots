@@ -30,14 +30,16 @@ module.exports.capture = function (req, res) {
     }
 
     var url = req.body.url;
+    var uniqueName = "dev-screenshots_" + new Date().getTime().toString() +
+        Math.floor((Math.random() * 100000) + 1) + "1";
 
     async function setViewports(device, url) {
         var browser = await puppeteer.launch();
         var page = await browser.newPage();
         await page.waitFor(500);
-        try{
+        try {
             let test = await page.goto(url);
-        }catch(err){
+        } catch (err) {
             return "URLErr"
         }
 
@@ -51,7 +53,7 @@ module.exports.capture = function (req, res) {
 
 
     async function getScreenshots(device, url, page, browser) {
-        var new_location = './screenshots/' + device.name + '(' + device.width + '-' + device.height + ')';
+        var new_location = './' + uniqueName + '/' + device.name + '(' + device.width + '-' + device.height + ')';
         fs.mkdir(new_location, function (err) {
             if (err) {}
         });
@@ -66,21 +68,21 @@ module.exports.capture = function (req, res) {
     async function getUrlAndResolutions(devices, url) {
         for (let device of devices) {
             let test = await setViewports(device, url);
-        
-            if(test === "URLErr"){
+
+            if (test === "URLErr") {
                 return responses.errorMsg(res, 404, "Not Found", "site not found.", null);
             }
         }
 
         //zip the folder
-        zipFolder('../screenshot/screenshots', '../screenshot/downloads/screenshots.zip', function (err) {
+        zipFolder('../screenshot/' + uniqueName, '../screenshot/downloads/' + uniqueName + '.zip', function (err) {
             if (err) {
                 console.log('oh no!', err);
                 return responses.errorMsg(res, 500, "Internal Server Error", "some error occured preparing your files.", null);
             } else {
-                rimraf('../screenshot/screenshots', function () {});
+                rimraf('../screenshot/' + uniqueName, function () {});
                 var results = {
-                    "filename": "screenshots.zip"
+                    "filename": uniqueName + ".zip"
                 };
                 responses.successMsg(res, results);
             }
