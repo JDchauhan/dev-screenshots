@@ -134,27 +134,34 @@
         </div>
 
         <!-- The Modal -->
-  <div class="modal fade" id="myModal">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-          
-            <!-- Modal Header -->
-            <div class="modal-header">
-              <h4 class="modal-title" id="message-heading"></h4>
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <div class="modal fade" id="myModal">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="message-heading"></h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    
+                    <!-- Modal body -->
+                    <div class="modal-body" id="message-body"></div>
+                    
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                    
+                </div>
             </div>
-            
-            <!-- Modal body -->
-            <div class="modal-body" id="message-body"></div>
-            
-            <!-- Modal footer -->
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-            
-          </div>
-        </div>
-      </div>
+        </div> 
+        <% if(error) { %>
+            <script>
+                document.getElementById("message-heading").innerHTML = "Error";
+                document.getElementById("message-body").innerHTML = "File has been expired. Regenerate it if required";
+                $("#myModal").modal("show");
+            </script> 
+        <% } %>
     </body>
 
     </html>

@@ -21,8 +21,7 @@ module.exports = function (app) {
             res.download(file);
         }else{
             res.render("index", {
-                error: true,
-                errorValue: "File not found"
+                error: true
             });
             //return responses.errorMsg(res, 404, "Not Found", "file not found.", null);
         }

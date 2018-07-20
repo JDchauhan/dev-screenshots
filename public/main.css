@@ -54,7 +54,7 @@ body {
 }
 
 #loader {
-    display: block;
+    display: none;
 }
 
 .hexerve {
