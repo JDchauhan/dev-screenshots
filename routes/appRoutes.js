@@ -19,9 +19,6 @@ module.exports = function (app) {
         var file = "../screenshot/downloads/" + req.params.filename;
         if (fs.existsSync(file)) {
             res.download(file);
-            setTimeout(function(){ 
-                rimraf(file, function () {}); //delete file after 5 minutes of first download 
-            }, 300000); //5 * 60 * 1000 // 5 min
         }else{
             res.render("index", {
                 error: true,

@@ -82,6 +82,9 @@ module.exports.capture = function (req, res) {
                 var results = {
                     "filename": uniqueName + ".zip"
                 };
+                setTimeout(function(){ 
+                    rimraf(file, function () {}); //delete file after 5 minutes of creation 
+                }, 300000); //5 * 60 * 1000 // 5 min
                 responses.successMsg(res, results);
             }
         });
