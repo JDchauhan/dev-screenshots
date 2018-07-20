@@ -122,12 +122,27 @@ function filter() {
 }
 
 function validateURL() {
-    url = document.getElementById("url").value;
+    url = document.getElementById("url").value.toLowerCase().replace(/\s/g, "");
+    
     if (url === "") {
         return false;
-    } else {
-        return true;
     }
+    
+    if(url.indexOf(".") === -1){
+        return false;
+    }
+
+    var test = url.split(":");
+    
+    if(test[0] !== "http" && test[0] !== "https" && test[0] !== "ftp"){
+        return false; //hostname err
+    }
+
+    if(test[1].slice(0,2) !== "//"){
+        return false;
+    }
+
+    return true;
 }
 
 function submit() {

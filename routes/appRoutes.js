@@ -21,8 +21,7 @@ module.exports = function (app) {
             res.download(file);
         }else{
             res.render("index", {
-                error: true,
-                errorValue: "File not found"
+                error: true
             });
             //return responses.errorMsg(res, 404, "Not Found", "file not found.", null);
         }
@@ -30,19 +29,27 @@ module.exports = function (app) {
 
     // star routes
     app.get('*', function (req, res) {
-        return responses.errorMsg(res, 404, "Not Found", "path not found.", null);
+        res.render("index", {
+            error: false
+        });
     });
 
     app.put('*', function (req, res) {
-        return responses.errorMsg(res, 404, "Not Found", "path not found.", null);
+        res.render("index", {
+            error: false
+        });
     });
 
     app.delete('*', function (req, res) {
-        return responses.errorMsg(res, 404, "Not Found", "path not found.", null);
+        res.render("index", {
+            error: false
+        });
     });
 
     app.post('*', function (req, res) {
-        return responses.errorMsg(res, 404, "Not Found", "path not found.", null);
+        res.render("index", {
+            error: false
+        });
     });
 
 };
