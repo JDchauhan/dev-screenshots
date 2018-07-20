@@ -48,11 +48,17 @@ body {
     border-bottom-left-radius: 0.3rem;
 }
 
+.checkbox-tooltip, .checkbox-tooltip:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
 #loader {
     display: block;
 }
 
 .hexerve {
+    width: 60px;
     position: fixed;
     top: 24%;
     margin-left: 36%;
