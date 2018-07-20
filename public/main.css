@@ -9,14 +9,12 @@ body {
 }
 
 .body-container {
-    position: fixed;
-    top: 45%;
-    left: 10%;
+    top: 50%;
 }
 
 .spacing {
     margin-top: 2%;
-    margin-left: 5%;
+    margin-left: 15%;
     margin-right: 5%;
 }
 
@@ -26,8 +24,12 @@ body {
 }
 
 .btn-group {
-    margin-top: 2%;
-    margin-left: 30%;
+    margin: auto;
+    margin-top: 5%;
+}
+
+.col-xs4 {
+    width: 33%;
 }
 
 #loader {
@@ -36,8 +38,8 @@ body {
 
 .hexerve {
     position: fixed;
-    top: 30%;
-    margin-left: 45%;
+    top: 35%;
+    margin-left: 47%;
     -webkit-animation: spin1 2s infinite linear;
     -moz-animation: spin1 2s infinite linear;
     -o-animation: spin1 2s infinite linear;
@@ -88,5 +90,34 @@ body {
     }
     100% {
         transform: rotate(360deg);
+    }
+}
+
+@media screen and (max-width: 768px){
+    .body-container {
+        top: 52 %;
+    }
+    .hexerve {
+        top: 35%;
+        margin-left: 45%;
+    }
+}
+
+@media screen and (max-width: 360px){
+    .body-container {
+        top: 45%;
+    }
+  
+    .hexerve {
+        top: 30%;
+        margin-left: 41%;
+    }
+    
+    .checkbox-container {
+        margin-top: 10%;
+    }
+
+    .wrapper {
+        margin-top: 5%;
     }
 }

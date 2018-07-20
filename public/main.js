@@ -68,11 +68,11 @@ function submit() {
     document.getElementById("loader").style.display = "block";
     filter();
     if (devices.length === 0 || !validateURL()) {
-        document.getElementById("message").innerHTML =
-            '<div class="alert alert-danger alert-dismissible fade show">' +
-            '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-            '<strong>Error!</strong> Improper Input.' +
-            '</div>';
+        
+        document.getElementById("message-heading").innerHTML = "Error";
+        document.getElementById("message-body").innerHTML = "Improper Input";
+        $("#myModal").modal("show");
+        
         document.getElementById("loader").style.display = "none";
         document.getElementById("submit").disabled = false;
     
@@ -81,11 +81,11 @@ function submit() {
         xmlhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 if (JSON.parse(this.response).results === "URLErr") {
-                    document.getElementById("message").innerHTML =
-                        '<div class="alert alert-danger alert-dismissible fade show">' +
-                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                        '<strong>Error!</strong> Unreachable URL. Make sure you have typed correct URL including http/https' +
-                        '</div>';
+        
+                    document.getElementById("message-heading").innerHTML = "Unreachable URL";
+                    document.getElementById("message-body").innerHTML = "Make sure you have typed correct URL including http/https";
+                    $("#myModal").modal("show");
+                    
                     document.getElementById("loader").style.display = "none";
                     document.getElementById("submit").disabled = false;
     
@@ -93,12 +93,12 @@ function submit() {
                     var filename = JSON.parse(this.response).results.filename;
                     document.getElementById("download").setAttribute("onclick",
                         "window.open('download/" + filename + "','_self')");
+
                     document.getElementById("download").disabled = false;
-                    document.getElementById("message").innerHTML =
-                        '<div class="alert alert-success alert-dismissible fade show">' +
-                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                        '<strong>Success!</strong> File is ready, click on download button.' +
-                        '</div>';
+                    document.getElementById("message-heading").innerHTML = "Congratulations";
+                    document.getElementById("message-body").innerHTML = "Your file is ready, click on download button.";
+                    $("#myModal").modal("show");
+
                     document.getElementById("loader").style.display = "none";
                     document.getElementById("submit").disabled = false;
     
