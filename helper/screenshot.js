@@ -72,8 +72,9 @@ module.exports.capture = function (req, res) {
                 return responses.successMsg(res, "URLErr");
         }
 
+        var file = "../screenshot/downloads/" + uniqueName + '.zip';
         //zip the folder
-        zipFolder('../screenshot/' + uniqueName, '../screenshot/downloads/' + uniqueName + '.zip', function (err) {
+        zipFolder('../screenshot/' + uniqueName, file, function (err) {
             if (err) {
                 console.log('oh no!', err);
                 return responses.errorMsg(res, 500, "Internal Server Error", "some error occured preparing your files.", null);
@@ -82,6 +83,7 @@ module.exports.capture = function (req, res) {
                 var results = {
                     "filename": uniqueName + ".zip"
                 };
+                
                 setTimeout(function(){ 
                     rimraf(file, function () {}); //delete file after 5 minutes of creation 
                 }, 300000); //5 * 60 * 1000 // 5 min
