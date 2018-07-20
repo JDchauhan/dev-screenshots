@@ -103,6 +103,13 @@ function submit() {
                     document.getElementById("submit").disabled = false;
     
                 }
+            }else if(this.readyState == 4 && this.status == 0){
+                document.getElementById("message-heading").innerHTML = "Network Error";
+                document.getElementById("message-body").innerHTML = "Can't reach server! Check your Internet connection";
+                $("#myModal").modal("show");
+                
+                document.getElementById("loader").style.display = "none";
+                document.getElementById("submit").disabled = false;        
             }
         };
         xmlhttp.open("POST", "../");
