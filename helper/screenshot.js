@@ -5,6 +5,7 @@ var zipFolder = require('zip-folder');
 var rimraf = require('rimraf');
 
 module.exports.capture = function (req, res) {
+    req.setTimeout(900000);
     if (req.body.devices === undefined || req.body.devices === null ||
         req.body.devices === [] || req.body.devices === "") {
         return responses.errorMsg(res, 400, "Bad Request", "devices not provided.", null);
@@ -36,7 +37,7 @@ module.exports.capture = function (req, res) {
     async function setViewports(device, url) {
         var browser = await puppeteer.launch({
             args: ['--no-sandbox'],
-            timeout: 10000,
+            timeout: 900000,
         });
         var page = await browser.newPage();
         await page.waitFor(500);
@@ -56,7 +57,7 @@ module.exports.capture = function (req, res) {
 
 
     async function getScreenshots(device, url, page, browser) {
-        var new_location = uniqueName + '/' + device.name + '(' + device.width + '-' + device.height + ')';
+        var new_location = uniqueName;
         fs.mkdir(new_location, function (err) {
             if (err) {
                 console.log(err);
@@ -64,7 +65,7 @@ module.exports.capture = function (req, res) {
         });
 
         await page.screenshot({
-            path: new_location + '/' + "screenshot" + '.png',
+            path: new_location + '/' + device.name + '(' + device.width + ' x ' + device.height + ')' + '.png',
             fullPage: true
         });
         browser.close();

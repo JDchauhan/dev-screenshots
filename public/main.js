@@ -44,13 +44,13 @@ function getDevice(deviceName) {
             break;
 
         case "iPhone 8 Plus":
-            currDevice.name = "iPhone (8/7/6/6S) Plus";
+            currDevice.name = "iPhone (8-7-6-6S) Plus";
             currDevice.height = 736;
             currDevice.width = 414;
             break;
 
         case "iPhone 8":
-            currDevice.name = "iPhone 8/7/6/6S";
+            currDevice.name = "iPhone 8-7-6-6S";
             currDevice.height = 667;
             currDevice.width = 375;
             break;
