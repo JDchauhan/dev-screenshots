@@ -34,7 +34,10 @@ module.exports.capture = function (req, res) {
         Math.floor((Math.random() * 100000) + 1) + "1";
 
     async function setViewports(device, url) {
-        var browser = await puppeteer.launch();
+        var browser = await puppeteer.launch({
+            args: ['--no-sandbox'],
+            timeout: 10000,
+        });
         var page = await browser.newPage();
         await page.waitFor(500);
         try {
@@ -53,9 +56,11 @@ module.exports.capture = function (req, res) {
 
 
     async function getScreenshots(device, url, page, browser) {
-        var new_location = './' + uniqueName + '/' + device.name + '(' + device.width + '-' + device.height + ')';
+        var new_location = uniqueName + '/' + device.name + '(' + device.width + '-' + device.height + ')';
         fs.mkdir(new_location, function (err) {
-            if (err) {}
+            if (err) {
+                console.log(err);
+            }
         });
 
         await page.screenshot({
@@ -68,23 +73,23 @@ module.exports.capture = function (req, res) {
     async function getUrlAndResolutions(devices, url) {
         for (let device of devices) {
             let test = await setViewports(device, url);
-            if(test === "URLErr")
+            if (test === "URLErr")
                 return responses.successMsg(res, "URLErr");
         }
 
-        var file = "../screenshot/downloads/" + uniqueName + '.zip';
+        var file = "downloads/" + uniqueName + '.zip';
         //zip the folder
-        zipFolder('../screenshot/' + uniqueName, file, function (err) {
+        zipFolder(uniqueName, file, function (err) {
             if (err) {
                 console.log('oh no!', err);
                 return responses.errorMsg(res, 500, "Internal Server Error", "some error occured preparing your files.", null);
             } else {
-                rimraf('../screenshot/' + uniqueName, function () {});
+                rimraf(uniqueName, function () {});
                 var results = {
                     "filename": uniqueName + ".zip"
                 };
-                
-                setTimeout(function(){ 
+
+                setTimeout(function () {
                     rimraf(file, function () {}); //delete file after 5 minutes of creation 
                 }, 300000); //5 * 60 * 1000 // 5 min
                 responses.successMsg(res, results);
