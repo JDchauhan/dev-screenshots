@@ -56,7 +56,7 @@ module.exports.capture = function (req, res) {
 
 
     async function getScreenshots(device, url, page, browser) {
-        var new_location = uniqueName + '/' + device.name + '(' + device.width + '-' + device.height + ')';
+        var new_location = uniqueName;
         fs.mkdir(new_location, function (err) {
             if (err) {
                 console.log(err);
@@ -64,7 +64,7 @@ module.exports.capture = function (req, res) {
         });
 
         await page.screenshot({
-            path: new_location + '/' + "screenshot" + '.png',
+            path: new_location + '/' + device.name + '(' + device.width + ' x ' + device.height + ')' + '.png',
             fullPage: true
         });
         browser.close();
