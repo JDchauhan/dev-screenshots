@@ -8,8 +8,14 @@ module.exports = function (app) {
 
     // user Routes
     app.get("/", function (req, res) {
+        var error;
+        if(req.query.fileErr &&  req.query.fileErr ==="true" ){
+            error = true;
+        }else{
+            error = false;
+        }
         res.render("index", {
-            error: false
+            error: error
         });
     });
 
@@ -20,36 +26,25 @@ module.exports = function (app) {
         if (fs.existsSync(file)) {
             res.download(file);
         }else{
-            res.render("index", {
-                error: true
-            });
-            //return responses.errorMsg(res, 404, "Not Found", "file not found.", null);
+            res.redirect(301, "../?fileErr=true");
         }
     });
 
     // star routes
     app.get('*', function (req, res) {
-        res.render("index", {
-            error: false
-        });
+        res.redirect(301, "../");
     });
 
     app.put('*', function (req, res) {
-        res.render("index", {
-            error: false
-        });
+        res.redirect(301, "../");
     });
 
     app.delete('*', function (req, res) {
-        res.render("index", {
-            error: false
-        });
+        res.redirect(301, "../");
     });
 
     app.post('*', function (req, res) {
-        res.render("index", {
-            error: false
-        });
+        res.redirect(301, "../");
     });
 
 };
