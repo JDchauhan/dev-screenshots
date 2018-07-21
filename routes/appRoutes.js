@@ -16,7 +16,7 @@ module.exports = function (app) {
     app.post("/", screenshot.capture);
 
     app.get("/download/:filename", function (req, res) {
-        var file = "../screenshot/downloads/" + req.params.filename;
+        var file = "downloads/" + req.params.filename;
         if (fs.existsSync(file)) {
             res.download(file);
         }else{
