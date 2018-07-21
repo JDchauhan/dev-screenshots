@@ -1,7 +1,5 @@
 body {
-    background: url('./header.jpg');
-    background-position: center center;
-    background-size: cover;
+    background: url('./header.jpg') no-repeat center center fixed;
 }
 
 .nav-link {
