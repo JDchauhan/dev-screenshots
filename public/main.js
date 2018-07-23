@@ -191,6 +191,7 @@ function submit() {
                     document.getElementById("download").disabled = false;
                     document.getElementById("message-heading").innerHTML = "Congratulations";
                     document.getElementById("message-body").innerHTML = "Your file is ready, click on download button.";
+                    document.getElementById("success_audio").play();
                     $("#myModal").modal("show");
 
                     document.getElementById("loader").style.display = "none";
