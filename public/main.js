@@ -10,21 +10,21 @@ function getDevice(deviceName) {
             currDevice.width = 1920;
             break;
 
-        
+
         case "Laptop large":
             currDevice.name = "Laptop large";
             currDevice.height = 768;
             currDevice.width = 1366;
             break;
 
-        
+
         case "Laptop wxga–wide":
             currDevice.name = "Laptop wxga–wide";
             currDevice.height = 800;
             currDevice.width = 1280;
             break;
 
-        
+
         case "iPad Pro":
             currDevice.name = "iPad Pro";
             currDevice.height = 1024;
@@ -36,7 +36,7 @@ function getDevice(deviceName) {
             currDevice.height = 768;
             currDevice.width = 1024;
             break;
-        
+
         case "iPhone X":
             currDevice.name = "iPhone X";
             currDevice.height = 812;
@@ -123,22 +123,22 @@ function filter() {
 
 function validateURL() {
     url = document.getElementById("url").value.toLowerCase().replace(/\s/g, "");
-    
+
     if (url === "") {
         return false;
     }
-    
-    if(url.indexOf(".") === -1){
+
+    if (url.indexOf(".") === -1) {
         return false;
     }
 
     var test = url.split(":");
-    
-    if(test[0] !== "http" && test[0] !== "https" && test[0] !== "ftp"){
+
+    if (test[0] !== "http" && test[0] !== "https" && test[0] !== "ftp") {
         return false; //hostname err
     }
 
-    if(test[1].slice(0,2) !== "//"){
+    if (test[1].slice(0, 2) !== "//") {
         return false;
     }
 
@@ -151,28 +151,38 @@ function submit() {
     document.getElementById("submit").disabled = true;
     document.getElementById("loader").style.display = "block";
     filter();
-    if (devices.length === 0 || !validateURL()) {
-        
-        document.getElementById("message-heading").innerHTML = "Error";
-        document.getElementById("message-body").innerHTML = "Improper Input";
+    if (devices.length === 0) {
+
+        document.getElementById("message-heading").innerHTML = "Invalid Input";
+        document.getElementById("message-body").innerHTML = "Please atleast select one device from the list.";
         $("#myModal").modal("show");
-        
+
         document.getElementById("loader").style.display = "none";
         document.getElementById("submit").disabled = false;
-    
+
+    } else if (!validateURL()) {
+        document.getElementById("message-heading").innerHTML = "Invalid URL";
+        document.getElementById("message-body").innerHTML = "Please make sure you have included the protocol " +
+            "like <code><b>http://</b></code> or <code><b>https://</b></code>.";
+        $("#myModal").modal("show");
+
+        document.getElementById("loader").style.display = "none";
+        document.getElementById("submit").disabled = false;
+
     } else {
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 if (JSON.parse(this.response).results === "URLErr") {
-        
+
                     document.getElementById("message-heading").innerHTML = "Unreachable URL";
-                    document.getElementById("message-body").innerHTML = "Make sure you have typed correct URL including http/https";
+                    document.getElementById("message-body").innerHTML = "Make sure you have typed correct URL including the protocol " +
+                        "like <code><b>http://</b></code> or <code><b>https://</b></code>.";
                     $("#myModal").modal("show");
-                    
+
                     document.getElementById("loader").style.display = "none";
                     document.getElementById("submit").disabled = false;
-    
+
                 } else {
                     var filename = JSON.parse(this.response).results.filename;
                     document.getElementById("download").setAttribute("onclick",
@@ -181,19 +191,20 @@ function submit() {
                     document.getElementById("download").disabled = false;
                     document.getElementById("message-heading").innerHTML = "Congratulations";
                     document.getElementById("message-body").innerHTML = "Your file is ready, click on download button.";
+                    document.getElementById("success_audio").play();
                     $("#myModal").modal("show");
 
                     document.getElementById("loader").style.display = "none";
                     document.getElementById("submit").disabled = false;
-    
+
                 }
-            }else if(this.readyState == 4 && this.status == 0){
+            } else if (this.readyState == 4 && this.status == 0) {
                 document.getElementById("message-heading").innerHTML = "Network Error";
                 document.getElementById("message-body").innerHTML = "Can't reach server! Check your Internet connection";
                 $("#myModal").modal("show");
-                
+
                 document.getElementById("loader").style.display = "none";
-                document.getElementById("submit").disabled = false;        
+                document.getElementById("submit").disabled = false;
             }
         };
         xmlhttp.open("POST", "../");
@@ -205,6 +216,6 @@ function submit() {
     }
 }
 
-$(document).ready(function(){
-    $('[data-toggle="tooltip"]').tooltip();   
+$(document).ready(function () {
+    $('[data-toggle="tooltip"]').tooltip();
 });

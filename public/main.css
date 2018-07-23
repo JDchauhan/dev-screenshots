@@ -36,17 +36,20 @@ body {
     margin-right: 5%;
 }
 
-.btn-group>.btn-group:not(:last-child)>.btn, .btn-group>.btn:not(:last-child):not(.dropdown-toggle) {
+.btn-group>.btn-group:not(:last-child)>.btn,
+.btn-group>.btn:not(:last-child):not(.dropdown-toggle) {
     border-top-right-radius: 0.3rem;
     border-bottom-right-radius: 0.3rem;
 }
 
-.btn-group>.btn-group:not(:first-child)>.btn, .btn-group>.btn:not(:first-child) {
+.btn-group>.btn-group:not(:first-child)>.btn,
+.btn-group>.btn:not(:first-child) {
     border-top-left-radius: 0.3rem;
     border-bottom-left-radius: 0.3rem;
 }
 
-.checkbox-tooltip, .checkbox-tooltip:hover {
+.checkbox-tooltip,
+.checkbox-tooltip:hover {
     color: #fff;
     text-decoration: none;
 }
@@ -66,6 +69,40 @@ body {
     -ms-animation: spin1 2s infinite linear;
     animation: spin1 2s infinite linear;
     display: block;
+}
+
+::placeholder {
+    /* WebKit, Blink, Edge */
+    opacity: 0.4 !important;
+}
+
+::-webkit-input-placeholder {
+    /* WebKit, Blink, Edge */
+    opacity: 0.4 !important;
+}
+
+:-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 */
+    opacity: 0.4 !important;
+}
+
+::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    opacity: 0.4 !important;
+}
+
+:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    opacity: 0.4 !important;
+}
+
+::-ms-input-placeholder {
+    /* Microsoft Edge */
+    opacity: 0.4 !important;
+}
+
+#success_audio {
+    display: none;
 }
 
 @-webkit-keyframes spin1 {
@@ -113,39 +150,33 @@ body {
     }
 }
 
-@media screen and (max-width: 768px){
+@media screen and (max-width: 768px) {
     .body-container {
         top: 40%;
     }
-
     .row {
         margin-left: 4%;
     }
-    
     .hexerve {
         top: 22%;
         margin-left: 38%;
     }
-
     .btn-group {
         margin-left: -2%;
     }
 }
 
-@media screen and (max-width: 360px){
+@media screen and (max-width: 360px) {
     .body-container {
         top: 28%;
     }
-    
     .col-xs4 {
         width: 100%;
     }
-  
     .hexerve {
         top: 14%;
         margin-left: 33%;
     }
-    
     .btn-group {
         margin-top: 1%;
     }

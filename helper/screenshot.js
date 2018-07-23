@@ -31,7 +31,7 @@ module.exports.capture = function (req, res) {
     }
 
     var url = req.body.url;
-    var uniqueName = "dev-screenshots_" + new Date().getTime().toString() +
+    var uniqueName = "screenshots_" + new Date().getTime().toString() +
         Math.floor((Math.random() * 100000) + 1) + "1";
 
     async function setViewports(device, url) {
