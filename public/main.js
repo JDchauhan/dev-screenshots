@@ -1,5 +1,8 @@
 var devices = [];
 var url;
+var list = [{"name": "asdfj"},{ "name": "skjh"}];
+var item = {};
+
 
 function getDevice(deviceName) {
     var currDevice = {};
@@ -143,6 +146,41 @@ function validateURL() {
     }
 
     return true;
+}
+
+function viewList(){
+    var table ;
+    $("#list").empty();
+    $("#list").append(
+        "<table class='table table-striped'>" +
+            "<thead>" +
+                "<tr>" +
+                    "<th class='sno'>S.No.</th>" +
+                    "<th class='name'>Folder Name</th>" +
+                    "<th class='url'>URL</th>" +
+                    "<th class='remove'>Remove</th>" +
+                "</tr>" +
+            "</thead>" +
+            "<tbody id='list_table'></tbody>"+
+        "</table>"
+    );
+                
+    for(i = 0; i < list.length; i++){
+        for(var name in list[i]) {
+            if(list[i].hasOwnProperty(name)) {
+                var value = list[i][name];
+                $("#list_table").append(
+                    "<tr  id='list" + i + "'>" +
+                        "<td class='sno'>" + (i + 1) + "</td>" +
+                        "<td class='name'>" + name + "</td>" +
+                        "<td class='url'>" + value + "</td>" +
+                        "<td class='remove'>X</td>" +
+                    "</tr>"
+                );
+            }
+        }
+    }
+    $("#listModal").modal("show");
 }
 
 function submit() {
