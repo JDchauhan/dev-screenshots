@@ -6,7 +6,9 @@
                 <a class="navbar-brand" href="#">
                     <img src="/hexerve-logo.png" alt="logo">
                 </a>
-                <a class="nav-link" href="#">Screenshot taker</a>
+                <a class="nav-link" href="#"><b>Screenshot Taker <span class="beta">
+                    (Beta)
+                </span></b></a>
                 
             </div>
         </nav>
@@ -22,8 +24,11 @@
                     <span class="input-group-text">URL</span>
                 </div>
                 <input type="text" class="form-control" name="url" id="url" placeholder="https://www.hexerve.com">
+                <div class="input-group-append">
+                    <button class="btn btn-default" onclick="viewList()" type="button"><b>+</b></button>
+                </div>
             </div>
-
+            
             <!--checkbox grids-->
             <div class="container checkbox-container">
                 <div class="row">
@@ -132,6 +137,52 @@
                 </div>
             </div>
         </div>
+
+        <!-- List Modal -->
+        <div class="modal fade" id="listModal">
+            <div class="modal-dialog modal-dialog-centered" id="full_width_model">
+                <div class="modal-content">
+                
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title"> List of the Pages</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    
+                    <!-- Modal body -->
+                    <div class="modal-body"></div>
+
+                        <div class="list" id="list"></div>
+
+                        <form class="form-inline">
+                            <div class="form-group inline_form input-group mb-3 container addWidth">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Folder name</span>
+                                </div>
+                                <input type="text" class="form-control" name="url" id="name_insert" placeholder="Hexerve">
+                            </div>
+                            <div class="form-group inline_form input-group mb-3 container half-width">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">URL </span>
+                                </div>
+                                <input type="text" class="form-control" name="url" id="url_insert" placeholder="https://www.hexerve.com" />            
+                            </div>
+                            <div class="form-group inline_form input-group mb-3 container">
+                                <button type="button" class="btn btn-secondary add_button">Add</button>
+                            </div>
+                        </form>
+                          
+                            
+                        
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary">Submit</button>
+                    </div>
+                    
+                </div>
+            </div>
+        </div> 
+        
 
         <!-- The Modal -->
         <div class="modal fade" id="myModal">
