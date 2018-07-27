@@ -278,16 +278,16 @@ function submit() {
         document.getElementById("submit").disabled = false;
 
     } else {
-        if(list.length !== 0){
-            url = list;
-        } else {
+        if(list.length === 0){
             url = document.getElementById("url").value.toLowerCase().replace(/\s/g, "");
+            list = [{name: '', url: url}];
         }
+
         xmlhttp.open("POST", "../");
         xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         xmlhttp.send(JSON.stringify({
             "devices": devices,
-            "url": url
+            "urls": list
         }));
     }
 }
