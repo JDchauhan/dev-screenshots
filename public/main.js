@@ -26,6 +26,7 @@ xmlhttp.onreadystatechange = function () {
             document.getElementById("success_audio").play();
             $("#myModal").modal("show");
 
+            list = [];
             document.getElementById("loader").style.display = "none";
             document.getElementById("submit").disabled = false;
 
