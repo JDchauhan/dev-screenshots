@@ -1,7 +1,45 @@
 var devices = [];
 var url;
-var list = [{"name": "asdfj"},{ "name": "skjh"}];
-var item = {};
+var list = [];
+
+var xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+        if (JSON.parse(this.response).results === "URLErr") {
+
+            document.getElementById("message-heading").innerHTML = "Unreachable URL";
+            document.getElementById("message-body").innerHTML = "Make sure you have typed correct URL including the protocol " +
+                "like <code><b>http://</b></code> or <code><b>https://</b></code>.";
+            $("#myModal").modal("show");
+
+            document.getElementById("loader").style.display = "none";
+            document.getElementById("submit").disabled = false;
+
+        } else {
+            var filename = JSON.parse(this.response).results.filename;
+            document.getElementById("download").setAttribute("onclick",
+                "window.open('download/" + filename + "','_self')");
+
+            document.getElementById("download").disabled = false;
+            document.getElementById("message-heading").innerHTML = "Congratulations";
+            document.getElementById("message-body").innerHTML = "Your file is ready, click on download button.";
+            document.getElementById("success_audio").play();
+            $("#myModal").modal("show");
+
+            document.getElementById("loader").style.display = "none";
+            document.getElementById("submit").disabled = false;
+
+        }
+    } else if (this.readyState == 4 && this.status == 0) {
+        document.getElementById("message-heading").innerHTML = "Network Error";
+        document.getElementById("message-body").innerHTML = "Can't reach server! Check your Internet connection";
+        $("#myModal").modal("show");
+
+        document.getElementById("loader").style.display = "none";
+        document.getElementById("submit").disabled = false;
+    }
+};
+    
 
 
 function getDevice(deviceName) {
@@ -124,8 +162,8 @@ function filter() {
     delete temp;
 }
 
-function validateURL() {
-    url = document.getElementById("url").value.toLowerCase().replace(/\s/g, "");
+function validateURL(url) {
+    url = url.toLowerCase().replace(/\s/g, "");
 
     if (url === "") {
         return false;
@@ -148,8 +186,35 @@ function validateURL() {
     return true;
 }
 
+function removeList(index){
+    list.splice(index, 1);
+    viewList();
+}
+
+function addList(){
+    var name = $('#name_insert').val();
+    var url = $('#url_insert').val();
+    if(!validateURL(url)){
+        console.log("err");
+        
+        $("#url_add_err").empty();
+        $("#url_add_err").append(
+            '<div class="alert alert-danger fade in alert-dismissible show">'+
+                '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
+                '<strong>Invalid URL!</strong> Make sure you have include http/https protocol.' +
+            '</div>'
+        );
+        
+        return;
+    }
+    $('#name_insert').val('');
+    $('#url_insert').val('');
+    var item = {name: name, url:url};
+    list.push(item);
+    viewList();
+}
+
 function viewList(){
-    var table ;
     $("#list").empty();
     $("#list").append(
         "<table class='table table-striped'>" +
@@ -165,26 +230,31 @@ function viewList(){
         "</table>"
     );
                 
-    for(i = 0; i < list.length; i++){
-        for(var name in list[i]) {
-            if(list[i].hasOwnProperty(name)) {
-                var value = list[i][name];
-                $("#list_table").append(
-                    "<tr  id='list" + i + "'>" +
-                        "<td class='sno'>" + (i + 1) + "</td>" +
-                        "<td class='name'>" + name + "</td>" +
-                        "<td class='url'>" + value + "</td>" +
-                        "<td class='remove'>X</td>" +
-                    "</tr>"
-                );
-            }
-        }
+    for(i = 0; i < list.length; i++){        
+        $("#list_table").append(
+            "<tr  id='list" + i + "'>" +
+                "<td class='sno'>" + (i + 1) + "</td>" +
+                "<td class='name'>" + list[i].name + "</td>" +
+                "<td class='url'>" + list[i].url + "</td>" +
+                "<td class='remove'><button onclick='removeList(" + i + ")'>X</button></td>" +
+            "</tr>"
+        );
     }
     $("#listModal").modal("show");
 }
 
+function submitList(){
+    if(list.length !== 0 ){
+        document.getElementById("url").value = '';
+        document.getElementById("url").placeholder = 'Submitting List';
+        document.getElementById("url").disabled = true;
+    } else {
+        document.getElementById("url").placeholder = 'https://www.hexerve.com';
+        document.getElementById("url").disabled = false;
+    }
+}
+
 function submit() {
-    document.getElementById("")
     document.getElementById("download").disabled = true;
     document.getElementById("submit").disabled = true;
     document.getElementById("loader").style.display = "block";
@@ -198,7 +268,7 @@ function submit() {
         document.getElementById("loader").style.display = "none";
         document.getElementById("submit").disabled = false;
 
-    } else if (!validateURL()) {
+    } else if ( list.length === 0 && !validateURL(document.getElementById("url").value)) {
         document.getElementById("message-heading").innerHTML = "Invalid URL";
         document.getElementById("message-body").innerHTML = "Please make sure you have included the protocol " +
             "like <code><b>http://</b></code> or <code><b>https://</b></code>.";
@@ -208,43 +278,10 @@ function submit() {
         document.getElementById("submit").disabled = false;
 
     } else {
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                if (JSON.parse(this.response).results === "URLErr") {
-
-                    document.getElementById("message-heading").innerHTML = "Unreachable URL";
-                    document.getElementById("message-body").innerHTML = "Make sure you have typed correct URL including the protocol " +
-                        "like <code><b>http://</b></code> or <code><b>https://</b></code>.";
-                    $("#myModal").modal("show");
-
-                    document.getElementById("loader").style.display = "none";
-                    document.getElementById("submit").disabled = false;
-
-                } else {
-                    var filename = JSON.parse(this.response).results.filename;
-                    document.getElementById("download").setAttribute("onclick",
-                        "window.open('download/" + filename + "','_self')");
-
-                    document.getElementById("download").disabled = false;
-                    document.getElementById("message-heading").innerHTML = "Congratulations";
-                    document.getElementById("message-body").innerHTML = "Your file is ready, click on download button.";
-                    document.getElementById("success_audio").play();
-                    $("#myModal").modal("show");
-
-                    document.getElementById("loader").style.display = "none";
-                    document.getElementById("submit").disabled = false;
-
-                }
-            } else if (this.readyState == 4 && this.status == 0) {
-                document.getElementById("message-heading").innerHTML = "Network Error";
-                document.getElementById("message-body").innerHTML = "Can't reach server! Check your Internet connection";
-                $("#myModal").modal("show");
-
-                document.getElementById("loader").style.display = "none";
-                document.getElementById("submit").disabled = false;
-            }
-        };
+        if(list.length !== 0){
+            url = list;
+        }
+        url = document.getElementById("url").value.toLowerCase().replace(/\s/g, "");
         xmlhttp.open("POST", "../");
         xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         xmlhttp.send(JSON.stringify({

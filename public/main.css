@@ -114,6 +114,11 @@ body {
     color: #35A6F0;
 }
 
+#url_add_err {
+    width: 95%;
+    margin-left: 2.5%;
+}
+    
 ::placeholder {
     /* WebKit, Blink, Edge */
     opacity: 0.4 !important;

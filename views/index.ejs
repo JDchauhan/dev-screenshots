@@ -168,15 +168,15 @@
                                 <input type="text" class="form-control" name="url" id="url_insert" placeholder="https://www.hexerve.com" />            
                             </div>
                             <div class="form-group inline_form input-group mb-3 container">
-                                <button type="button" class="btn btn-secondary add_button">Add</button>
+                                <button type="button" class="btn btn-secondary add_button" onclick="addList()">Add</button>
                             </div>
                         </form>
-                          
+                        <div id="url_add_err">
                             
-                        
+                        </div>
                     <!-- Modal footer -->
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary">Submit</button>
+                        <button type="button" class="btn btn-secondary" onclick="submitList()" data-dismiss="modal">Submit</button>
                     </div>
                     
                 </div>
