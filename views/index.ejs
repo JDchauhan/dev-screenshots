@@ -6,9 +6,15 @@
                 <a class="navbar-brand" href="#">
                     <img src="/hexerve-logo.png" alt="logo">
                 </a>
-                <a class="nav-link" href="#"><b>Screenshot Taker <span class="beta">
-                    (Beta)
-                </span></b></a>
+                <a class="nav-link" href="#">
+                    <b>Screenshot Taker <span class="beta">
+                        (Beta)
+                    </span></b>        
+                    <p class="timer">
+                        <span class="beta spacer_sm_1">Till:</span>
+                        <span id="timer"></span>
+                    </p>
+                </a>
                 
             </div>
         </nav>
@@ -168,15 +174,15 @@
                                 <input type="text" class="form-control" name="url" id="url_insert" placeholder="https://www.hexerve.com" />            
                             </div>
                             <div class="form-group inline_form input-group mb-3 container">
-                                <button type="button" class="btn btn-secondary add_button">Add</button>
+                                <button type="button" class="btn btn-secondary add_button" onclick="addList()">Add</button>
                             </div>
                         </form>
-                          
+                        <div id="url_add_err">
                             
-                        
+                        </div>
                     <!-- Modal footer -->
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary">Submit</button>
+                        <button type="button" class="btn btn-secondary" onclick="submitList()" data-dismiss="modal">Submit</button>
                     </div>
                     
                 </div>
