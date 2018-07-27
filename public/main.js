@@ -280,8 +280,9 @@ function submit() {
     } else {
         if(list.length !== 0){
             url = list;
+        } else {
+            url = document.getElementById("url").value.toLowerCase().replace(/\s/g, "");
         }
-        url = document.getElementById("url").value.toLowerCase().replace(/\s/g, "");
         xmlhttp.open("POST", "../");
         xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         xmlhttp.send(JSON.stringify({
