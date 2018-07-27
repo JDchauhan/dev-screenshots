@@ -236,7 +236,7 @@ function viewList(){
                 "<td class='sno'>" + (i + 1) + "</td>" +
                 "<td class='name'>" + list[i].name + "</td>" +
                 "<td class='url'>" + list[i].url + "</td>" +
-                "<td class='remove'><button onclick='removeList(" + i + ")'>X</button></td>" +
+                "<td class='remove'><button onclick='removeList(" + i + ")' class='close' id='remove_button'>&times;</button></td>" +
             "</tr>"
         );
     }
@@ -246,7 +246,7 @@ function viewList(){
 function submitList(){
     if(list.length !== 0 ){
         document.getElementById("url").value = '';
-        document.getElementById("url").placeholder = 'Submitting List';
+        document.getElementById("url").placeholder = 'Links copied';
         document.getElementById("url").disabled = true;
     } else {
         document.getElementById("url").placeholder = 'https://www.hexerve.com';

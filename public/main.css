@@ -114,6 +114,11 @@ body {
     color: #35A6F0;
 }
 
+#remove_button {
+    color: red;
+    margin-right: 35%;
+}
+
 #url_add_err {
     width: 95%;
     margin-left: 2.5%;
