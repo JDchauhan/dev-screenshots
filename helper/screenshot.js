@@ -4,7 +4,16 @@ var responses = require('./responses');
 var zipFolder = require('zip-folder');
 var rimraf = require('rimraf');
 
+var visitTime = {};
+var screenshotTime = {};
+var startupTime;
+
+var start;
+var end;
+
 module.exports.capture = function (req, res) {
+    start = new Date().getTime();
+
     req.setTimeout(0); //no time out
     if (req.body.devices === undefined || req.body.devices === null ||
         req.body.devices === [] || req.body.devices === "") {
@@ -34,30 +43,38 @@ module.exports.capture = function (req, res) {
     var uniqueName = "screenshots_" + new Date().getTime().toString() +
         Math.floor((Math.random() * 100000) + 1) + "1";
 
-    async function setViewports(device, urls) {
+    async function setViewports(devices, urls) {
         try {
+            var time1 = new Date().getTime();
             var browser = await puppeteer.launch({
                 args: ['--no-sandbox'],
                 timeout: 0,
             });
             var page = await browser.newPage();
             await page.waitFor(500);
-
+            startupTime = new Date().getTime() - time1;
             
             for( var i = 0; i < urls.length; i++){
+                var startTime = new Date().getTime();
                 try {
-                    await page.goto(urls[i].url);
+                    await page.goto(urls[i].url); 
                 } catch (err){
                     urls.splice(i, 1);
                     continue;
                 }
+                var endTime = new Date().getTime();
+                visitTime[urls[i].url] =  endTime - startTime;
                 
-                // Setting-up viewports 
-                await page.setViewport({
-                    width: device.width,
-                    height: device.height
-                });
-                await getScreenshots(device, urls[i].name, page, browser);
+                for (let device of devices){
+                    // Setting-up viewports 
+                    await page.setViewport({
+                        width: device.width,
+                        height: device.height
+                    });
+                
+                    await getScreenshots(device, urls[i].name, page, browser);
+                }
+                screenshotTime[urls[i].url] = new Date().getTime() - endTime;
             }
         } catch (err) {
             console.log(err)
@@ -83,29 +100,31 @@ module.exports.capture = function (req, res) {
     }
 
     async function getUrlAndResolutions(devices, urls) {
-        for (let device of devices) {
-            
-            let test = await setViewports(device, urls);
-            /*if (test === "URLErr")
-                return responses.successMsg(res, "URLErr");
-            */
-        }
+        await setViewports(devices, urls);
 
         var file = "downloads/" + uniqueName + '.zip';
         //zip the folder
+        var time1 = new Date().getTime();
         zipFolder(uniqueName, file, function (err) {
             if (err) {
                 console.log('oh no!', err);
                 return responses.errorMsg(res, 500, "Internal Server Error", "some error occured preparing your files.", null);
             } else {
                 rimraf(uniqueName, function () {});
-                var results = {
-                    "filename": uniqueName + ".zip"
-                };
-
                 setTimeout(function () {
                     rimraf(file, function () {}); //delete file after 5 minutes of creation 
                 }, 300000); //5 * 60 * 1000 // 5 min
+ 
+                end = new Date().getTime();
+                var results = {
+                    "filename": uniqueName + ".zip",
+                    "totalTime": end - start,
+                    "chromeStartup": startupTime,
+                    "visitTime": visitTime,
+                    "screenshotTime": screenshotTime,
+                    "zipTime": end - time1
+                };
+
                 responses.successMsg(res, results);
             }
         });

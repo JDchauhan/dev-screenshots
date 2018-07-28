@@ -16,20 +16,65 @@ xmlhttp.onreadystatechange = function () {
             document.getElementById("submit").disabled = false;
 
         } else {
-            var filename = JSON.parse(this.response).results.filename;
+            var results = JSON.parse(this.response).results;
+            var filename = results.filename;
             document.getElementById("download").setAttribute("onclick",
                 "window.open('download/" + filename + "','_self')");
 
+            var tableData = "";  
+            for( let i = 0; i < list.length; i++ ){
+                var key = list[i].url;
+                tableData += 
+                    "<Tr>" +
+                        "<Td class='url_td'>" + key + "</Td>" +
+                        "<Td class='visit_time_td'>" + parseInt(results.visitTime[key] ) + "ms </Td>" +        
+                        "<Td  class='ss_time_td'>" + parseInt(results.screenshotTime[key] ) + "ms </Td>" +        
+                    "</tr>";
+            }
+
             document.getElementById("download").disabled = false;
             document.getElementById("message-heading").innerHTML = "Congratulations";
-            document.getElementById("message-body").innerHTML = "Your file is ready, click on download button.";
+            document.getElementById("message-body").innerHTML = 
+                "Your file is ready, click on download button.<br/>" +
+                "<Table class='timestamps'>" +
+                    "<Tr>" +
+                        "<Th>Total Time</Th>" +
+                        "<Td>" + parseInt(results.totalTime ) + "ms </Td>" +
+                    "</Tr>" +
+                    "<Tr>" +
+                        "<Th>Startup Time</Th>" +
+                        "<Td>" + parseInt(results.chromeStartup ) + "ms </Td>" +
+                    "</Tr>" +
+                    "<Tr>" +
+                        "<Th>Zip Time</Th>" +
+                        "<Td>" + parseInt(results.zipTime ) + "ms </Td>" +
+                    "</Tr>" +
+                "<Table>" +
+
+                "<Table class='timestamps table-striped urls_timestamp'>" +
+                    "<Thead>" +
+                        "<Tr>" +
+                            "<Th class='url_td'>URL</Th>" +
+                            "<Th class='visit_time_td'>Visit Time</Th>" +
+                            "<Th class='ss_time_td'>Screenshot Time</Th>" +
+                        "</Tr>" +
+                    "</Thead>" +
+                    "<Tbody>" +
+                        tableData +
+                    "</Tbody>" +
+                "<Table>";
+
+
+
             document.getElementById("success_audio").play();
             $("#myModal").modal("show");
 
             list = [];
             document.getElementById("loader").style.display = "none";
             document.getElementById("submit").disabled = false;
-
+            document.getElementById("url").placeholder = 'https://www.hexerve.com';
+            document.getElementById("url").disabled = false;
+            document.getElementById("addList_icon").className = "fa fa-search-plus";
         }
     } else if (this.readyState == 4 && this.status == 0) {
         document.getElementById("message-heading").innerHTML = "Network Error";
@@ -249,9 +294,11 @@ function submitList(){
         document.getElementById("url").value = '';
         document.getElementById("url").placeholder = 'Links copied';
         document.getElementById("url").disabled = true;
+        document.getElementById("addList_icon").className = "fa fa-eye";
     } else {
         document.getElementById("url").placeholder = 'https://www.hexerve.com';
         document.getElementById("url").disabled = false;
+        document.getElementById("addList_icon").className = "fa fa-search-plus";
     }
 }
 
