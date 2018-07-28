@@ -74,6 +74,7 @@ xmlhttp.onreadystatechange = function () {
             document.getElementById("submit").disabled = false;
             document.getElementById("url").placeholder = 'https://www.hexerve.com';
             document.getElementById("url").disabled = false;
+            document.getElementById("addList_icon").className = "fa fa-search-plus";
         }
     } else if (this.readyState == 4 && this.status == 0) {
         document.getElementById("message-heading").innerHTML = "Network Error";
@@ -293,9 +294,11 @@ function submitList(){
         document.getElementById("url").value = '';
         document.getElementById("url").placeholder = 'Links copied';
         document.getElementById("url").disabled = true;
+        document.getElementById("addList_icon").className = "fa fa-eye";
     } else {
         document.getElementById("url").placeholder = 'https://www.hexerve.com';
         document.getElementById("url").disabled = false;
+        document.getElementById("addList_icon").className = "fa fa-search-plus";
     }
 }
 
