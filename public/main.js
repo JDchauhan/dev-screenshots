@@ -347,10 +347,6 @@ function submit() {
     }
 }
 
-$(document).ready(function () {
-    $('[data-toggle="tooltip"]').tooltip();
-});
-
 // Set the date we're counting down to
 var countDownDate = new Date("Sep 5, 2018 15:37:25").getTime();
 
@@ -379,3 +375,71 @@ var x = setInterval(function() {
         document.getElementById("timer").innerHTML = "EXPIRED";
     }
 }, 1000);
+
+$(document).ready(function() {
+    $('[data-toggle="tooltip"]').tooltip();
+
+    // method to add data to list from file
+    function addFileToList(data){
+        for(var i = 0;i < data.length; i++) {
+            var curr_data = data[i].split(/,/);
+            var name = curr_data[0];
+            var url = curr_data[1];
+            
+            if(!validateURL(url)){
+                console.log("err");
+                
+                $("#url_add_err").empty();
+                $("#url_add_err").append(
+                    '<div class="alert alert-danger fade in alert-dismissible show">'+
+                        '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
+                        '<strong>Invalid URLs!</strong> Make sure you have include http/https protocol.' +
+                    '</div>'
+                );
+            }else{
+                var item = {name: name, url:url};
+                list.push(item);
+                viewList();
+            }
+        }
+    }
+
+
+    // The event listener for the file upload
+    document.getElementById('txtFileUpload').addEventListener('change', upload, false);
+
+    // Method that checks that the browser supports the HTML5 File API
+    function browserSupportFileUpload() {
+        var isCompatible = false;
+        if (window.File && window.FileReader && window.FileList && window.Blob) {
+        isCompatible = true;
+        }
+        return isCompatible;
+    }
+    
+    // Method that reads and processes the selected file
+    function upload(evt) {
+    if (!browserSupportFileUpload()) {
+        alert('The File APIs are not fully supported in this browser!');
+        } else {
+            var data = null;
+            var file = evt.target.files[0];
+            var reader = new FileReader();
+            reader.readAsText(file);
+            reader.onload = function(event) {
+                var csvData = event.target.result;
+                data = csvData.split(/\n/);
+                data = data.filter(v=>v!='');
+                
+                if (data && data.length > 0) {
+                    addFileToList(data);
+                } else {
+                    alert('No data to import!');
+                }
+            };
+            reader.onerror = function() {
+                alert('Unable to read ' + file.fileName);
+            };
+        }
+    }
+});
