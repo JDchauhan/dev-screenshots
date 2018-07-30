@@ -66,16 +66,16 @@ module.exports.capture = function (req, res) {
                 visitTime[urls[i].url] =  endTime - startTime;
                 
                 for (let device of devices){
-                    // Setting-up viewports 
+                    // Setting-up viewports
                     await page.setViewport({
                         width: device.width,
                         height: device.height
                     });
-                
                     await getScreenshots(device, urls[i].name, page, browser);
                 }
                 screenshotTime[urls[i].url] = new Date().getTime() - endTime;
             }
+            browser.close();
         } catch (err) {
             console.log(err)
             return "URLErr"
@@ -96,7 +96,6 @@ module.exports.capture = function (req, res) {
                 Math.floor((Math.random() * 100000) + 1) + '.png',
             fullPage: true
         });
-        browser.close();
     }
 
     async function getUrlAndResolutions(devices, urls) {
