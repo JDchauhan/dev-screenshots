@@ -53,29 +53,29 @@ module.exports.capture = function (req, res) {
             var page = await browser.newPage();
             await page.waitFor(500);
             startupTime = new Date().getTime() - time1;
-            
-            for( var i = 0; i < urls.length; i++){
+
+            for (var i = 0; i < urls.length; i++) {
                 var startTime = new Date().getTime();
                 try {
-                    await page.goto(urls[i].url); 
-                } catch (err){
+                    await page.goto(urls[i].url);
+                } catch (err) {
                     urls.splice(i, 1);
                     continue;
                 }
                 var endTime = new Date().getTime();
-                visitTime[urls[i].url] =  endTime - startTime;
-                
-                for (let device of devices){
-                    // Setting-up viewports 
+                visitTime[urls[i].url] = endTime - startTime;
+
+                for (let device of devices) {
+                    // Setting-up viewports
                     await page.setViewport({
                         width: device.width,
                         height: device.height
                     });
-                
                     await getScreenshots(device, urls[i].name, page, browser);
                 }
                 screenshotTime[urls[i].url] = new Date().getTime() - endTime;
             }
+            browser.close();
         } catch (err) {
             console.log(err)
             return "URLErr"
@@ -96,7 +96,6 @@ module.exports.capture = function (req, res) {
                 Math.floor((Math.random() * 100000) + 1) + '.png',
             fullPage: true
         });
-        browser.close();
     }
 
     async function getUrlAndResolutions(devices, urls) {
@@ -114,7 +113,7 @@ module.exports.capture = function (req, res) {
                 setTimeout(function () {
                     rimraf(file, function () {}); //delete file after 5 minutes of creation 
                 }, 300000); //5 * 60 * 1000 // 5 min
- 
+
                 end = new Date().getTime();
                 var results = {
                     "filename": uniqueName + ".zip",

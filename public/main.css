@@ -53,25 +53,13 @@ body {
     width: 50%;
 }
 
-
-.btn-circle {
-    position: fixed;
-    left: 95%;
-    top: 90%;
-    width: 36px;
-    height: 36px;
-    text-align: center;
-    font-size: 25px;
-    padding: 0;
-    line-height: 1.42;
-    border-radius: 18px;
-    color: #fff;
-    background-color: #35A6F0;
+.custom-file {
+    margin-left: 1.5%;
+    margin-right: 1.5%;
 }
 
-.btn-circle:hover {
-    background-color: #fff;
-    color: #35A6F0;
+.right_5 {
+    right: 5px;
 }
 
 .btn-group>.btn-group:not(:last-child)>.btn,
@@ -99,7 +87,7 @@ body {
 .hexerve {
     width: 60px;
     position: fixed;
-    top: 24%;
+    top: 25%;
     margin-left: 36%;
     -webkit-animation: spin1 2s infinite linear;
     -moz-animation: spin1 2s infinite linear;
@@ -110,7 +98,7 @@ body {
 }
 
 #full_width_model {
-    max-width: 98% !important
+    max-width: 85% !important
 }
 
 #list {
@@ -140,7 +128,7 @@ body {
 
 .form-inline {
     margin-left: 1%;
-    margin-bottom: 1%;
+    margin-bottom: 16px;
 }
 
 .addWidth {
@@ -172,7 +160,7 @@ body {
 .spacer_sm_1 {
     padding-right: 5%;
 }
-    
+
 ::placeholder {
     /* WebKit, Blink, Edge */
     opacity: 0.4 !important;
@@ -264,36 +252,57 @@ body {
         margin-left: 4%;
     }
     .hexerve {
-        top: 22%;
         margin-left: 38%;
     }
     .btn-group {
         margin-left: -2%;
     }
-    .btn-circle {
-        left: 93%;
-    }
 }
 
-@media screen and (max-width: 425px) {
-    .half-width, .addWidth {
+@media screen and (max-width: 480px) {
+    .half-width,
+    .addWidth {
         width: 100% !important;
     }
-
     .body-container {
-        top: 28%;
+        position: relative;
+        overflow: scroll;
+        height: 70vh;
+    }
+    .hidden {
+        display: none;
     }
     .col-xs4 {
         width: 100%;
     }
     .hexerve {
-        top: 14%;
         margin-left: 33%;
+        top: 50%;
     }
     .btn-group {
-        margin-top: 1%;
+        margin-top: 4%;
     }
-    .btn-circle{
-        left: 88%;
+    .spacer {
+        display: block;
+        box-sizing: content-box;
+        height: 18vh;
+    }
+    #full_width_model {
+        max-width: 98% !important
+    }
+    .navbar-brand {
+        margin-left: 25%;
+    }
+    .nav-link {
+        margin-left: 12%;
+        padding-top: 0;
+    }
+    .timer {
+        display: none;
+    }
+    .zopim {
+        left: 90%;
+        bottom: 14% !important;
+        border-radius: 4px;
     }
 }
