@@ -58,26 +58,6 @@ body {
     margin-right: 1.5%;
 }
 
-.btn-circle {
-    position: fixed;
-    left: 95%;
-    top: 90%;
-    width: 36px;
-    height: 36px;
-    text-align: center;
-    font-size: 25px;
-    padding: 0;
-    line-height: 1.42;
-    border-radius: 18px;
-    color: #fff;
-    background-color: #35A6F0;
-}
-
-.btn-circle:hover {
-    background-color: #fff;
-    color: #35A6F0;
-}
-
 .btn-group>.btn-group:not(:last-child)>.btn,
 .btn-group>.btn:not(:last-child):not(.dropdown-toggle) {
     border-top-right-radius: 0.3rem;
@@ -273,10 +253,6 @@ body {
     .btn-group {
         margin-left: -2%;
     }
-    .btn-circle {
-        left: 93%;
-        top: 80%;
-    }
 }
 
 @media screen and (max-width: 480px) {
@@ -303,10 +279,6 @@ body {
     }
     .btn-group {
         margin-top: 1%;
-    }
-    .btn-circle{
-        left: 88%;
-        top: 80%;
     }
     .spacer {
         display: block;
