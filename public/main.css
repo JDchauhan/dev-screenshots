@@ -267,7 +267,7 @@ body {
     .body-container {
         position: relative;
         overflow: scroll;
-        height: 65vh;
+        height: 70vh;
     }
     .hidden {
         display: none;
@@ -280,14 +280,29 @@ body {
         top: 50%;
     }
     .btn-group {
-        margin-top: 1%;
+        margin-top: 4%;
     }
     .spacer {
         display: block;
         box-sizing: content-box;
-        height: 25vh;
+        height: 18vh;
     }
     #full_width_model {
         max-width: 98% !important
+    }
+    .navbar-brand {
+        margin-left: 25%;
+    }
+    .nav-link {
+        margin-left: 12%;
+        padding-top: 0;
+    }
+    .timer {
+        display: none;
+    }
+    .zopim {
+        left: 90%;
+        bottom: 14% !important;
+        border-radius: 4px;
     }
 }
