@@ -271,6 +271,7 @@ body {
     }
     .btn-circle {
         left: 93%;
+        top: 80%;
     }
 }
 
@@ -282,7 +283,6 @@ body {
     .body-container {
         position: relative;
         overflow: scroll;
-        margin-bottom: 30%;
         height: 65vh;
     }
 
