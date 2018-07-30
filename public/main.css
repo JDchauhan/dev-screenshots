@@ -99,7 +99,7 @@ body {
 .hexerve {
     width: 60px;
     position: fixed;
-    top: 24%;
+    top: 25%;
     margin-left: 36%;
     -webkit-animation: spin1 2s infinite linear;
     -moz-animation: spin1 2s infinite linear;
@@ -264,7 +264,6 @@ body {
         margin-left: 4%;
     }
     .hexerve {
-        top: 22%;
         margin-left: 38%;
     }
     .btn-group {
@@ -281,19 +280,33 @@ body {
     }
 
     .body-container {
-        top: 28%;
+        position: relative;
+        overflow: scroll;
+        margin-bottom: 30%;
+        height: 65vh;
     }
+
+    .hidden {
+        display: none;
+    }
+
     .col-xs4 {
         width: 100%;
     }
     .hexerve {
-        top: 14%;
         margin-left: 33%;
+        top: 50%;
     }
     .btn-group {
         margin-top: 1%;
     }
     .btn-circle{
         left: 88%;
+        top: 80%;
+    }
+    .spacer {
+        display: block;
+        box-sizing: content-box;
+        height: 25vh;
     }
 }

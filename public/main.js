@@ -13,6 +13,7 @@ xmlhttp.onreadystatechange = function () {
             $("#myModal").modal("show");
 
             document.getElementById("loader").style.display = "none";
+            document.getElementById("body-container").classList.remove("hidden");
             document.getElementById("submit").disabled = false;
 
         } else {
@@ -71,6 +72,8 @@ xmlhttp.onreadystatechange = function () {
 
             list = [];
             document.getElementById("loader").style.display = "none";
+            document.getElementById("body-container").classList.remove("hidden");
+            
             document.getElementById("submit").disabled = false;
             document.getElementById("url").placeholder = 'https://www.hexerve.com';
             document.getElementById("url").disabled = false;
@@ -82,6 +85,7 @@ xmlhttp.onreadystatechange = function () {
         $("#myModal").modal("show");
 
         document.getElementById("loader").style.display = "none";
+        document.getElementById("body-container").classList.remove("hidden");
         document.getElementById("submit").disabled = false;
     }
 };
@@ -306,6 +310,7 @@ function submit() {
     document.getElementById("download").disabled = true;
     document.getElementById("submit").disabled = true;
     document.getElementById("loader").style.display = "block";
+    document.getElementById("body-container").classList.add("hidden");
     filter();
     if (devices.length === 0) {
 
@@ -314,6 +319,7 @@ function submit() {
         $("#myModal").modal("show");
 
         document.getElementById("loader").style.display = "none";
+        document.getElementById("body-container").classList.remove("hidden");
         document.getElementById("submit").disabled = false;
 
     } else if ( list.length === 0 && !validateURL(document.getElementById("url").value)) {
@@ -323,6 +329,7 @@ function submit() {
         $("#myModal").modal("show");
 
         document.getElementById("loader").style.display = "none";
+        document.getElementById("body-container").classList.remove("hidden");
         document.getElementById("submit").disabled = false;
 
     } else {
