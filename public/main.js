@@ -22,47 +22,47 @@ xmlhttp.onreadystatechange = function () {
             document.getElementById("download").setAttribute("onclick",
                 "window.open('download/" + filename + "','_self')");
 
-            var tableData = "";  
-            for( let i = 0; i < list.length; i++ ){
+            var tableData = "";
+            for (let i = 0; i < list.length; i++) {
                 var key = list[i].url;
-                tableData += 
+                tableData +=
                     "<Tr>" +
-                        "<Td class='url_td'>" + key + "</Td>" +
-                        "<Td class='visit_time_td'>" + parseInt(results.visitTime[key] ) + "ms </Td>" +        
-                        "<Td  class='ss_time_td'>" + parseInt(results.screenshotTime[key] ) + "ms </Td>" +        
+                    "<Td class='url_td'>" + key + "</Td>" +
+                    "<Td class='visit_time_td'>" + parseInt(results.visitTime[key]) + "ms </Td>" +
+                    "<Td  class='ss_time_td'>" + parseInt(results.screenshotTime[key]) + "ms </Td>" +
                     "</tr>";
             }
 
             document.getElementById("download").disabled = false;
             document.getElementById("message-heading").innerHTML = "Congratulations";
-            document.getElementById("message-body").innerHTML = 
+            document.getElementById("message-body").innerHTML =
                 "Your file is ready, click on download button.<br/>" +
                 "<Table class='timestamps'>" +
-                    "<Tr>" +
-                        "<Th>Total Time</Th>" +
-                        "<Td>" + parseInt(results.totalTime ) + "ms </Td>" +
-                    "</Tr>" +
-                    "<Tr>" +
-                        "<Th>Startup Time</Th>" +
-                        "<Td>" + parseInt(results.chromeStartup ) + "ms </Td>" +
-                    "</Tr>" +
-                    "<Tr>" +
-                        "<Th>Zip Time</Th>" +
-                        "<Td>" + parseInt(results.zipTime ) + "ms </Td>" +
-                    "</Tr>" +
+                "<Tr>" +
+                "<Th>Total Time</Th>" +
+                "<Td>" + parseInt(results.totalTime) + "ms </Td>" +
+                "</Tr>" +
+                "<Tr>" +
+                "<Th>Startup Time</Th>" +
+                "<Td>" + parseInt(results.chromeStartup) + "ms </Td>" +
+                "</Tr>" +
+                "<Tr>" +
+                "<Th>Zip Time</Th>" +
+                "<Td>" + parseInt(results.zipTime) + "ms </Td>" +
+                "</Tr>" +
                 "<Table>" +
 
                 "<Table class='timestamps table-striped urls_timestamp'>" +
-                    "<Thead>" +
-                        "<Tr>" +
-                            "<Th class='url_td'>URL</Th>" +
-                            "<Th class='visit_time_td'>Visit Time</Th>" +
-                            "<Th class='ss_time_td'>Screenshot Time</Th>" +
-                        "</Tr>" +
-                    "</Thead>" +
-                    "<Tbody>" +
-                        tableData +
-                    "</Tbody>" +
+                "<Thead>" +
+                "<Tr>" +
+                "<Th class='url_td'>URL</Th>" +
+                "<Th class='visit_time_td'>Visit Time</Th>" +
+                "<Th class='ss_time_td'>Screenshot Time</Th>" +
+                "</Tr>" +
+                "</Thead>" +
+                "<Tbody>" +
+                tableData +
+                "</Tbody>" +
                 "<Table>";
 
 
@@ -73,7 +73,7 @@ xmlhttp.onreadystatechange = function () {
             list = [];
             document.getElementById("loader").style.display = "none";
             document.getElementById("body-container").classList.remove("hidden");
-            
+
             document.getElementById("submit").disabled = false;
             document.getElementById("url").placeholder = 'https://www.hexerve.com';
             document.getElementById("url").disabled = false;
@@ -89,7 +89,7 @@ xmlhttp.onreadystatechange = function () {
         document.getElementById("submit").disabled = false;
     }
 };
-    
+
 
 
 function getDevice(deviceName) {
@@ -236,65 +236,68 @@ function validateURL(url) {
     return true;
 }
 
-function removeList(index){
+function removeList(index) {
     list.splice(index, 1);
     viewList();
 }
 
-function addList(){
+function addList() {
     var name = $('#name_insert').val();
     var url = $('#url_insert').val();
-    if(!validateURL(url)){
+    if (!validateURL(url)) {
         console.log("err");
-        
+
         $("#url_add_err").empty();
         $("#url_add_err").append(
-            '<div class="alert alert-danger fade in alert-dismissible show">'+
-                '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
-                '<strong>Invalid URL!</strong> Make sure you have include http/https protocol.' +
+            '<div class="alert alert-danger fade in alert-dismissible show">' +
+            '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
+            '<strong>Invalid URL!</strong> Make sure you have include http/https protocol.' +
             '</div>'
         );
-        
+
         return;
     }
     $('#name_insert').val('');
     $('#url_insert').val('');
-    var item = {name: name, url:url};
+    var item = {
+        name: name,
+        url: url
+    };
     list.push(item);
     viewList();
 }
 
-function viewList(){
+function viewList() {
     $("#list").empty();
     $("#list").append(
         "<table class='table table-striped'>" +
-            "<thead>" +
-                "<tr>" +
-                    "<th class='sno'>S.No.</th>" +
-                    "<th class='name'>Folder Name</th>" +
-                    "<th class='url'>URL</th>" +
-                    "<th class='remove'>Remove</th>" +
-                "</tr>" +
-            "</thead>" +
-            "<tbody id='list_table'></tbody>"+
+        "<thead>" +
+        "<tr>" +
+        "<th class='sno'>S.No.</th>" +
+        "<th class='name'>Folder Name</th>" +
+        "<th class='url'>URL</th>" +
+        "<th class='remove'>Remove</th>" +
+        "</tr>" +
+        "</thead>" +
+        "<tbody id='list_table'></tbody>" +
         "</table>"
     );
-                
-    for(i = 0; i < list.length; i++){        
+
+    for (i = 0; i < list.length; i++) {
         $("#list_table").append(
             "<tr  id='list" + i + "'>" +
-                "<td class='sno'>" + (i + 1) + "</td>" +
-                "<td class='name'>" + list[i].name + "</td>" +
-                "<td class='url'>" + list[i].url + "</td>" +
-                "<td class='remove'><button onclick='removeList(" + i + ")' class='close' id='remove_button'>&times;</button></td>" +
+            "<td class='sno'>" + (i + 1) + "</td>" +
+            "<td class='name'>" + list[i].name + "</td>" +
+            "<td class='url'>" + list[i].url + "</td>" +
+            "<td class='remove'><button onclick='removeList(" + i + ")' class='close' id='remove_button'>&times;</button></td>" +
             "</tr>"
         );
     }
     $("#listModal").modal("show");
 }
 
-function submitList(){
-    if(list.length !== 0 ){
+function submitList() {
+    if (list.length !== 0) {
         document.getElementById("url").value = '';
         document.getElementById("url").placeholder = 'Links copied';
         document.getElementById("url").disabled = true;
@@ -322,7 +325,7 @@ function submit() {
         document.getElementById("body-container").classList.remove("hidden");
         document.getElementById("submit").disabled = false;
 
-    } else if ( list.length === 0 && !validateURL(document.getElementById("url").value)) {
+    } else if (list.length === 0 && !validateURL(document.getElementById("url").value)) {
         document.getElementById("message-heading").innerHTML = "Invalid URL";
         document.getElementById("message-body").innerHTML = "Please make sure you have included the protocol " +
             "like <code><b>http://</b></code> or <code><b>https://</b></code>.";
@@ -333,9 +336,12 @@ function submit() {
         document.getElementById("submit").disabled = false;
 
     } else {
-        if(list.length === 0){
+        if (list.length === 0) {
             url = document.getElementById("url").value.toLowerCase().replace(/\s/g, "");
-            list = [{name: '', url: url}];
+            list = [{
+                name: '',
+                url: url
+            }];
         }
 
         xmlhttp.open("POST", "../");
@@ -351,24 +357,24 @@ function submit() {
 var countDownDate = new Date("Sep 5, 2018 15:37:25").getTime();
 
 // Update the count down every 1 second
-var x = setInterval(function() {
+var x = setInterval(function () {
 
     // Get todays date and time
     var now = new Date().getTime();
-    
+
     // Find the distance between now an the count down date
     var distance = countDownDate - now;
-    
+
     // Time calculations for days, hours, minutes and seconds
     var days = Math.floor(distance / (1000 * 60 * 60 * 24));
     var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    
+
     // Output the result in an element with id="timer"
-    document.getElementById("timer").innerHTML = days + "d " + hours + "h "
-    + minutes + "m " + seconds + "s ";
-    
+    document.getElementById("timer").innerHTML = days + "d " + hours + "h " +
+        minutes + "m " + seconds + "s ";
+
     // If the count down is over, write some text 
     if (distance < 0) {
         clearInterval(x);
@@ -376,28 +382,31 @@ var x = setInterval(function() {
     }
 }, 1000);
 
-$(document).ready(function() {
+$(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
 
     // method to add data to list from file
-    function addFileToList(data){
-        for(var i = 0;i < data.length; i++) {
+    function addFileToList(data) {
+        for (var i = 0; i < data.length; i++) {
             var curr_data = data[i].split(/,/);
             var name = curr_data[0];
             var url = curr_data[1];
-            
-            if(!validateURL(url)){
+
+            if (!validateURL(url)) {
                 console.log("err");
-                
+
                 $("#url_add_err").empty();
                 $("#url_add_err").append(
-                    '<div class="alert alert-danger fade in alert-dismissible show">'+
-                        '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
-                        '<strong>Invalid URLs!</strong> Make sure you have include http/https protocol.' +
+                    '<div class="alert alert-danger fade in alert-dismissible show">' +
+                    '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
+                    '<strong>Invalid URLs!</strong> Make sure you have include http/https protocol.' +
                     '</div>'
                 );
-            }else{
-                var item = {name: name, url:url};
+            } else {
+                var item = {
+                    name: name,
+                    url: url
+                };
                 list.push(item);
                 viewList();
             }
@@ -412,32 +421,32 @@ $(document).ready(function() {
     function browserSupportFileUpload() {
         var isCompatible = false;
         if (window.File && window.FileReader && window.FileList && window.Blob) {
-        isCompatible = true;
+            isCompatible = true;
         }
         return isCompatible;
     }
-    
+
     // Method that reads and processes the selected file
     function upload(evt) {
-    if (!browserSupportFileUpload()) {
-        alert('The File APIs are not fully supported in this browser!');
+        if (!browserSupportFileUpload()) {
+            alert('The File APIs are not fully supported in this browser!');
         } else {
             var data = null;
             var file = evt.target.files[0];
             var reader = new FileReader();
             reader.readAsText(file);
-            reader.onload = function(event) {
+            reader.onload = function (event) {
                 var csvData = event.target.result;
                 data = csvData.split(/\n/);
-                data = data.filter(v=>v!='');
-                
+                data = data.filter(v => v != '');
+
                 if (data && data.length > 0) {
                     addFileToList(data);
                 } else {
                     alert('No data to import!');
                 }
             };
-            reader.onerror = function() {
+            reader.onerror = function () {
                 alert('Unable to read ' + file.fileName);
             };
         }

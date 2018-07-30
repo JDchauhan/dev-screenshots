@@ -156,7 +156,7 @@ body {
 .spacer_sm_1 {
     padding-right: 5%;
 }
-    
+
 ::placeholder {
     /* WebKit, Blink, Edge */
     opacity: 0.4 !important;
@@ -256,20 +256,18 @@ body {
 }
 
 @media screen and (max-width: 480px) {
-    .half-width, .addWidth {
+    .half-width,
+    .addWidth {
         width: 100% !important;
     }
-
     .body-container {
         position: relative;
         overflow: scroll;
         height: 65vh;
     }
-
     .hidden {
         display: none;
     }
-
     .col-xs4 {
         width: 100%;
     }
