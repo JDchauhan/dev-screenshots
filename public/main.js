@@ -28,8 +28,8 @@ xmlhttp.onreadystatechange = function () {
                 tableData +=
                     "<Tr>" +
                     "<Td class='url_td'>" + key + "</Td>" +
-                    "<Td class='visit_time_td'>" + parseInt(results.visitTime[key]) + "ms </Td>" +
-                    "<Td  class='ss_time_td'>" + parseInt(results.screenshotTime[key]) + "ms </Td>" +
+                    "<Td class='visit_time_td'>" + (Math.round(results.visitTime[key] / 10) / 10) + "s </Td>" +
+                    "<Td  class='ss_time_td'>" + (Math.round(results.screenshotTime[key] / 10) / 10) + "s </Td>" +
                     "</tr>";
             }
 
@@ -37,18 +37,18 @@ xmlhttp.onreadystatechange = function () {
             document.getElementById("message-heading").innerHTML = "Congratulations";
             document.getElementById("message-body").innerHTML =
                 "Your file is ready, click on download button.<br/>" +
-                "<Table class='timestamps'>" +
+                "<Table class='timestamps width_60'>" +
                 "<Tr>" +
                 "<Th>Total Time</Th>" +
-                "<Td>" + parseInt(results.totalTime) + "ms </Td>" +
+                "<Td>" + (Math.round(results.totalTime / 10) / 10) + "s </Td>" +
                 "</Tr>" +
                 "<Tr>" +
                 "<Th>Startup Time</Th>" +
-                "<Td>" + parseInt(results.chromeStartup) + "ms </Td>" +
+                "<Td>" + (Math.round(results.chromeStartup / 10) / 10) + "s </Td>" +
                 "</Tr>" +
                 "<Tr>" +
                 "<Th>Zip Time</Th>" +
-                "<Td>" + parseInt(results.zipTime) + "ms </Td>" +
+                "<Td>" + (Math.round(results.zipTime / 10) / 10) + "s </Td>" +
                 "</Tr>" +
                 "<Table>" +
 
@@ -56,7 +56,7 @@ xmlhttp.onreadystatechange = function () {
                 "<Thead>" +
                 "<Tr>" +
                 "<Th class='url_td'>URL</Th>" +
-                "<Th class='visit_time_td'>Visit Time</Th>" +
+                "<Th class='visit_time_td'>Load Time</Th>" +
                 "<Th class='ss_time_td'>Screenshot Time</Th>" +
                 "</Tr>" +
                 "</Thead>" +

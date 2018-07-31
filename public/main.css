@@ -45,12 +45,37 @@ body {
     margin-left: 2% !important;
 }
 
+.width_60 {
+    width: 98% !important;
+}
+
+.width_60 td {
+    text-align: right
+}
+
 .urls_timestamp {
     margin-left: 0 !important;
+    table-layout: fixed
 }
 
 .url_td {
     width: 50%;
+    word-wrap: break-word;
+}
+
+td.visit_time_td {
+    background-color: #E8801C;
+    color: #ffffff;
+    padding: 0 4px;
+}
+
+.visit_time_td,
+.ss_time_td {
+    text-align: center;
+}
+
+.ss_time_td {
+    padding: 0 4px;
 }
 
 .custom-file {
@@ -150,7 +175,6 @@ body {
 }
 
 .timer {
-    margin-left: 5%;
     font-size: 16px;
     letter-spacing: 2px;
     font-weight: 800;
@@ -159,6 +183,11 @@ body {
 
 .spacer_sm_1 {
     padding-right: 5%;
+}
+
+input[type=checkbox], input[type=radio] {
+    height: 15px;
+    width: 15px;
 }
 
 ::placeholder {
