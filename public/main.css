@@ -69,7 +69,8 @@ td.visit_time_td {
     padding: 0 4px;
 }
 
-.visit_time_td, .ss_time_td {
+.visit_time_td,
+.ss_time_td {
     text-align: center;
 }
 

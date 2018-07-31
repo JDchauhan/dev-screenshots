@@ -28,8 +28,8 @@ xmlhttp.onreadystatechange = function () {
                 tableData +=
                     "<Tr>" +
                     "<Td class='url_td'>" + key + "</Td>" +
-                    "<Td class='visit_time_td'>" + (Math.round( results.visitTime[key] / 10 ) / 10) + "s </Td>" +
-                    "<Td  class='ss_time_td'>" + (Math.round( results.screenshotTime[key] / 10 ) / 10) + "s </Td>" +
+                    "<Td class='visit_time_td'>" + (Math.round(results.visitTime[key] / 10) / 10) + "s </Td>" +
+                    "<Td  class='ss_time_td'>" + (Math.round(results.screenshotTime[key] / 10) / 10) + "s </Td>" +
                     "</tr>";
             }
 
@@ -40,15 +40,15 @@ xmlhttp.onreadystatechange = function () {
                 "<Table class='timestamps width_60'>" +
                 "<Tr>" +
                 "<Th>Total Time</Th>" +
-                "<Td>" + (Math.round( results.totalTime / 10 ) / 10) + "s </Td>" +
+                "<Td>" + (Math.round(results.totalTime / 10) / 10) + "s </Td>" +
                 "</Tr>" +
                 "<Tr>" +
                 "<Th>Startup Time</Th>" +
-                "<Td>" + (Math.round( results.chromeStartup / 10 ) / 10) + "s </Td>" +
+                "<Td>" + (Math.round(results.chromeStartup / 10) / 10) + "s </Td>" +
                 "</Tr>" +
                 "<Tr>" +
                 "<Th>Zip Time</Th>" +
-                "<Td>" + (Math.round( results.zipTime / 10 ) / 10) + "s </Td>" +
+                "<Td>" + (Math.round(results.zipTime / 10) / 10) + "s </Td>" +
                 "</Tr>" +
                 "<Table>" +
 
