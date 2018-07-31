@@ -185,6 +185,11 @@ td.visit_time_td {
     padding-right: 5%;
 }
 
+input[type=checkbox], input[type=radio] {
+    height: 15px;
+    width: 15px;
+}
+
 ::placeholder {
     /* WebKit, Blink, Edge */
     opacity: 0.4 !important;
