@@ -53,6 +53,16 @@ body {
     width: 50%;
 }
 
+.visit_time_td {
+    background-color: #8cb709;
+    color: #ffffff;
+    padding: 0 4px;
+}
+
+.visit_time_td, .ss_time_td {
+    text-align: center;
+}
+
 .custom-file {
     margin-left: 1.5%;
     margin-right: 1.5%;
