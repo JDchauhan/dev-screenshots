@@ -45,22 +45,36 @@ body {
     margin-left: 2% !important;
 }
 
+.width_60 {
+    width: 98% !important;
+}
+
+.width_60 td {
+    text-align: right
+}
+
 .urls_timestamp {
     margin-left: 0 !important;
+    table-layout: fixed
 }
 
 .url_td {
     width: 50%;
+    word-wrap: break-word;
 }
 
-.visit_time_td {
-    background-color: #8cb709;
+td.visit_time_td {
+    background-color: #E8801C;
     color: #ffffff;
     padding: 0 4px;
 }
 
 .visit_time_td, .ss_time_td {
     text-align: center;
+}
+
+.ss_time_td {
+    padding: 0 4px;
 }
 
 .custom-file {
