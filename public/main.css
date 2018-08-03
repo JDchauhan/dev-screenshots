@@ -216,8 +216,16 @@ input[type=checkbox], input[type=radio] {
     }
 }
 
+.linkButton {
+    background: none;
+    border: none;
+    color: #ffffff;
+    text-decoration: underline;
+    cursor: pointer;
+    font-weight: 400;
+}
+
 .wobble-vertical {
-    margin: 0 2%;
     background-color: #47B625;
     color: #ffffff;
     border-color: #47B625;
