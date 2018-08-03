@@ -122,7 +122,7 @@ td.visit_time_td {
     display: block;
 }
 
-#full_width_model {
+.full_width_model {
     max-width: 85% !important
 }
 
@@ -149,6 +149,10 @@ td.visit_time_td {
 
 .remove {
     width: 10%;
+}
+
+.eqiWidthInput {
+    width: 31% !important;
 }
 
 .form-inline {
@@ -213,6 +217,7 @@ input[type=checkbox], input[type=radio] {
 }
 
 .wobble-vertical {
+    margin: 0 2%;
     background-color: #47B625;
     color: #ffffff;
     border-color: #47B625;
@@ -265,7 +270,7 @@ input[type=checkbox], input[type=radio] {
     display: none;
 }
 
-#full_width_model .modal-content .modal-header {
+.full_width_model .modal-content .modal-header {
     border: none !important;
 }
 
@@ -357,7 +362,7 @@ input[type=checkbox], input[type=radio] {
         box-sizing: content-box;
         height: 18vh;
     }
-    #full_width_model {
+    .full_width_model {
         max-width: 98% !important
     }
     .navbar-brand {
