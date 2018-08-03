@@ -19,9 +19,9 @@ xmlhttp.onreadystatechange = function () {
         } else {
             var results = JSON.parse(this.response).results;
             var filename = results.filename;
-            document.getElementById("download").setAttribute("onclick",
-                "window.open('download/" + filename + "','_self')");
-
+            var url = 'download/' + filename;
+            window.open(url);
+            
             var tableData = "";
             for (let i = 0; i < list.length; i++) {
                 var key = list[i].url;
@@ -33,7 +33,6 @@ xmlhttp.onreadystatechange = function () {
                     "</tr>";
             }
 
-            document.getElementById("download").disabled = false;
             document.getElementById("message-heading").innerHTML = "Congratulations";
             document.getElementById("message-body").innerHTML =
                 "Your file is ready, click on download button.<br/>" +
@@ -310,7 +309,6 @@ function submitList() {
 }
 
 function submit() {
-    document.getElementById("download").disabled = true;
     document.getElementById("submit").disabled = true;
     document.getElementById("loader").style.display = "block";
     document.getElementById("body-container").classList.add("hidden");
