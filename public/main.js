@@ -19,9 +19,9 @@ xmlhttp.onreadystatechange = function () {
         } else {
             var results = JSON.parse(this.response).results;
             var filename = results.filename;
-            document.getElementById("download").setAttribute("onclick",
-                "window.open('download/" + filename + "','_self')");
-
+            var url = 'download/' + filename;
+            window.open(url);
+            
             var tableData = "";
             for (let i = 0; i < list.length; i++) {
                 var key = list[i].url;
@@ -33,7 +33,6 @@ xmlhttp.onreadystatechange = function () {
                     "</tr>";
             }
 
-            document.getElementById("download").disabled = false;
             document.getElementById("message-heading").innerHTML = "Congratulations";
             document.getElementById("message-body").innerHTML =
                 "Your file is ready, click on download button.<br/>" +
@@ -309,8 +308,76 @@ function submitList() {
     }
 }
 
+function addViewports() {
+    var height = $('#viewport_height').val();
+    var width = $('#viewport_width').val();
+    var name = $('#viewport_name').val();
+    if (isNaN(height) || isNaN(width)) {
+        console.log("err");
+
+        $("#viewport_add_err").empty();
+        $("#viewport_add_err").append(
+            '<div class="alert alert-danger fade in alert-dismissible show">' +
+            '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
+            '<strong>Invalid Viewport!</strong> Please enter a correct vieport sizes.' +
+            '</div>'
+        );
+
+        return;
+    }
+    
+    if(name === ""){
+        name = "test";
+    }
+
+    $('#viewport_height').val('');
+    $('#viewport_width').val('');
+    var item = {
+        width: parseInt(width),
+        height: parseInt(height),
+        name: name
+    };
+    devices.push(item);
+    viewViewports();
+}
+
+function removeViewport(index) {
+    devices.splice(index, 1);
+    viewViewports();
+}
+
+function viewViewports() {
+    $("#viewportList").empty();
+    $("#viewportList").append(
+        "<table class='table table-striped'>" +
+        "<thead>" +
+        "<tr>" +
+        "<th class='sno'>S.No.</th>" +
+        "<th class='name'>Name</th>" +
+        "<th class='height'>Height</th>" +
+        "<th class='width'>Width</th>" +
+        "<th class='remove'>Remove</th>" +
+        "</tr>" +
+        "</thead>" +
+        "<tbody id='viewport_list_table'></tbody>" +
+        "</table>"
+    );
+
+    for (i = 0; i < devices.length; i++) {
+        $("#viewport_list_table").append(
+            "<tr  id='viewportList" + i + "'>" +
+            "<td class='sno'>" + (i + 1) + "</td>" +
+            "<td class='name'>" + devices[i].name + "</td>" +
+            "<td class='height'>" + devices[i].height + "</td>" +
+            "<td class='width'>" + devices[i].width + "</td>" +
+            "<td class='remove'><button onclick='removeViewport(" + i + ")' class='close' id='remove_button'>&times;</button></td>" +
+            "</tr>"
+        );
+    }
+    $("#devicesListModal").modal("show");
+}
+
 function submit() {
-    document.getElementById("download").disabled = true;
     document.getElementById("submit").disabled = true;
     document.getElementById("loader").style.display = "block";
     document.getElementById("body-container").classList.add("hidden");

@@ -29,12 +29,13 @@ module.exports.capture = function (req, res) {
     if (typeof (devices) !== "object" || devices.length < 1 || Object.keys(devices).length === 0) {
         return responses.errorMsg(res, 400, "Bad Request", "improper devices format.", null);
     }
+    
     for (i = 0; i < devices.length; i++) {
         if (!devices[i].name || devices[i].name === "") {
             return responses.errorMsg(res, 400, "Bad Request", "device name not provided.", null);
         }
-        if (!devices[i].width || devices[i].width < 140 || !devices[i].height ||
-            devices[i].height < 140) {
+        if (!devices[i].width || devices[i].width < 1 || !devices[i].height ||
+            devices[i].height < 1) {
             return responses.errorMsg(res, 400, "Bad Request", "improper device dimentions.", null);
         }
     }
