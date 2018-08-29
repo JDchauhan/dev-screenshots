@@ -24,7 +24,15 @@ $(function(){
                 console.log("success");
             },
             error: function (xhr, textStatus, errorThrown) {
-                console.log("err")
+                var errMsg = JSON.parse(xhr.responseText).message;
+                errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
+                
+                $('#login-msg').append(
+                    '<div class="alert alert-danger alert-dismissible fade show">' +
+                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                    '<strong>Oops! </strong>' + errMsg +
+                    '</div>'
+                );
             }
         });
     });
@@ -41,10 +49,23 @@ $(function(){
             data: JSON.stringify(data),
             contentType: 'application/json',
             success: function (result) {
-                console.log("success");
+                $('#register-msg').append(
+                    '<div class="alert alert-success alert-dismissible fade show">' +
+                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                    '<strong>Congratulations! </strong> You have registered successfully. Please verify your account.' +
+                    '</div>'
+                );
             },
             error: function (xhr, textStatus, errorThrown) {
-                console.log("err")
+                var errMsg = JSON.parse(xhr.responseText).message;
+                errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
+                
+                $('#register-msg').append(
+                    '<div class="alert alert-danger alert-dismissible fade show">' +
+                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                    '<strong>Oops! </strong> ' + errMsg  +
+                    '</div>'
+                );
             }
         });
     });
