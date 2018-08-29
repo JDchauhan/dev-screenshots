@@ -1,5 +1,9 @@
 $(function(){
     
+    if (getCookie("token") !== "") {
+        window.location.href = "/dashboard";
+    }
+
     $('#register').click(function(){
         $('.login').attr("style","display:none;");
         $('.register').attr("style","display:inline-block;");
@@ -20,8 +24,9 @@ $(function(){
             type: 'POST',
             data: JSON.stringify(data),
             contentType: 'application/json',
-            success: function (result) {
-                console.log("success");
+            success: function (data) {
+                setCookie("token", data.results.token, 1);
+                window.location.href = "/dashboard";
             },
             error: function (xhr, textStatus, errorThrown) {
                 var errMsg = JSON.parse(xhr.responseText).message;

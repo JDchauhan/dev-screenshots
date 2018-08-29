@@ -6,7 +6,8 @@ module.exports = function (app) {
     var User = require('../controllers/userController');
     var screenshot = require('../helper/screenshot');
     var responses = require('../helper/responses');
-
+    var VerifyToken = require('../helper/verifyToken');
+    
     // user Routes
     app.get("/", function (req, res) {
         res.render("login");
@@ -15,6 +16,12 @@ module.exports = function (app) {
     app.post("/login", User.login);
 
     app.post("/register", User.register);
+
+    app.get('/verify/email/:token', VerifyToken, User.verify);
+
+    app.get("/user", VerifyToken, User.current_user);
+
+    app.post('/verify/email', User.sendVerificationLink);
 
     app.get("/dashboard", function (req, res) {
         var error;
