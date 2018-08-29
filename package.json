@@ -9,12 +9,17 @@
   "author": "Jagdish Singh",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "ejs": "^2.6.1",
     "express": "^4.16.3",
     "file-system": "^2.2.2",
     "fs": "0.0.1-security",
+    "jsonwebtoken": "^8.3.0",
+    "mongoose": "^5.2.10",
+    "nodemailer": "^4.6.8",
     "puppeteer": "^1.6.0",
+    "request": "^2.88.0",
     "rimraf": "^2.6.2",
     "zip-folder": "^1.0.0"
   }

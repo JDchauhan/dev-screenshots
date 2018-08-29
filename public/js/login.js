@@ -13,7 +13,7 @@ $(function(){
     $('#login-btn').click(function(){
         let data ={};
         data.email = $('#email').val();
-        data.pass = $('#pass').val();
+        data.password = $('#pass').val();
 
         $.ajax({
             url: "http://localhost:3000/login",
@@ -32,10 +32,9 @@ $(function(){
     $('#register-btn').click(function(){
         let data ={};
         data.email = $('#email1').val();
-        data.pass = $('#pass1').val();
+        data.password = $('#pass1').val();
         data.name = $('#name').val();
     
-        
         $.ajax({
             url: "http://localhost:3000/register",
             type: 'POST',

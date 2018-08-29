@@ -3,6 +3,7 @@ module.exports = function (app) {
     var rimraf = require('rimraf');
     var fs = require('fs');
 
+    var User = require('../controllers/userController');
     var screenshot = require('../helper/screenshot');
     var responses = require('../helper/responses');
 
@@ -11,13 +12,9 @@ module.exports = function (app) {
         res.render("login");
     });
 
-    app.post("/login", function (req, res) {
-        res.send(req.body);
-    });
+    app.post("/login", User.login);
 
-    app.post("/register", function (req, res) {
-        res.send(req.body);
-    });
+    app.post("/register", User.register);
 
     app.get("/dashboard", function (req, res) {
         var error;
