@@ -1,4 +1,7 @@
 <% include partials/header.ejs %>
+    <script src="/js/dashboard.js"></script>
+
+    </head>
 
     <body>
         <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
@@ -7,15 +10,13 @@
                     <img src="/hexerve-logo.png" alt="logo">
                 </a>
                 <a class="nav-link" href="#">
-                    <b>Screenshot Taker
-                        <span class="beta">
-                            (Free)
-                        </span>
-                    </b>
-                    <p class="timer">
+                    <b>Screenshot Taker</b>
+                    
+                    <!-- <p class="timer">
                         <span class="beta spacer_sm_1">Till:</span>
                         <span id="timer"></span>
                     </p>
+                 -->
                 </a>
 
             </div>
@@ -41,7 +42,7 @@
 
             <!--checkbox grids-->
             <div class="container checkbox-container">
-                <div class="row">
+                <div class="row device-row">
                     <div class="col-md-4 col-xs4">
                         <input type="checkbox" id="Laptop HD" onchange='handleChange("Laptop HD");' />
                         <a href="#" class="checkbox-tooltip" data-toggle="tooltip" data-placement="bottom" title="Laptop HD (1080 * 1920)">
@@ -62,7 +63,7 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row device-row">
                     <div class="col-md-4 col-xs4">
                         <input type="checkbox" id="iPad Pro" onchange='handleChange("iPad Pro");' />
                         <a href="#" class="checkbox-tooltip" data-toggle="tooltip" data-placement="bottom" title="iPad Pro (1024 * 1366)">
@@ -83,7 +84,7 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row device-row">
                     <div class="col-md-4 col-xs4">
                         <input type="checkbox" id="iPhone 8 Plus" onchange='handleChange("iPhone 8 Plus");' />
                         <a href="#" class="checkbox-tooltip" data-toggle="tooltip" data-placement="bottom" title="iPhone (8/7/6/6S) Plus (736 * 414)">
@@ -104,7 +105,7 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row device-row">
                     <div class="col-md-4 col-xs4">
                         <input type="checkbox" id="Nexus 6P" onchange='handleChange("Nexus 6P");' />
                         <a href="#" class="checkbox-tooltip" data-toggle="tooltip" data-placement="bottom" title="Nexus 6P (731 * 411)">
@@ -126,7 +127,7 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row device-row">
                     <div class="col-md-4 col-xs4">
                         <input type="checkbox" id="Samsung Galaxy S7" onchange='handleChange("Samsung Galaxy S7");' />
                         <a href="#" class="checkbox-tooltip" data-toggle="tooltip" data-placement="bottom" title="Samsung Galaxy S7 (640 * 360)">
@@ -134,9 +135,14 @@
                         </a>
                     </div>
                     <div class="col-md-4 col-xs4">
-                        <button type="button" class="linkButton" onclick="viewViewports()">Custom Sizes...</button>
+                        <input type="checkbox" id="Samsung Galaxy Note 9" onchange='handleChange("Samsung Galaxy Note 9");' />
+                        <a href="#" class="checkbox-tooltip" data-toggle="tooltip" data-placement="bottom" title="Samsung Galaxy Note 9 (2960 * 1440)">
+                            Samsung Galaxy Note 9
+                            <span class="badge badge-new">New</span>
+                        </a>
                     </div>
                     <div class="col-md-4 col-xs4">
+                        <button type="button" class="linkButton" onclick="viewViewports()">Custom Sizes...</button>
                     </div>
                 </div>
 

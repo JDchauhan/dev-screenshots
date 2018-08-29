@@ -175,6 +175,12 @@ function getDevice(deviceName) {
             currDevice.width = 360;
             break;
 
+        case "Samsung Galaxy Note 9":
+            currDevice.name = "Samsung Galaxy Note 9";
+            currDevice.height = 2960;
+            currDevice.width = 1440;
+            break;
+
         default:
             currDevice = null;
     }

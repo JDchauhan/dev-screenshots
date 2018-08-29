@@ -19,10 +19,14 @@ body {
     margin-right: 5%;
 }
 
-.row {
+.device-row {
     color: #fff !important;
     margin-top: 1%;
     margin-left: 8%;
+}
+
+.login-row {
+    margin-top: 20%;
 }
 
 .btn-group {
@@ -35,7 +39,7 @@ body {
     width: 33%;
 }
 
-#submit {
+.btn {
     margin-right: 5%;
 }
 
@@ -194,6 +198,10 @@ input[type=checkbox], input[type=radio] {
     width: 15px;
 }
 
+.badge-new {
+    background-color: #E8801C
+}
+
 /* Wobble Vertical */
 @keyframes wobble-vertical {
     16.65% {
@@ -331,7 +339,7 @@ input[type=checkbox], input[type=radio] {
     .body-container {
         top: 40%;
     }
-    .row {
+    .device-row {
         margin-left: 4%;
     }
     .hexerve {

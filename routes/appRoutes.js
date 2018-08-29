@@ -8,13 +8,25 @@ module.exports = function (app) {
 
     // user Routes
     app.get("/", function (req, res) {
+        res.render("login");
+    });
+
+    app.post("/login", function (req, res) {
+        res.send(req.body);
+    });
+
+    app.post("/register", function (req, res) {
+        res.send(req.body);
+    });
+
+    app.get("/dashboard", function (req, res) {
         var error;
         if(req.query.fileErr &&  req.query.fileErr ==="true" ){
             error = true;
         }else{
             error = false;
         }
-        res.render("index", {
+        res.render("dashboard", {
             error: error
         });
     });
