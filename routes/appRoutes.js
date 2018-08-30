@@ -3,6 +3,8 @@ module.exports = function (app) {
     var rimraf = require('rimraf');
     var fs = require('fs');
 
+    var transactionController = require('../controllers/transactionController');    
+
     var User = require('../controllers/userController');
     var screenshot = require('../helper/screenshot');
     var responses = require('../helper/responses');
@@ -45,6 +47,11 @@ module.exports = function (app) {
             res.redirect(301, "../?fileErr=true");
         }
     });
+
+    //transactions
+    app.post('/payment/payumoney',transactionController.payUMoneyPayment);
+
+    app.post('/payment/payumoney/response', transactionController.payUMoneyPaymentResponse);
 
     // star routes
     app.get('*', function (req, res) {
