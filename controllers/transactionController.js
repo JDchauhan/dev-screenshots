@@ -2,6 +2,8 @@ var mongoose = require('mongoose');
 var Transaction = require('../models/transactionModel');
 Transaction = mongoose.model('transaction');
 
+var stripe = require("stripe")("sk_test_zYughn70gpvloEOH5AAyH5Ze");
+
 var userController = require('../controllers/userController');
 
 var jsSHA = require("jssha");
@@ -24,7 +26,25 @@ exports.payUMoneyPayment = function (req, res) {
             'hash': hash
         });
     }
-}
+};
+
+exports.stripePayment = function (req, res) {
+    
+        // Token is created using Checkout or Elements!
+        // Get the payment token ID submitted by the form:
+        const token = req.body.id; // Using Express
+        
+        const charge = stripe.charges.create({
+          amount: 999,
+          currency: 'usd',
+          description: 'Example charge',
+          source: token,
+        });
+
+        res.send({
+            'status': "success"
+        })
+};
 
 exports.payUMoneyPaymentResponse = function (req, res) {
     var pd = req.body;

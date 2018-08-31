@@ -22,6 +22,7 @@
     "puppeteer": "^1.6.0",
     "request": "^2.88.0",
     "rimraf": "^2.6.2",
+    "stripe": "^6.8.0",
     "zip-folder": "^1.0.0"
   }
 }
