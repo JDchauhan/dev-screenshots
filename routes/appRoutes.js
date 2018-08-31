@@ -23,6 +23,10 @@ module.exports = function (app) {
 
     app.get("/user", VerifyToken, User.current_user);
 
+    app.get("/payment", function(req, res){
+        res.render("payment");
+    });
+
     app.post('/verify/email', User.sendVerificationLink);
 
     app.get("/dashboard", function (req, res) {
