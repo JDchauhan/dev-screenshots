@@ -24,7 +24,7 @@ $(function () {
             function (data, status, xhr) {
                 console.log(data);
                 let name = data.results.user.name;
-                
+
                 RequestData.email = data.results.user.email;
                 RequestData.firstname = data.results.user.name;
 
@@ -34,9 +34,9 @@ $(function () {
 
             }).fail(function (xhr, status, error) {
 
-            setCookie("token", "", -1);
-            window.location.href = "../";
-        });
+                setCookie("token", "", -1);
+                window.location.href = "../";
+            });
     }
 
     //open payment dialog
@@ -64,13 +64,13 @@ function payumoney() {
 
     // API call to get the Hash value
     fetch('http://localhost:3000/payment/payumoney', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
         .then(function (a) {
             return a.json();
         })
@@ -82,13 +82,13 @@ function payumoney() {
             bolt.launch(RequestData, {
                 responseHandler: function (response) {
                     fetch('http://localhost:3000/payment/payumoney/response', {
-                            method: 'POST',
-                            headers: {
-                                'Accept': 'application/json',
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(response.response)
-                        })
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(response.response)
+                    })
                         .then(function (a) {
                             return a.json();
                         })
@@ -129,14 +129,21 @@ var handler = StripeCheckout.configure({
 });
 
 document.getElementById('customButton').addEventListener('click', function (e) {
-    // Open Checkout with further options:
-    handler.open({
-        name: 'Stripe.com',
-        description: '2 widgets',
-        zipCode: true,
-        amount: 2000
-    });
-    e.preventDefault();
+    if ($('#amount').val() && $('#amount').val() >= 1) {
+        RequestData.amount = $('#amount').val();
+
+        // Open Checkout with further options:
+        handler.open({
+            name: 'Hexerve',
+            description: 'Screenshot taker tool',
+            zipCode: true,
+            amount: 1000
+        });
+        e.preventDefault();
+    } else {
+        alert("Please enter an amount")
+    }
+
 });
 
 // Close Checkout on page navigation:

@@ -43,6 +43,10 @@ body {
     margin-right: 5%;
 }
 
+.white {
+    color: #fff ;
+}
+
 .timestamps {
     width: 100% !important;
     margin-top: 5% !important;

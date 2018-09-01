@@ -205,3 +205,20 @@ module.exports.sendVerificationLink = function (req, res) {
         }
     });
 };
+
+module.exports.addMoney = function(req, res, email, amount){
+    User.findOneAndUpdate({
+        email: email
+    }, {
+        $inc: { balance: amount }
+    },
+    function (err, user) {
+        if (err) {
+            return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+        } else {
+            user.password = undefined;
+
+            return responses.successMsg(res, null);
+        }
+    });
+}
