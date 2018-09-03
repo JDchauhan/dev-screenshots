@@ -1,45 +1,63 @@
 <% include partials/header.ejs %>
-    <script id="bolt" src="https://sboxcheckout-static.citruspay.com/bolt/run/bolt.min.js" bolt- color="<color-code>" bolt-logo="<image path>"></script>
+<script id="bolt" src="https://sboxcheckout-static.citruspay.com/bolt/run/bolt.min.js" bolt- color="<color-code>"
+    bolt-logo="<image path>"></script>
 
-    <script src="https://checkout.stripe.com/checkout.js"></script>
-    </head>
+<script src="https://checkout.stripe.com/checkout.js"></script>
+</head>
 
-    <body>
-        <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-            <div class="container">
-                <a class="navbar-brand" href="#">
-                    <img src="/hexerve-logo.png" alt="logo">
-                </a>
-                <a class="nav-link" href="#">
-                    <b>Screenshot Taker</b>
-                </a>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+        <div class="container">
 
-            </div>
-        </nav>
-        <div class="spacer"></div>
-        <div id="loader" class="container row">
-            <img class="hexerve" src="/hexerve.png" />
-        </div>
+            <!-- Brand/logo -->
+            <a class="navbar-brand" href="#">
+                <figure class="figure">
+                    <img src="/hexerve-logo.png" alt="Hexerve">
+                    <figcaption class="figure-caption">Screenshot Taker</figcaption>
+                </figure>
+            </a>
 
-        <div class="fixed-top container">
-            <div class="row login-row">
-                <!--Description-->
-                <div class="col-md-6">
-                    <form>
-                        <div class="btn-group btn-group-lg">
-                            <button type="button" id="customButton" class="btn btn-success" id="payment">Pay via Stripe</button>
-                            <button type="button" class="btn btn-success" id="payment">Pay via PayU money</button>
-                        </div>
-                    </form>
+            <!-- Toggler/collapsibe Button -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-                </div>
+            <div class="collapse navbar-collapse collapsibleNavbar">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="./dashboard">Dashboard</a>
+                    </li>
+                </ul>
             </div>
 
         </div>
+    </nav>
+
+    <div class="spacer"></div>
+
+    <div id="loader" class="container row">
+        <img class="hexerve" src="/hexerve.png" />
+    </div>
+
+    <div class="fixed-top body-top-container container">
+        <div class="row login-row">
+            <!--Description-->
+            <div class="col-md-6">
+                <form>
+                    <div class="btn-group btn-group-lg">
+                        <button type="button" id="customButton" class="btn btn-success" id="payment">Pay via Stripe</button>
+                        <button type="button" class="btn btn-success" id="payment">Pay via PayU money</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
 
 
 
-        <script src="/js/payment.js"></script>
-    </body>
+    <script src="/js/payment.js"></script>
+</body>
 
-    </html>
+</html>

@@ -5,12 +5,19 @@ body {
 .nav-link {
     color: #C8C3C3 !important;
     font-size: 20px;
-    padding-bottom: 0px;
-    padding-top: 16px;
+    padding: 0px !important;
+}
+
+.nav-item {
+    padding: 0px 10px !important;
 }
 
 .body-container {
     top: 40%;
+}
+
+.body-top-container {
+    top: 10%;
 }
 
 .spacing {
@@ -237,6 +244,11 @@ input[type=checkbox], input[type=radio] {
     font-weight: 400;
 }
 
+.figure-caption {
+    color: #f1f1f1;
+    text-align: center;
+}
+
 .wobble-vertical {
     background-color: #47B625;
     color: #ffffff;
@@ -390,7 +402,6 @@ input[type=checkbox], input[type=radio] {
     }
     .nav-link {
         margin-left: 12%;
-        padding-top: 0;
     }
     .timer {
         display: none;
