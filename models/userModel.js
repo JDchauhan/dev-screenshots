@@ -19,6 +19,10 @@ var UserSchema = new Schema({
     unique: true,
     required: [true, 'please enter your email']
   },
+  mobile: {
+    type: Number,
+    required: [true, 'please enter your email']
+  },
   isVerifiedEmail: {
     type: Boolean,
     default: false

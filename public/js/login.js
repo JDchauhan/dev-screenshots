@@ -47,6 +47,7 @@ $(function(){
         data.email = $('#email1').val();
         data.password = $('#pass1').val();
         data.name = $('#name').val();
+        data.mobile = $('#mobile').val();
     
         $.ajax({
             url: "http://localhost:3000/register",

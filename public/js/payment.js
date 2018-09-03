@@ -11,6 +11,8 @@ var RequestData = {
     furl: 'http://localhost/kontact%20services/NoScam/client/pages/payment.html',
 };
 
+var email = '';
+
 $(function () {
     if (getCookie("token") === "") {
         window.location.href = "/login";
@@ -25,8 +27,10 @@ $(function () {
                 console.log(data);
                 let name = data.results.user.name;
 
+                email = data.results.user.email;
                 RequestData.email = data.results.user.email;
                 RequestData.firstname = data.results.user.name;
+                RequestData.phone = data.results.user.mobile;
 
                 name = name.charAt(0).toUpperCase() + name.substr(1);
 
@@ -129,7 +133,8 @@ document.getElementById('customButton').addEventListener('click', function (e) {
         name: 'Hexerve',
         description: 'Screenshot taker tool',
         zipCode: true,
-        amount: 599
+        amount: 599,
+        email: email
     });
     e.preventDefault();
 });
