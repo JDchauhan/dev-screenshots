@@ -3,6 +3,9 @@ var fs = require('file-system');
 var responses = require('./responses');
 var zipFolder = require('zip-folder');
 var rimraf = require('rimraf');
+var jwt = require('jsonwebtoken');
+
+var config = require('../config');
 
 var visitTime = {};
 var screenshotTime = {};
@@ -10,8 +13,24 @@ var startupTime;
 
 var start;
 var end;
+var isGuest = true;
 
 module.exports.capture = function (req, res) {
+
+    var token = req.headers.authorization || req.params.token;
+    if (token) {
+        jwt.verify(token, config.secret, function (err, decoded) {
+            if (!err) {
+                isGuest = false;
+            }
+        });
+    }
+
+    if(isGuest && req.body.devices.length >3){
+        return responses.errorMsg(res, 400, "Bad Request", "free version can't request more than 3 screenshots.", null);
+    }
+    isGuest = true;
+
     start = new Date().getTime();
 
     req.setTimeout(0); //no time out
@@ -29,7 +48,7 @@ module.exports.capture = function (req, res) {
     if (typeof (devices) !== "object" || devices.length < 1 || Object.keys(devices).length === 0) {
         return responses.errorMsg(res, 400, "Bad Request", "improper devices format.", null);
     }
-    
+
     for (i = 0; i < devices.length; i++) {
         if (!devices[i].name || devices[i].name === "") {
             return responses.errorMsg(res, 400, "Bad Request", "device name not provided.", null);
