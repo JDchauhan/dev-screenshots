@@ -121,7 +121,7 @@ td.visit_time_td {
     width: 60px;
     position: fixed;
     top: 25%;
-    margin-left: 36%;
+    margin-left: 45%;
     -webkit-animation: spin1 2s infinite linear;
     -moz-animation: spin1 2s infinite linear;
     -o-animation: spin1 2s infinite linear;
@@ -347,7 +347,7 @@ input[type=checkbox], input[type=radio] {
         margin-left: 4%;
     }
     .hexerve {
-        margin-left: 38%;
+        margin-left: 45%;
     }
     .btn-group {
         margin-left: -2%;
@@ -371,7 +371,7 @@ input[type=checkbox], input[type=radio] {
         width: 100%;
     }
     .hexerve {
-        margin-left: 33%;
+        margin-left: 40%;
         top: 50%;
     }
     .btn-group {
