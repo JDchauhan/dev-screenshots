@@ -29,21 +29,36 @@ exports.payUMoneyPayment = function (req, res) {
 };
 
 exports.stripePayment = function (req, res) {
-    
-        // Token is created using Checkout or Elements!
-        // Get the payment token ID submitted by the form:
-        const token = req.body.id; // Using Express
-        
-        const charge = stripe.charges.create({
-          amount: 999,
-          currency: 'usd',
-          description: 'Example charge',
-          source: token,
+
+    // Token is created using Checkout or Elements!
+    // Get the payment token ID submitted by the form:
+    const token = req.body.id; // Using Express
+
+    const charge = stripe.charges.create({
+        amount: 599,
+        currency: 'usd',
+        description: 'Example charge',
+        source: token,
+    }, function (err, charge) {
+        if(err){
+            console.log(err);
+            return res.send({
+                'status': "Error occured"
+            });
+        }
+
+        Transaction.create({
+            email: req.body.email,
+            amount: 5.99,
+            txnID: charge.id
+        }, function (err, response) {
+            if(err){
+                console.log(err);
+            }
         });
 
-        res.send({
-            'status': "success"
-        })
+        userController.addMoney(req, res, req.body.email);
+    });
 };
 
 exports.payUMoneyPaymentResponse = function (req, res) {
@@ -62,17 +77,16 @@ exports.payUMoneyPaymentResponse = function (req, res) {
             email: pd.email,
             amount: pd.net_amount_debit,
             txnID: pd.payuMoneyId
-        }, function(err, response){
-            if(err){
-                if(err.code && err.code == 11000){
-                } else {
+        }, function (err, response) {
+            if (err) {
+                if (err.code && err.code == 11000) {} else {
                     return console.log(err);
                 }
                 res.send({
                     'status': "Error occured"
                 });
             } else {
-                userController.addMoney(req, res, pd.email, pd.net_amount_debit);
+                userController.addMoney(req, res, pd.email);
             }
         })
     } else {

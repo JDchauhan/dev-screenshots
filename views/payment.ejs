@@ -1,52 +1,45 @@
 <% include partials/header.ejs %>
-<script id="bolt" src="https://sboxcheckout-static.citruspay.com/bolt/run/bolt.min.js" bolt- color="<color-code>"
-    bolt-logo="<image path>"></script>
+    <script id="bolt" src="https://sboxcheckout-static.citruspay.com/bolt/run/bolt.min.js" bolt- color="<color-code>" bolt-logo="<image path>"></script>
 
-<script src="https://checkout.stripe.com/checkout.js"></script>
-</head>
+    <script src="https://checkout.stripe.com/checkout.js"></script>
+    </head>
 
-<body>
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <img src="/hexerve-logo.png" alt="logo">
-            </a>
-            <a class="nav-link" href="#">
-                <b>Screenshot Taker</b>
-            </a>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <img src="/hexerve-logo.png" alt="logo">
+                </a>
+                <a class="nav-link" href="#">
+                    <b>Screenshot Taker</b>
+                </a>
 
+            </div>
+        </nav>
+        <div class="spacer"></div>
+        <div id="loader" class="container row">
+            <img class="hexerve" src="/hexerve.png" />
         </div>
-    </nav>
-    <div class="spacer"></div>
-    <div id="loader" class="container row">
-        <img class="hexerve" src="/hexerve.png" />
-    </div>
 
-    <div class="fixed-top container">
-        <div class="row login-row">
-            <!--Description-->
-            <div class="col-md-6">
-                <form>
-                    <div class="form-group">
-                        <label for="amount" class="white">Add Amount:</label>
-                        <input class="form-control" id="amount" min="1" type="number" placeholder="Amount" />
-                    </div>
-                    <div class="text-right">
+        <div class="fixed-top container">
+            <div class="row login-row">
+                <!--Description-->
+                <div class="col-md-6">
+                    <form>
                         <div class="btn-group btn-group-lg">
                             <button type="button" id="customButton" class="btn btn-success" id="payment">Pay via Stripe</button>
                             <button type="button" class="btn btn-success" id="payment">Pay via PayU money</button>
                         </div>
-                    </div>
-                </form>
+                    </form>
 
+                </div>
             </div>
+
         </div>
 
-    </div>
 
 
+        <script src="/js/payment.js"></script>
+    </body>
 
-    <script src="/js/payment.js"></script>
-</body>
-
-</html>
+    </html>

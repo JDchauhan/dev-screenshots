@@ -30,6 +30,10 @@ var UserSchema = new Schema({
     type: Number,
     default: 0.0
   },
+  expires: {
+    type: Date,
+    default: Date.now
+  },
   active: {
     type: Boolean,
     default: true

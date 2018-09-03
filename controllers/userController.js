@@ -206,19 +206,36 @@ module.exports.sendVerificationLink = function (req, res) {
     });
 };
 
-module.exports.addMoney = function(req, res, email, amount){
-    User.findOneAndUpdate({
-        email: email
-    }, {
-        $inc: { balance: amount }
-    },
-    function (err, user) {
+module.exports.addMoney = function (req, res, email) {
+
+    User.findOne({
+        email: email,
+    }, function (err, user) {
         if (err) {
             return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
         } else {
-            user.password = undefined;
-
-            return responses.successMsg(res, null);
+            var expires;
+            if(user.expires < Date.now()){
+                let time = new Date();
+                expires = time.setDate(time.getDate()+30);
+            } else {
+                let time = user.expires;
+                expires = time.setDate(time.getDate()+30);
+            }
+            User.findOneAndUpdate({
+                email: email,
+            }, {
+                expires: expires
+            },
+            function (err, user) {
+                if (err) {
+                    return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+                } else {
+                    user.password = undefined;
+    
+                    return responses.successMsg(res, null);
+                }
+            });
         }
     });
 }

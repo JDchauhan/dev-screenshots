@@ -2,7 +2,7 @@ var RequestData = {
     key: 'eolzYsVq',
     txnid: 'ishfuewouro3u',
     hash: '',
-    amount: '',
+    amount: '425',
     firstname: '',
     email: '',
     phone: '',
@@ -41,12 +41,7 @@ $(function () {
 
     //open payment dialog
     $(document).on('click', '#payment', function () {
-        if ($('#amount').val() && $('#amount').val() >= 1) {
-            RequestData.amount = $('#amount').val();
-            payumoney();
-        } else {
-            alert("Please enter an amount")
-        }
+        payumoney();
     });
 });
 
@@ -129,21 +124,14 @@ var handler = StripeCheckout.configure({
 });
 
 document.getElementById('customButton').addEventListener('click', function (e) {
-    if ($('#amount').val() && $('#amount').val() >= 1) {
-        RequestData.amount = $('#amount').val();
-
-        // Open Checkout with further options:
-        handler.open({
-            name: 'Hexerve',
-            description: 'Screenshot taker tool',
-            zipCode: true,
-            amount: 1000
-        });
-        e.preventDefault();
-    } else {
-        alert("Please enter an amount")
-    }
-
+    // Open Checkout with further options:
+    handler.open({
+        name: 'Hexerve',
+        description: 'Screenshot taker tool',
+        zipCode: true,
+        amount: 599
+    });
+    e.preventDefault();
 });
 
 // Close Checkout on page navigation:
