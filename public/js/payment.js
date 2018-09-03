@@ -13,7 +13,7 @@ var RequestData = {
 
 $(function () {
     if (getCookie("token") === "") {
-        window.location.href = "../";
+        window.location.href = "/login";
     } else {
         $.ajaxSetup({
             headers: {
@@ -35,7 +35,7 @@ $(function () {
             }).fail(function (xhr, status, error) {
 
                 setCookie("token", "", -1);
-                window.location.href = "../";
+                window.location.href = "/login";
             });
     }
 

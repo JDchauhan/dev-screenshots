@@ -1,7 +1,7 @@
 $(function(){
     
     if (getCookie("token") !== "") {
-        window.location.href = "/dashboard";
+        window.location.href = "/";
     }
 
     $('#register').click(function(){
@@ -26,7 +26,7 @@ $(function(){
             contentType: 'application/json',
             success: function (data) {
                 setCookie("token", data.results.token, 1);
-                window.location.href = "/dashboard";
+                window.location.href = "/";
             },
             error: function (xhr, textStatus, errorThrown) {
                 var errMsg = JSON.parse(xhr.responseText).message;
