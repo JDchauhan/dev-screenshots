@@ -142,10 +142,13 @@ module.exports.verify = function (req, res) {
         if (!verified) {
             return responses.errorMsg(res, 410, "Gone", "link has been expired.", null);
         } else {
+            let time = new Date();
+            let expires = time.setDate(time.getDate()+30);
             User.findOneAndUpdate({
                 _id: req.id
             }, {
-                isVerifiedEmail: true
+                isVerifiedEmail: true,
+                expires: expires
             }, function (err, user) {
                 if (err) {
                     return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
