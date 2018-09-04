@@ -1,8 +1,9 @@
 var mongoose = require('mongoose');
 var Transaction = require('../models/transactionModel');
+var config = require('../config');
 Transaction = mongoose.model('transaction');
 
-var stripe = require("stripe")("sk_test_zYughn70gpvloEOH5AAyH5Ze");
+var stripe = require("stripe")(config.stripeKey);
 
 var userController = require('../controllers/userController');
 
@@ -13,12 +14,12 @@ exports.payUMoneyPayment = function (req, res) {
         res.send("Mandatory fields missing");
     } else {
         var pd = req.body;
-        var hashString = 'eolzYsVq' + // Merchant Key 
+        var hashString = config.merchantKey +
             '|' + pd.txnid +
             '|' + pd.amount + '|' + pd.productinfo + '|' +
             pd.firstname + '|' + pd.email + '|' +
             '||||||||||' +
-            '1iMiPKZ9hO' // Your salt value
+            config.merchantSalt;
         var sha = new jsSHA('SHA-512', "TEXT");
         sha.update(hashString)
         var hash = sha.getHash("HEX");
@@ -40,7 +41,7 @@ exports.stripePayment = function (req, res) {
         description: 'Example charge',
         source: token,
     }, function (err, charge) {
-        if(err){
+        if (err) {
             console.log(err);
             return res.send({
                 'status': "Error occured"
@@ -52,7 +53,7 @@ exports.stripePayment = function (req, res) {
             amount: 5.99,
             txnID: charge.id
         }, function (err, response) {
-            if(err){
+            if (err) {
                 console.log(err);
             }
         });
@@ -64,7 +65,7 @@ exports.stripePayment = function (req, res) {
 exports.payUMoneyPaymentResponse = function (req, res) {
     var pd = req.body;
     //Generate new Hash 
-    var hashString = '1iMiPKZ9hO' + '|' + pd.status + '||||||||||' + '|' + pd.email + '|' + pd.firstname + '|' + pd.productinfo + '|' + pd.amount + '|' + pd.txnid + '|' + 'eolzYsVq'
+    var hashString = config.merchantSalt + '|' + pd.status + '||||||||||' + '|' + pd.email + '|' + pd.firstname + '|' + pd.productinfo + '|' + pd.amount + '|' + pd.txnid + '|' + config.merchantKey;
     var sha = new jsSHA('SHA-512', "TEXT");
     sha.update(hashString)
     var hash = sha.getHash("HEX");

@@ -34,8 +34,6 @@ $(function () {
 
                 name = name.charAt(0).toUpperCase() + name.substr(1);
 
-                //$(".username").text(fname + " " + lname);
-
             }).fail(function (xhr, status, error) {
 
             setCookie("token", "", -1);

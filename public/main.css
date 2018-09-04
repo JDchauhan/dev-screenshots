@@ -115,7 +115,8 @@ table
 }
 
 .payment-group {
-    margin-bottom: 2%;
+    margin-bottom: 6%;
+    margin-top: 6%;
 }
 
 .pricingdiv ul.theplan {
@@ -127,22 +128,13 @@ table
     border-top-left-radius: 50px;
     border-bottom-right-radius: 50px;
     color: white;
-    background: #7c3ac9;
+    background: #b40036;
     position: relative;
     width: 400px;
     /* width of each table */
     margin-right: 10px;
     /* spacing between tables */
     margin-bottom: 1em;
-    transition: all .5s;
-}
-
-.pricingdiv ul.theplan:hover {
-    /* when mouse hover over pricing table */
-    transform: scale(1.05);
-    transition: all .5s;
-    z-index: -1;
-    box-shadow: 0 0 10px gray;
 }
 
 .pricingdiv ul.theplan li {
@@ -156,6 +148,7 @@ table
     font-weight: bold;
     text-align: center;
     margin-top: 20px;
+    margin-bottom: 7%;
     text-transform: uppercase;
     border-bottom: 5px solid white;
 }
@@ -236,7 +229,7 @@ table
 .navbar-collapse {
     background: rgb(77, 77, 77);
     width: 100vw;
-    margin: 0% -5%;
+    margin: 0%;
 }
 
 .hexerve {
@@ -567,5 +560,9 @@ input[type=radio] {
     .body-top-container {
         height: 75vh;
         margin-top: 0% !important;
+    }
+
+    .navbar-collapse {
+        margin: 0% -5%;
     }
 }
