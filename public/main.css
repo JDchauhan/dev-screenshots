@@ -17,7 +17,8 @@ body {
 }
 
 .body-top-container {
-    top: 10%;
+    margin-top: 8% !important;
+    position: relative;
 }
 
 .spacing {
@@ -51,7 +52,7 @@ body {
 }
 
 .white {
-    color: #fff ;
+    color: #fff;
 }
 
 .timestamps {
@@ -102,6 +103,114 @@ td.visit_time_td {
     right: 5px;
 }
 
+/* 
+table
+*/
+.pricingdiv {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: large
+}
+
+.payment-group {
+    margin-bottom: 2%;
+}
+
+.pricingdiv ul.theplan {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    border-top-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    color: white;
+    background: #7c3ac9;
+    position: relative;
+    width: 400px;
+    /* width of each table */
+    margin-right: 10px;
+    /* spacing between tables */
+    margin-bottom: 1em;
+    transition: all .5s;
+}
+
+.pricingdiv ul.theplan:hover {
+    /* when mouse hover over pricing table */
+    transform: scale(1.05);
+    transition: all .5s;
+    z-index: -1;
+    box-shadow: 0 0 10px gray;
+}
+
+.pricingdiv ul.theplan li {
+    margin: 5px 20px;
+    position: relative;
+    text-align: center;
+}
+
+.pricingdiv ul.theplan li.title {
+    font-size: 150%;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+    text-transform: uppercase;
+    border-bottom: 5px solid white;
+}
+
+.pricingdiv ul.theplan:nth-of-type(1) {
+    background: #e53499;
+}
+
+.pricingdiv ul.theplan:nth-of-type(2) {
+    background: #2a2cc8;
+}
+
+.pricingdiv ul.theplan:last-of-type {
+    /* remove right margin in very last table */
+    margin-right: 0;
+}
+
+/*very last LI within each pricing UL */
+.pricingdiv ul.theplan li:last-of-type {
+    text-align: center;
+    margin-top: auto;
+    /*align last LI (price botton li) to the very bottom of UL */
+}
+
+.pricingdiv a.pricebutton {
+    background: white;
+    text-decoration: none;
+    padding: 10px;
+    display: inline-block;
+    margin: 10px auto;
+    border-radius: 5px;
+    color: navy;
+    text-transform: uppercase;
+}
+
+@media only screen and (max-width: 500px) {
+    .pricingdiv ul.theplan {
+        border-radius: 0;
+        width: 100%;
+        margin-right: 0;
+    }
+
+    .pricingdiv ul.theplan:hover {
+        transform: none;
+        box-shadow: none;
+    }
+
+    .pricingdiv a.pricebutton {
+        display: block;
+    }
+}
+
+/* 
+table
+*/
 .btn-group>.btn-group:not(:last-child)>.btn,
 .btn-group>.btn:not(:last-child):not(.dropdown-toggle) {
     border-top-right-radius: 0.3rem;
@@ -122,6 +231,12 @@ td.visit_time_td {
 
 #loader {
     display: none;
+}
+
+.navbar-collapse {
+    background: rgb(77, 77, 77);
+    width: 100vw;
+    margin: 0% -5%;
 }
 
 .hexerve {
@@ -204,7 +319,8 @@ td.visit_time_td {
     padding-right: 5%;
 }
 
-input[type=checkbox], input[type=radio] {
+input[type=checkbox],
+input[type=radio] {
     height: 15px;
     width: 15px;
 }
@@ -218,18 +334,23 @@ input[type=checkbox], input[type=radio] {
     16.65% {
         transform: translateY(8px);
     }
+
     33.3% {
         transform: translateY(-6px);
     }
+
     49.95% {
         transform: translateY(4px);
     }
+
     66.6% {
         transform: translateY(-2px);
     }
+
     83.25% {
         transform: translateY(1px);
     }
+
     100% {
         transform: translateY(0);
     }
@@ -267,7 +388,7 @@ input[type=checkbox], input[type=radio] {
     animation-timing-function: ease-in-out;
     animation-iteration-count: 1;
 }
-  
+
 ::placeholder {
     /* WebKit, Blink, Edge */
     opacity: 0.4 !important;
@@ -310,6 +431,7 @@ input[type=checkbox], input[type=radio] {
     0% {
         -webkit-transform: rotate(0deg);
     }
+
     100% {
         -webkit-transform: rotate(360deg);
     }
@@ -319,6 +441,7 @@ input[type=checkbox], input[type=radio] {
     0% {
         -moz-transform: rotate(0deg);
     }
+
     100% {
         -moz-transform: rotate(360deg);
     }
@@ -328,6 +451,7 @@ input[type=checkbox], input[type=radio] {
     0% {
         -o-transform: rotate(0deg);
     }
+
     100% {
         -o-transform: rotate(360deg);
     }
@@ -337,6 +461,7 @@ input[type=checkbox], input[type=radio] {
     0% {
         -ms-transform: rotate(0deg);
     }
+
     100% {
         -ms-transform: rotate(360deg);
     }
@@ -346,6 +471,7 @@ input[type=checkbox], input[type=radio] {
     0% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(360deg);
     }
@@ -355,60 +481,91 @@ input[type=checkbox], input[type=radio] {
     .body-container {
         top: 40%;
     }
+
     .device-row {
         margin-left: 4%;
     }
+
     .hexerve {
         margin-left: 45%;
     }
+
     .btn-group {
         margin-left: -2%;
     }
 }
 
 @media screen and (max-width: 480px) {
+
     .half-width,
     .addWidth {
         width: 100% !important;
     }
+
     .body-container {
-        position: relative;
+        position: inherit;
         overflow: scroll;
         height: 70vh;
     }
+
     .hidden {
         display: none;
     }
+
     .col-xs4 {
         width: 100%;
     }
+
     .hexerve {
         margin-left: 40%;
         top: 50%;
     }
+
     .btn-group {
         margin-top: 4%;
     }
+
     .spacer {
         display: block;
         box-sizing: content-box;
         height: 18vh;
     }
+
     .full_width_model {
         max-width: 98% !important
     }
+
+    .navbar-fixed-top {
+        top: -70px;
+        /* you'll have to figure out the exact number here */
+    }
+
+    .navbar-fixed-top,
+    .navbar-fixed-bottom {
+        position: relative;
+        /* this can also be static */
+    }
+
     .navbar-brand {
         margin-left: 25%;
     }
+
     .nav-link {
         margin-left: 12%;
     }
+
     .timer {
         display: none;
     }
+
     .zopim {
         left: 90%;
         bottom: 14% !important;
         border-radius: 4px;
+    }
+
+    .body-top-container {
+        height: 75vh;
+        margin-top: 0% !important;
     }
 }
