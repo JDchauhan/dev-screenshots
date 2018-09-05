@@ -95,8 +95,14 @@ td.visit_time_td {
 }
 
 .custom-file {
-    margin-left: 1.5%;
+    margin-left: 0.8%;
     margin-right: 1.5%;
+}
+
+#stripeBtn {
+    background: #38A2E2;
+    color: #ffffff;
+    font-weight: bold;
 }
 
 .right_5 {
@@ -128,7 +134,7 @@ table
     border-top-left-radius: 50px;
     border-bottom-right-radius: 50px;
     color: white;
-    background: #b40036;
+    background:  #b100af;
     position: relative;
     width: 400px;
     /* width of each table */
@@ -154,7 +160,7 @@ table
 }
 
 .pricingdiv ul.theplan:nth-of-type(1) {
-    background: #e53499;
+    background:  #b100af;
 }
 
 .pricingdiv ul.theplan:nth-of-type(2) {

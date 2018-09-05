@@ -20,7 +20,7 @@ $(function(){
         data.password = $('#pass').val();
 
         $.ajax({
-            url: "http://localhost:3000/login",
+            url: "../login",
             type: 'POST',
             data: JSON.stringify(data),
             contentType: 'application/json',
@@ -32,6 +32,10 @@ $(function(){
                 var errMsg = JSON.parse(xhr.responseText).message;
                 errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
                 
+                if(errMsg === 'Validation failed.'){
+                    errMsg += '<br/>Incorrect ' + JSON.parse(xhr.responseText).errors.index.join(", ");
+                }
+
                 $('#login-msg').append(
                     '<div class="alert alert-danger alert-dismissible fade show">' +
                     '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
@@ -50,7 +54,7 @@ $(function(){
         data.mobile = $('#mobile').val();
     
         $.ajax({
-            url: "http://localhost:3000/register",
+            url: "../register",
             type: 'POST',
             data: JSON.stringify(data),
             contentType: 'application/json',
@@ -65,6 +69,10 @@ $(function(){
             error: function (xhr, textStatus, errorThrown) {
                 var errMsg = JSON.parse(xhr.responseText).message;
                 errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
+
+                if(errMsg === 'Validation failed.'){
+                    errMsg += '<br/>Incorrect ' + JSON.parse(xhr.responseText).errors.index.join(", ");
+                }
                 
                 $('#register-msg').append(
                     '<div class="alert alert-danger alert-dismissible fade show">' +
