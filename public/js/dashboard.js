@@ -2,6 +2,34 @@ var devices = [];
 var url;
 var list = [];
 
+$(function () {
+    if (getCookie("token") === "") {
+        window.location.href = "../";
+    } else {
+        $.ajaxSetup({
+            headers: {
+                'authorization': getCookie("token")
+            }
+        });
+        $.get("http://localhost:3000/user", {},
+            function (data, status, xhr) {
+                console.log(data);
+                // let name = data.results.user.name;
+                
+                // name = name.charAt(0).toUpperCase() + name.substr(1);
+
+                // $(".username").text(name);
+
+                // currentUserID = data.results.user._id;
+
+            }).fail(function (xhr, status, error) {
+
+            setCookie("token", "", -1);
+            window.location.href = "../";
+        });
+    }
+});
+
 var xmlhttp = new XMLHttpRequest();
 xmlhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
@@ -21,15 +49,15 @@ xmlhttp.onreadystatechange = function () {
             var filename = results.filename;
             var url = 'download/' + filename;
             window.open(url);
-            
+
             var tableData = "";
             for (let i = 0; i < list.length; i++) {
                 var key = list[i].url;
                 tableData +=
                     "<Tr>" +
                     "<Td class='url_td'>" + key + "</Td>" +
-                    "<Td class='visit_time_td'>" + (Math.round(results.visitTime[key] / 10) / 10) + "s </Td>" +
-                    "<Td  class='ss_time_td'>" + (Math.round(results.screenshotTime[key] / 10) / 10) + "s </Td>" +
+                    "<Td class='visit_time_td'>" + (Math.round(results.visitTime[key] / 100) / 10) + "s </Td>" +
+                    "<Td  class='ss_time_td'>" + (Math.round(results.screenshotTime[key] / 100) / 10) + "s </Td>" +
                     "</tr>";
             }
 
@@ -39,15 +67,15 @@ xmlhttp.onreadystatechange = function () {
                 "<Table class='timestamps width_60'>" +
                 "<Tr>" +
                 "<Th>Total Time</Th>" +
-                "<Td>" + (Math.round(results.totalTime / 10) / 10) + "s </Td>" +
+                "<Td>" + (Math.round(results.totalTime / 100) / 10) + "s </Td>" +
                 "</Tr>" +
                 "<Tr>" +
                 "<Th>Startup Time</Th>" +
-                "<Td>" + (Math.round(results.chromeStartup / 10) / 10) + "s </Td>" +
+                "<Td>" + (Math.round(results.chromeStartup / 100) / 10) + "s </Td>" +
                 "</Tr>" +
                 "<Tr>" +
                 "<Th>Zip Time</Th>" +
-                "<Td>" + (Math.round(results.zipTime / 10) / 10) + "s </Td>" +
+                "<Td>" + (Math.round(results.zipTime / 100) / 10) + "s </Td>" +
                 "</Tr>" +
                 "<Table>" +
 
@@ -173,6 +201,12 @@ function getDevice(deviceName) {
             currDevice.name = "Samsung Galaxy S7";
             currDevice.height = 640;
             currDevice.width = 360;
+            break;
+
+        case "Samsung Galaxy Note 9":
+            currDevice.name = "Samsung Galaxy Note 9";
+            currDevice.height = 2960;
+            currDevice.width = 1440;
             break;
 
         default:
@@ -325,8 +359,8 @@ function addViewports() {
 
         return;
     }
-    
-    if(name === ""){
+
+    if (name === "") {
         name = "test";
     }
 
@@ -420,34 +454,34 @@ function submit() {
     }
 }
 
-// Set the date we're counting down to
-var countDownDate = new Date("Sep 5, 2018 15:37:25").getTime();
+// // Set the date we're counting down to
+// var countDownDate = new Date("Sep 5, 2018 15:37:25").getTime();
 
-// Update the count down every 1 second
-var x = setInterval(function () {
+// // Update the count down every 1 second
+// var x = setInterval(function () {
 
-    // Get todays date and time
-    var now = new Date().getTime();
+//     // Get todays date and time
+//     var now = new Date().getTime();
 
-    // Find the distance between now an the count down date
-    var distance = countDownDate - now;
+//     // Find the distance between now an the count down date
+//     var distance = countDownDate - now;
 
-    // Time calculations for days, hours, minutes and seconds
-    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+//     // Time calculations for days, hours, minutes and seconds
+//     var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+//     var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+//     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+//     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    // Output the result in an element with id="timer"
-    document.getElementById("timer").innerHTML = days + "d " + hours + "h " +
-        minutes + "m " + seconds + "s ";
+//     // Output the result in an element with id="timer"
+//     document.getElementById("timer").innerHTML = days + "d " + hours + "h " +
+//         minutes + "m " + seconds + "s ";
 
-    // If the count down is over, write some text 
-    if (distance < 0) {
-        clearInterval(x);
-        document.getElementById("timer").innerHTML = "EXPIRED";
-    }
-}, 1000);
+//     // If the count down is over, write some text 
+//     if (distance < 0) {
+//         clearInterval(x);
+//         document.getElementById("timer").innerHTML = "EXPIRED";
+//     }
+// }, 1000);
 
 $(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
