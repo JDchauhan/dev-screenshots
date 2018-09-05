@@ -12,6 +12,18 @@ module.exports = function (app) {
     
     // user Routes
     app.get("/", function (req, res) {
+        var error;
+        if(req.query.fileErr &&  req.query.fileErr ==="true" ){
+            error = true;
+        }else{
+            error = false;
+        }
+        res.render("dashboard", {
+            error: error
+        });
+    });
+
+    app.get("/login", function (req, res) {
         res.render("login");
     });
 
@@ -28,18 +40,6 @@ module.exports = function (app) {
     });
 
     app.post('/verify/email', User.sendVerificationLink);
-
-    app.get("/dashboard", function (req, res) {
-        var error;
-        if(req.query.fileErr &&  req.query.fileErr ==="true" ){
-            error = true;
-        }else{
-            error = false;
-        }
-        res.render("dashboard", {
-            error: error
-        });
-    });
 
     app.post("/", screenshot.capture);
 

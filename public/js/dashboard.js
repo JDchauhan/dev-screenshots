@@ -1,17 +1,18 @@
 var devices = [];
 var url;
+var isGuest;
 var list = [];
 
 $(function () {
     if (getCookie("token") === "") {
-        window.location.href = "../";
+        isGuest =  true;
     } else {
         $.ajaxSetup({
             headers: {
                 'authorization': getCookie("token")
             }
         });
-        $.get("http://localhost:3000/user", {},
+        $.get("../user", {},
             function (data, status, xhr) {
                 console.log(data);
                 // let name = data.results.user.name;
@@ -25,7 +26,7 @@ $(function () {
             }).fail(function (xhr, status, error) {
 
             setCookie("token", "", -1);
-            window.location.href = "../";
+            isGuest = true;
         });
     }
 });
@@ -114,6 +115,18 @@ xmlhttp.onreadystatechange = function () {
         document.getElementById("loader").style.display = "none";
         document.getElementById("body-container").classList.remove("hidden");
         document.getElementById("submit").disabled = false;
+    } else if(this.readyState == 4) {
+
+        document.getElementById("message-heading").innerHTML = this.statusText;
+        document.getElementById("message-body").innerHTML = JSON.parse(this.response).message;
+        if(JSON.parse(this.response).message === "free version can't request more than 3 screenshots."){
+            document.getElementById("message-body").innerHTML += '<br/> <a href="./payment">upgrade to pro</a>';
+        }
+        $("#myModal").modal("show");
+
+        document.getElementById("loader").style.display = "none";
+        document.getElementById("body-container").classList.remove("hidden");
+        document.getElementById("submit").disabled = false;    
     }
 };
 
@@ -447,6 +460,7 @@ function submit() {
 
         xmlhttp.open("POST", "../");
         xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xmlhttp.setRequestHeader('authorization', getCookie("token"));
         xmlhttp.send(JSON.stringify({
             "devices": devices,
             "urls": list
