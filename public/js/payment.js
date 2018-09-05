@@ -2,7 +2,7 @@ var email = '';
 
 $(function () {
     if (getCookie("token") === "") {
-        window.location.href = "/login";
+        window.location.href = "/login?action=login_required";
     } else {
         $.ajaxSetup({
             headers: {
@@ -21,7 +21,7 @@ $(function () {
             }).fail(function (xhr, status, error) {
 
             setCookie("token", "", -1);
-            window.location.href = "/login";
+            window.location.href = "/login?action=login_required";
         });
     }
 

@@ -1,5 +1,4 @@
 $(function(){
-    
     if (getCookie("token") !== "") {
         window.location.href = "/";
     }
@@ -83,5 +82,14 @@ $(function(){
             }
         });
     });
+
+    if(window.location.search.substr(1).split("=")[1] === "login_required"){
+        $('#login-msg').append(
+            '<div class="alert alert-danger alert-dismissible fade show">' +
+            '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+            '<strong>Oops! </strong> Login Required.'  +
+            '</div>'
+        );
+    }
 
 });

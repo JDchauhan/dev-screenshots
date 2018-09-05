@@ -4,8 +4,9 @@ var isGuest;
 var list = [];
 
 $(function () {
+    $(".guest").show();
     if (getCookie("token") === "") {
-        isGuest =  true;
+        isGuest = true;
     } else {
         $.ajaxSetup({
             headers: {
@@ -16,12 +17,14 @@ $(function () {
             function (data, status, xhr) {
                 console.log(data);
                 // let name = data.results.user.name;
-                
+
                 // name = name.charAt(0).toUpperCase() + name.substr(1);
 
                 // $(".username").text(name);
 
                 // currentUserID = data.results.user._id;
+                $(".guest").hide();
+                $("#pro").attr("href", "./payment");
 
             }).fail(function (xhr, status, error) {
 
@@ -115,18 +118,18 @@ xmlhttp.onreadystatechange = function () {
         document.getElementById("loader").style.display = "none";
         document.getElementById("body-container").classList.remove("hidden");
         document.getElementById("submit").disabled = false;
-    } else if(this.readyState == 4) {
+    } else if (this.readyState == 4) {
 
         document.getElementById("message-heading").innerHTML = this.statusText;
         document.getElementById("message-body").innerHTML = JSON.parse(this.response).message;
-        if(JSON.parse(this.response).message === "free version can't request more than 3 screenshots."){
+        if (JSON.parse(this.response).message === "free version can't request more than 3 screenshots.") {
             document.getElementById("message-body").innerHTML += '<br/> <a href="./payment">upgrade to pro</a>';
         }
         $("#myModal").modal("show");
 
         document.getElementById("loader").style.display = "none";
         document.getElementById("body-container").classList.remove("hidden");
-        document.getElementById("submit").disabled = false;    
+        document.getElementById("submit").disabled = false;
     }
 };
 
@@ -175,13 +178,13 @@ function getDevice(deviceName) {
             break;
 
         case "iPhone 8 Plus":
-            currDevice.name = "iPhone (8-7-6-6S) Plus";
+            currDevice.name = "iPhone 8 Plus";
             currDevice.height = 736;
             currDevice.width = 414;
             break;
 
         case "iPhone 8":
-            currDevice.name = "iPhone 8-7-6-6S";
+            currDevice.name = "iPhone 8";
             currDevice.height = 667;
             currDevice.width = 375;
             break;
@@ -229,6 +232,15 @@ function getDevice(deviceName) {
 }
 
 function add(deviceName) {
+    if (isGuest && devices.length > 2) {
+        document.getElementById("message-heading").innerHTML = "<code>Limitations!</code>";
+        document.getElementById("message-body").innerHTML = "You can only choose 3 devices.<br/>" + 
+            "Please <a href='../payment'>Upgrade to Pro</a> version for unlimited access.";
+        $("#myModal").modal("show");
+
+        document.getElementById(deviceName).checked = false;
+        return;
+    }
     var currDevice = getDevice(deviceName);
     devices.push(currDevice);
 }
@@ -384,6 +396,16 @@ function addViewports() {
         height: parseInt(height),
         name: name
     };
+    if (isGuest && devices.length > 2) {
+        document.getElementById("message-heading").innerHTML = "Upgradation Required";
+        document.getElementById("message-body").innerHTML = "You can only choose 3 device.<br/>" + 
+            "Please upgrade to pro for enjoying unlimited access " +
+            "<a href='../payment'>Upgrade to Pro</a>.";
+        $("#myModal").modal("show");
+
+        document.getElementById(deviceName).checked = false;
+        return;
+    }
     devices.push(item);
     viewViewports();
 }

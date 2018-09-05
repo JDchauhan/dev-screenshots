@@ -24,7 +24,9 @@ module.exports = function (app) {
     });
 
     app.get("/login", function (req, res) {
-        res.render("login");
+        res.render("login", {
+            message: false
+        });
     });
 
     app.post("/login", User.login);

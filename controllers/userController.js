@@ -158,7 +158,9 @@ module.exports.verify = function (req, res) {
                     return responses.errorMsg(res, 404, "Not Found", "user not found.", null);
                 }
                 user.email_verification = true;
-                return res.render("login");
+                return res.render("login", {
+                    message: "verified"
+                });
             });
         }
     });
