@@ -19,6 +19,10 @@ var UserSchema = new Schema({
     unique: true,
     required: [true, 'please enter your email']
   },
+  mobile: {
+    type: Number,
+    required: [true, 'please enter your email']
+  },
   isVerifiedEmail: {
     type: Boolean,
     default: false
@@ -29,6 +33,10 @@ var UserSchema = new Schema({
   balance: {
     type: Number,
     default: 0.0
+  },
+  expires: {
+    type: Date,
+    default: Date.now
   },
   active: {
     type: Boolean,

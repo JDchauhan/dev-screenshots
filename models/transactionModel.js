@@ -11,7 +11,7 @@ var TransactionSchema = new Schema({
     type: Number,
   },
   txnID: {
-    type: Number,
+    type: String,
     unique: true
   },
   generation_timestamp: {
