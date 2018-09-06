@@ -1,5 +1,5 @@
 <% include partials/header.ejs %>
-<script src="/js/resetPass.js"></script>
+<script src="/js/forgetPass.js"></script>
 </head>
 
 <body>
@@ -22,10 +22,13 @@
             <div class="collapse navbar-collapse collapsibleNavbar">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link white" href="./dashboard"><b>Dashboard</b></a>
+                        <a class="nav-link white" href="../../dashboard"><b>Dashboard</b></a>
+                    </li>
+                    <li class="nav-item white guest">
+                        <a class="nav-link white" href="../../login"><b>Login / Register</b></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link highlight-nav" id="pro" href="./payment"><b>Pro</b></a>
+                        <a class="nav-link highlight-nav" id="pro" href="../../login?action=login_required"><b>Pro</b></a>
                     </li>
                 </ul>
             </div>
@@ -48,22 +51,11 @@
                     <form>
                         <div class="input-group mb-3 input-group-lg container">
                             <div class="input-group-prepend">
-                                <span class="input-group-text">Current Password</span>
+                                <span class="input-group-text">Email</span>
                             </div>
-                            <input type="password" class="form-control" id="curr_pass" placeholder="password">
+                            <input type="email" class="form-control" id="email" placeholder="example@gmail.com">
                         </div>
-                        <div class="input-group mb-3 input-group-lg container">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">New Password</span>
-                            </div>
-                            <input type="password" class="form-control" id="pass" placeholder="password">
-                        </div>
-                        <div class="input-group mb-3 input-group-lg container">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Confirm New Password</span>
-                            </div>
-                            <input type="password" class="form-control" id="conf_pass" placeholder="password">
-                        </div>
+
                         <div class="wrapper text-center">
                             <div class="btn-group btn-group-lg">
                                 <button type="button" id="reset_btn" class="btn wobble-vertical">Reset Password</button>
@@ -75,11 +67,8 @@
             <div class="col-md-2 login">
 
             </div>
-
         </div>
-
     </div>
-
 
 </body>
 

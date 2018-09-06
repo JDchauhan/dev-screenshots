@@ -52,7 +52,7 @@ $(function () {
         data.newPassword = new_pass;
 
         $.ajax({
-            url: "../password",
+            url: "../password/reset",
             type: 'PUT',
             data: JSON.stringify(data),
             contentType: 'application/json',

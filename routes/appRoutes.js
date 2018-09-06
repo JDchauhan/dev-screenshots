@@ -37,7 +37,13 @@ module.exports = function (app) {
 
     app.post("/register", User.register);
 
-    app.put("/password", VerifyToken, User.changePassword);
+    app.put("/password/reset", VerifyToken, User.changePassword);
+
+    app.get("/password/forget", function (req, res) {
+        res.render("forgetPass");
+    });
+
+    //app.put("/password/forget", User.updatePassword);
 
     app.get('/verify/email/:token', VerifyToken, User.verify);
 
