@@ -26,10 +26,18 @@ $(function () {
                 // currentUserID = data.results.user._id;
                 $(".guest").hide();
                 $(".logged").show();
-                
+
                 $("#pro").attr("href", "./payment");
 
             }).fail(function (xhr, status, error) {
+            if (xhr.status === 0) {
+                $('#pass-msg').append(
+                    '<div class="alert alert-danger alert-dismissible fade show">' +
+                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                    '<strong>Oops! </strong>Network error.</div>'
+                );
+                return;
+            }
 
             setCookie("token", "", -1);
             isGuest = true;
@@ -237,7 +245,7 @@ function getDevice(deviceName) {
 function add(deviceName) {
     if (isGuest && devices.length > 2) {
         document.getElementById("message-heading").innerHTML = "<code>Limitations!</code>";
-        document.getElementById("message-body").innerHTML = "You can only choose 3 devices.<br/>" + 
+        document.getElementById("message-body").innerHTML = "You can only choose 3 devices.<br/>" +
             "Please <a href='../payment'>Upgrade to Pro</a> version for unlimited access.";
         $("#myModal").modal("show");
 
@@ -401,7 +409,7 @@ function addViewports() {
     };
     if (isGuest && devices.length > 2) {
         document.getElementById("message-heading").innerHTML = "Upgradation Required";
-        document.getElementById("message-body").innerHTML = "You can only choose 3 device.<br/>" + 
+        document.getElementById("message-body").innerHTML = "You can only choose 3 device.<br/>" +
             "Please upgrade to pro for enjoying unlimited access " +
             "<a href='../payment'>Upgrade to Pro</a>.";
         $("#myModal").modal("show");
