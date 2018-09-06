@@ -9,8 +9,11 @@ $(function () {
             data: JSON.stringify(data),
             contentType: 'application/json',
             success: function (data) {
-                setCookie("token", data.results.token, 1);
-                window.location.href = "/";
+                $('#pass-msg').append(
+                    '<div class="alert alert-success alert-dismissible fade show">' +
+                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                    '<strong>Congratulation! </strong>Please click on the link you have recieved</div>'
+                );
             },
             error: function (xhr, textStatus, errorThrown) {
                 var errMsg;

@@ -46,13 +46,13 @@ module.exports.register = function (req, res) {
             var token = jwt.sign({
                 id: user._id
             }, config.secret, {
-                    expiresIn: 86400 // expires in 24 hours
-                });
+                expiresIn: 86400 // expires in 24 hours
+            });
 
             Verification.create({
-                userID: user._id,
-                key: token
-            },
+                    userID: user._id,
+                    key: token
+                },
                 function (err, verification) {
                     if (err) {
                         return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
@@ -107,8 +107,8 @@ module.exports.login = function (req, res) {
         var token = jwt.sign({
             id: user._id
         }, config.secret, {
-                expiresIn: 86400 // expires in 24 hours
-            });
+            expiresIn: 86400 // expires in 24 hours
+        });
 
         results = {
             auth: true,
@@ -163,19 +163,15 @@ module.exports.changePassword = function (req, res) {
             return responses.errorMsg(res, 401, "Unauthorized", "Verify your account to login.", errors);
         }
 
-        var hashedPassword = bcrypt.hashSync(req.body.newPassword, 8);
-        User.findOneAndUpdate({
-            _id: user._id,
-        }, {
-                password: hashedPassword
-            },
-            function (err, user) {
-                if (err) {
-                    return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
-                } else {
-                    return responses.successMsg(res, null);
-                }
-            });
+        updatePassword(user.id, req.body.newPassword, function (result) {
+            if (result) {
+                return responses.successMsg(res, null);
+
+            } else {
+                return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+            }
+        });
+
     });
 };
 
@@ -192,11 +188,36 @@ module.exports.verify = function (req, res) {
         if (!verified) {
             return responses.errorMsg(res, 410, "Gone", "link has been expired.", null);
         } else {
-            let time = new Date();
-            let expires = time.setDate(time.getDate() + 15);
-            User.findOneAndUpdate({
-                _id: req.id
-            }, {
+            if (verified.type && verified.type === "pass") {
+                var pass = "";
+                var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+                for (var i = 0; i < 5; i++)
+                    pass += possible.charAt(Math.floor(Math.random() * possible.length));
+
+                AuthoriseUser.getUser(req, res, function (user) {
+                    Mail.verification_mail(user.email, pass);
+                    updatePassword(req.id, pass, function (result) {
+                        if (result) {
+                        
+                            return res.render("login", {
+                                message: "forget_pass"
+                            });
+                        } else {
+                            
+                        return res.render("login", {
+                            message: "forget_pass_err"
+                        });
+                        }
+                    });
+                });
+            } else {
+
+                let time = new Date();
+                let expires = time.setDate(time.getDate() + 15);
+                User.findOneAndUpdate({
+                    _id: req.id
+                }, {
                     isVerifiedEmail: true,
                     expires: expires
                 }, function (err, user) {
@@ -212,7 +233,86 @@ module.exports.verify = function (req, res) {
                         message: "verified"
                     });
                 });
+            }
         }
+    });
+};
+
+function updatePassword(id, pass, callback) {
+    var hashedPassword = bcrypt.hashSync(pass, 8);
+    User.findOneAndUpdate({
+            _id: id,
+        }, {
+            password: hashedPassword
+        },
+        function (err, user) {
+            if (err) {
+                callback(false);
+            }
+            callback(true);
+        });
+}
+
+module.exports.forgetPassword = function (req, res) {
+    User.findOne({
+        email: req.body.email
+    }, function (err, user) {
+
+        if (err) {
+            return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+        }
+
+        if (!user) {
+            return responses.errorMsg(res, 404, "Not Found", "user not found.", null);
+        }
+
+        var token = jwt.sign({
+            id: user._id
+        }, config.secret, {
+            expiresIn: 86400 // expires in 24 hours
+        });
+
+        Verification.findOneAndUpdate({
+                userID: user._id
+            }, {
+                key: token,
+                type: "pass"
+            },
+            function (err, verification) {
+                if (err) {
+                    return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+                } else {
+                    if (!verification) {
+                        Verification.create({
+                                key: token,
+                                userID: user._id,
+                                type: "pass"
+                            },
+                            function (err, verification) {
+                                if (err) {
+                                    return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+                                }
+                                user.password = undefined;
+
+                                var link = 'http://localhost:3000/verify/email/' + token;
+
+                                Mail.verification_mail(req.body.email, link);
+
+                                return responses.successMsg(res, null);
+
+                            });
+                    } else {
+                        user.password = undefined;
+
+                        var link = 'http://localhost:3000/verify/email/' + token;
+
+                        Mail.verification_mail(req.body.email, link);
+
+                        return responses.successMsg(res, null);
+
+                    }
+                }
+            });
     });
 };
 
@@ -236,12 +336,12 @@ module.exports.sendVerificationLink = function (req, res) {
             var token = jwt.sign({
                 id: user._id
             }, config.secret, {
-                    expiresIn: 86400 // expires in 24 hours
-                });
+                expiresIn: 86400 // expires in 24 hours
+            });
 
             Verification.findOneAndUpdate({
-                email: req.body.email
-            }, {
+                    email: req.body.email
+                }, {
                     key: token
                 },
                 function (err, verification) {
@@ -278,8 +378,8 @@ module.exports.addMoney = function (req, res, email) {
                 expires = time.setDate(time.getDate() + 30);
             }
             User.findOneAndUpdate({
-                email: email,
-            }, {
+                    email: email,
+                }, {
                     expires: expires
                 },
                 function (err, user) {

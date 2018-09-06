@@ -43,7 +43,7 @@ module.exports = function (app) {
         res.render("forgetPass");
     });
 
-    //app.put("/password/forget", User.updatePassword);
+    app.put("/password/forget", User.forgetPassword);
 
     app.get('/verify/email/:token', VerifyToken, User.verify);
 

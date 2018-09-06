@@ -6,6 +6,9 @@ var VerificationModel = new Schema({
   userID: {
     type: Schema.Types.ObjectId
   },
+  type: {
+    type: String
+  },
   key: {
     type: String,
   }
