@@ -5,6 +5,7 @@ var list = [];
 
 $(function () {
     $(".guest").show();
+    $(".logged").hide();
     if (getCookie("token") === "") {
         isGuest = true;
     } else {
@@ -24,6 +25,8 @@ $(function () {
 
                 // currentUserID = data.results.user._id;
                 $(".guest").hide();
+                $(".logged").show();
+                
                 $("#pro").attr("href", "./payment");
 
             }).fail(function (xhr, status, error) {

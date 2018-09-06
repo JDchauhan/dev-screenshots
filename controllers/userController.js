@@ -169,11 +169,10 @@ module.exports.changePassword = function (req, res) {
         }, {
                 password: hashedPassword
             },
-            function (err, users) {
+            function (err, user) {
                 if (err) {
                     return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
                 } else {
-                    console.log(users)
                     return responses.successMsg(res, null);
                 }
             });
