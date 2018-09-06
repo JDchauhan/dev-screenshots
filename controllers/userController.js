@@ -46,13 +46,13 @@ module.exports.register = function (req, res) {
             var token = jwt.sign({
                 id: user._id
             }, config.secret, {
-                expiresIn: 86400 // expires in 24 hours
-            });
+                    expiresIn: 86400 // expires in 24 hours
+                });
 
             Verification.create({
-                    userID: user._id,
-                    key: token
-                },
+                userID: user._id,
+                key: token
+            },
                 function (err, verification) {
                     if (err) {
                         return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
@@ -107,8 +107,8 @@ module.exports.login = function (req, res) {
         var token = jwt.sign({
             id: user._id
         }, config.secret, {
-            expiresIn: 86400 // expires in 24 hours
-        });
+                expiresIn: 86400 // expires in 24 hours
+            });
 
         results = {
             auth: true,
@@ -126,6 +126,57 @@ module.exports.current_user = function (req, res) {
             user: user
         };
         return responses.successMsg(res, results);
+    });
+};
+
+module.exports.changePassword = function (req, res) {
+    if (!req.id || req.id.length !== 24) {
+        return responses.errorMsg(res, 401, "Unauthorized", "failed to authenticate token.", null);
+    }
+
+    User.findById(req.id, function (err, user) {
+        if (!user) {
+            return responses.errorMsg(res, 404, "Not Found", "user not found.", errors);
+        }
+
+        var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
+
+        if (!passwordIsValid)
+            results = {
+                user: user
+            };
+        if (!passwordIsValid) {
+            errors = {
+                auth: false,
+                token: null,
+                "msg": null
+            };
+            return responses.errorMsg(res, 401, "Unauthorized", "incorrect password.", errors);
+        }
+
+        if (!user.isVerifiedEmail) {
+            errors = {
+                auth: false,
+                token: null,
+                "msg": null
+            };
+            return responses.errorMsg(res, 401, "Unauthorized", "Verify your account to login.", errors);
+        }
+
+        var hashedPassword = bcrypt.hashSync(req.body.newPassword, 8);
+        User.findOneAndUpdate({
+            _id: user._id,
+        }, {
+                password: hashedPassword
+            },
+            function (err, users) {
+                if (err) {
+                    return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+                } else {
+                    console.log(users)
+                    return responses.successMsg(res, null);
+                }
+            });
     });
 };
 
@@ -147,21 +198,21 @@ module.exports.verify = function (req, res) {
             User.findOneAndUpdate({
                 _id: req.id
             }, {
-                isVerifiedEmail: true,
-                expires: expires
-            }, function (err, user) {
-                if (err) {
-                    return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
-                }
+                    isVerifiedEmail: true,
+                    expires: expires
+                }, function (err, user) {
+                    if (err) {
+                        return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+                    }
 
-                if (!user) {
-                    return responses.errorMsg(res, 404, "Not Found", "user not found.", null);
-                }
-                user.email_verification = true;
-                return res.render("login", {
-                    message: "verified"
+                    if (!user) {
+                        return responses.errorMsg(res, 404, "Not Found", "user not found.", null);
+                    }
+                    user.email_verification = true;
+                    return res.render("login", {
+                        message: "verified"
+                    });
                 });
-            });
         }
     });
 };
@@ -186,12 +237,12 @@ module.exports.sendVerificationLink = function (req, res) {
             var token = jwt.sign({
                 id: user._id
             }, config.secret, {
-                expiresIn: 86400 // expires in 24 hours
-            });
+                    expiresIn: 86400 // expires in 24 hours
+                });
 
             Verification.findOneAndUpdate({
-                    email: req.body.email
-                }, {
+                email: req.body.email
+            }, {
                     key: token
                 },
                 function (err, verification) {
@@ -228,8 +279,8 @@ module.exports.addMoney = function (req, res, email) {
                 expires = time.setDate(time.getDate() + 30);
             }
             User.findOneAndUpdate({
-                    email: email,
-                }, {
+                email: email,
+            }, {
                     expires: expires
                 },
                 function (err, user) {
