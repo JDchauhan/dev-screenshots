@@ -62,7 +62,7 @@ module.exports.register = function (req, res) {
 
                         Mail.verification_mail(req.body.email, link);
 
-                        return responses.successMsg(res, null);
+                        return responses.successMsg(res, {email: req.body.email});
                     }
                 });
 

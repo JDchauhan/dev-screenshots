@@ -20,6 +20,20 @@ body {
     top: 40%;
 }
 
+.height-30 {
+    height: 30px;
+}
+
+.resend_link {
+    color: #007bff !important;
+}
+
+.resend_link:hover {
+    color: #0056b3 !important;
+    text-decoration: underline !important;
+    cursor: pointer;
+}
+
 .body-top-container {
     margin-top: 8% !important;
     position: initial;
