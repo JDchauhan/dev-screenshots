@@ -18,7 +18,7 @@ $(function () {
                 }
             });
             $.ajax({
-                url: "../password/set",
+                url: "/password/set",
                 type: 'PUT',
                 data: JSON.stringify(data),
                 contentType: 'application/json',
@@ -28,6 +28,9 @@ $(function () {
                         '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
                         '<strong>Congratulation! </strong>Password successfully updated</div>'
                     );
+                    setTimeout(function(){
+                        window.location.href = "/login";
+                    }, 1000);
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     var errMsg;

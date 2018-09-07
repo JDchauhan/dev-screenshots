@@ -51,6 +51,8 @@ module.exports = function (app) {
         });
     });
 
+    app.put("/password/set", User.setPassword);
+
     app.get('/verify/email/:token', VerifyToken, User.verify);
 
     app.get("/user", VerifyToken, User.current_user);

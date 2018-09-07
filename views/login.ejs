@@ -113,39 +113,17 @@
     </div>
 
     <% if(message) { %>
-        <% if(message === "verified") { %>
-            <script>
-                $('#login-msg').append(
-                    '<div class="alert alert-success alert-dismissible fade show">' +
-                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                    '<strong>Congratulation! </strong> Verification Successful.' +
-                    '</div>'
-                );
-            </script>
-        <% } %>
-        
-        <% if(message === "forget_pass") { %>
-            <script>
-                $('#login-msg').append(
-                    '<div class="alert alert-success alert-dismissible fade show">' +
-                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                    '<strong>Congratulation! </strong> Password send to you on mail.<br/>We recommend you to change your password.' +
-                    '</div>'
-                );
-            </script>
-        <% } %>
-        
-        <% if(message === "forget_pass_err") { %>
-            <script>
-                $('#login-msg').append(
-                    '<div class="alert alert-danger alert-dismissible fade show">' +
-                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                    '<strong>Oops! </strong> Some error has occured.' +
-                    '</div>'
-                );
-            </script>
-        <% } %>
-        
+    <% if(message === "verified") { %>
+    <script>
+        $('#login-msg').append(
+            '<div class="alert alert-success alert-dismissible fade show">' +
+            '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+            '<strong>Congratulation! </strong> Verification Successful.' +
+            '</div>'
+        );
+    </script>
+    <% } %>
+
     <% } %>
 
 </body>

@@ -3,7 +3,7 @@
 <% if(message) { %>
     <script>
         var message = JSON.parse(("<%= message %>").split("&#34;").join("\""));
-        if(!message.token || message.token !== "" ){
+        if(!message.token || message.token === "" ){
             window.location.href = "/";
         }
         setCookie("pass_token", message.token, 1);

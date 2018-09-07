@@ -190,11 +190,14 @@ module.exports.verify = function (req, res) {
         } else {
             if (verified.type && verified.type === "pass") {
                 AuthoriseUser.getUser(req, res, function (user) {
-                    if(!user){
+                    if (!user) {
                         return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
                     }
                     var token = jwt.sign({
-                        id: user._id
+                        email: user.email,
+                        user: user._id,
+                        auth: true,
+                        type: "pass"
                     }, config.secret, {
                         expiresIn: 86400 // expires in 24 hours
                     });
@@ -247,6 +250,35 @@ function updatePassword(id, pass, callback) {
             callback(true);
         });
 }
+
+
+module.exports.setPassword = function (req, res) {
+    var token = req.headers.authorization || req.params.token;
+    if (!token) {
+        let errors = {
+            auth: false
+        };
+        return responses.errorMsg(res, 403, "Forbidden", "no token provided.", errors);
+    }
+
+    jwt.verify(token, config.secret, function (err, decoded) {
+        if (err || !(decoded.auth && decoded.type && decoded.type === "pass")) {
+            return responses.errorMsg(res, 401, "Unauthorized", "failed to authenticate token.", null);
+        }
+
+        let id = decoded.user;
+        updatePassword(id, req.body.newPassword, function (result) {
+            if (result) {
+                return responses.successMsg(res, null);
+
+            } else {
+                return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+            }
+        });
+
+    });
+
+};
 
 module.exports.forgetPassword = function (req, res) {
     User.findOne({
