@@ -2,7 +2,7 @@ var email = '';
 
 $(function () {
     if (getCookie("token") === "") {
-        window.location.href = "/login";
+        window.location.href = "/login?action=login_required";
     } else {
         $.ajaxSetup({
             headers: {
@@ -19,9 +19,17 @@ $(function () {
                 name = name.charAt(0).toUpperCase() + name.substr(1);
 
             }).fail(function (xhr, status, error) {
+            if (xhr.status === 0) {
+                $('#pass-msg').append(
+                    '<div class="alert alert-danger alert-dismissible fade show">' +
+                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                    '<strong>Oops! </strong>Network error.</div>'
+                );
+                return;
+            }
 
             setCookie("token", "", -1);
-            window.location.href = "/login";
+            window.location.href = "/login?action=login_required";
         });
     }
 

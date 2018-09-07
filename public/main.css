@@ -109,6 +109,19 @@ td.visit_time_td {
     right: 5px;
 }
 
+.white {
+    color: #ffffff !important;
+}
+
+.highlight-nav {
+    color: magenta !important;
+    -webkit-animation: wobble-vertical 2s infinite linear;
+    -moz-animation: wobble-vertical 2s infinite linear;
+    -o-animation: wobble-vertical 2s infinite linear;
+    -ms-animation: wobble-vertical 2s infinite linear;
+    animation: wobble-vertical 2s infinite linear;
+}
+
 /* 
 table
 */
@@ -134,7 +147,7 @@ table
     border-top-left-radius: 50px;
     border-bottom-right-radius: 50px;
     color: white;
-    background:  #b100af;
+    background: #b100af;
     position: relative;
     width: 400px;
     /* width of each table */
@@ -156,11 +169,12 @@ table
     margin-top: 20px;
     margin-bottom: 7%;
     text-transform: uppercase;
+    padding-bottom: 5px;
     border-bottom: 5px solid white;
 }
 
 .pricingdiv ul.theplan:nth-of-type(1) {
-    background:  #b100af;
+    background: #b100af;
 }
 
 .pricingdiv ul.theplan:nth-of-type(2) {

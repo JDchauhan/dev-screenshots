@@ -3,19 +3,19 @@ module.exports = function (app) {
     var rimraf = require('rimraf');
     var fs = require('fs');
 
-    var transactionController = require('../controllers/transactionController');    
+    var transactionController = require('../controllers/transactionController');
 
     var User = require('../controllers/userController');
     var screenshot = require('../helper/screenshot');
     var responses = require('../helper/responses');
     var VerifyToken = require('../helper/verifyToken');
-    
+
     // user Routes
     app.get("/", function (req, res) {
         var error;
-        if(req.query.fileErr &&  req.query.fileErr ==="true" ){
+        if (req.query.fileErr && req.query.fileErr === "true") {
             error = true;
-        }else{
+        } else {
             error = false;
         }
         res.render("dashboard", {
@@ -24,18 +24,40 @@ module.exports = function (app) {
     });
 
     app.get("/login", function (req, res) {
-        res.render("login");
+        res.render("login", {
+            message: false
+        });
+    });
+
+    app.get("/resetpass", function (req, res) {
+        res.render("resetPass");
     });
 
     app.post("/login", User.login);
 
     app.post("/register", User.register);
 
+    app.put("/password/reset", VerifyToken, User.changePassword);
+
+    app.get("/password/forget", function (req, res) {
+        res.render("forgetPass");
+    });
+
+    app.put("/password/forget", User.forgetPassword);
+
+    app.get("/password/set", function (req, res) {
+        res.render("setPass",{
+            message: null
+        });
+    });
+
+    app.put("/password/set", User.setPassword);
+
     app.get('/verify/email/:token', VerifyToken, User.verify);
 
     app.get("/user", VerifyToken, User.current_user);
 
-    app.get("/payment", function(req, res){
+    app.get("/payment", function (req, res) {
         res.render("payment");
     });
 
@@ -47,17 +69,17 @@ module.exports = function (app) {
         var file = "downloads/" + req.params.filename;
         if (fs.existsSync(file)) {
             res.download(file);
-        }else{
+        } else {
             res.redirect(301, "../?fileErr=true");
         }
     });
 
     //transactions
-    app.post('/payment/payumoney',transactionController.payUMoneyPayment);
+    //app.post('/payment/payumoney',transactionController.payUMoneyPayment);
 
-    app.post('/payment/stripe',transactionController.stripePayment);
+    app.post('/payment/stripe', transactionController.stripePayment);
 
-    app.post('/payment/payumoney/response', transactionController.payUMoneyPaymentResponse);
+    //app.post('/payment/payumoney/response', transactionController.payUMoneyPaymentResponse);
 
     // star routes
     app.get('*', function (req, res) {

@@ -1,21 +1,20 @@
-$(function(){
-    
+$(function () {
     if (getCookie("token") !== "") {
         window.location.href = "/";
     }
 
-    $('#register').click(function(){
-        $('.login').attr("style","display:none;");
-        $('.register').attr("style","display:inline-block;");
+    $('#register').click(function () {
+        $('.login').attr("style", "display:none;");
+        $('.register').attr("style", "display:inline-block;");
     });
 
-    $('#login').click(function(){
-        $('.register').attr("style","display:none;");
-        $('.login').attr("style","display:inline-block;");
+    $('#login').click(function () {
+        $('.register').attr("style", "display:none;");
+        $('.login').attr("style", "display:inline-block;");
     });
 
-    $('#login-btn').click(function(){
-        let data ={};
+    $('#login-btn').click(function () {
+        let data = {};
         data.email = $('#email').val();
         data.password = $('#pass').val();
 
@@ -29,13 +28,17 @@ $(function(){
                 window.location.href = "/";
             },
             error: function (xhr, textStatus, errorThrown) {
-                var errMsg = JSON.parse(xhr.responseText).message;
-                errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
-                
-                if(errMsg === 'Validation failed.'){
-                    errMsg += '<br/>Incorrect ' + JSON.parse(xhr.responseText).errors.index.join(", ");
-                }
+                var errMsg;
+                if (xhr.status === 0) {
+                    errMsg = "Network error.";
+                } else {
+                    errMsg = JSON.parse(xhr.responseText).message;
+                    errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
 
+                    if (errMsg === 'Validation failed.') {
+                        errMsg += '<br/>Incorrect ' + JSON.parse(xhr.responseText).errors.index.join(", ");
+                    }
+                }
                 $('#login-msg').append(
                     '<div class="alert alert-danger alert-dismissible fade show">' +
                     '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
@@ -46,13 +49,13 @@ $(function(){
         });
     });
 
-    $('#register-btn').click(function(){
-        let data ={};
+    $('#register-btn').click(function () {
+        let data = {};
         data.email = $('#email1').val();
         data.password = $('#pass1').val();
         data.name = $('#name').val();
         data.mobile = $('#mobile').val();
-    
+
         $.ajax({
             url: "../register",
             type: 'POST',
@@ -67,21 +70,35 @@ $(function(){
                 );
             },
             error: function (xhr, textStatus, errorThrown) {
-                var errMsg = JSON.parse(xhr.responseText).message;
-                errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
+                var errMsg;
+                if (xhr.status === 0) {
+                    errMsg = "Network error.";
+                } else {
+                    errMsg = JSON.parse(xhr.responseText).message;
+                    errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
 
-                if(errMsg === 'Validation failed.'){
-                    errMsg += '<br/>Incorrect ' + JSON.parse(xhr.responseText).errors.index.join(", ");
+                    if (errMsg === 'Validation failed.') {
+                        errMsg += '<br/>Incorrect ' + JSON.parse(xhr.responseText).errors.index.join(", ");
+                    }
                 }
-                
+
                 $('#register-msg').append(
                     '<div class="alert alert-danger alert-dismissible fade show">' +
                     '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                    '<strong>Oops! </strong> ' + errMsg  +
+                    '<strong>Oops! </strong> ' + errMsg +
                     '</div>'
                 );
             }
         });
     });
+
+    if (window.location.search.substr(1).split("=")[1] === "login_required") {
+        $('#login-msg').append(
+            '<div class="alert alert-danger alert-dismissible fade show">' +
+            '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+            '<strong>Oops! </strong> Login Required.' +
+            '</div>'
+        );
+    }
 
 });
