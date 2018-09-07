@@ -45,6 +45,12 @@ module.exports = function (app) {
 
     app.put("/password/forget", User.forgetPassword);
 
+    app.get("/password/set", function (req, res) {
+        res.render("setPass",{
+            message: null
+        });
+    });
+
     app.get('/verify/email/:token', VerifyToken, User.verify);
 
     app.get("/user", VerifyToken, User.current_user);

@@ -189,26 +189,21 @@ module.exports.verify = function (req, res) {
             return responses.errorMsg(res, 410, "Gone", "link has been expired.", null);
         } else {
             if (verified.type && verified.type === "pass") {
-                var pass = "";
-                var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-                for (var i = 0; i < 5; i++)
-                    pass += possible.charAt(Math.floor(Math.random() * possible.length));
-
                 AuthoriseUser.getUser(req, res, function (user) {
-                    Mail.verification_mail(user.email, pass);
-                    updatePassword(req.id, pass, function (result) {
-                        if (result) {
-                        
-                            return res.render("login", {
-                                message: "forget_pass"
-                            });
-                        } else {
-                            
-                        return res.render("login", {
-                            message: "forget_pass_err"
-                        });
-                        }
+                    if(!user){
+                        return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+                    }
+                    var token = jwt.sign({
+                        id: user._id
+                    }, config.secret, {
+                        expiresIn: 86400 // expires in 24 hours
+                    });
+                    results = {
+                        auth: true,
+                        token: token
+                    };
+                    res.render("setPass", {
+                        message: JSON.stringify(results)
                     });
                 });
             } else {

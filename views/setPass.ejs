@@ -1,5 +1,16 @@
 <% include partials/header.ejs %>
-<script src="/js/resetPass.js"></script>
+
+<% if(message) { %>
+    <script>
+        var message = JSON.parse(("<%= message %>").split("&#34;").join("\""));
+        if(!message.token || message.token !== "" ){
+            window.location.href = "/";
+        }
+        setCookie("pass_token", message.token, 1);
+    </script>   
+<% } %>
+
+<script src="/js/setPass.js"></script>
 </head>
 
 <body>
@@ -13,22 +24,6 @@
                     <figcaption class="figure-caption">Screenshot Taker</figcaption>
                 </figure>
             </a>
-
-            <!-- Toggler/collapsibe Button -->
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".collapsibleNavbar">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse collapsibleNavbar">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link white" href="./dashboard"><b>Dashboard</b></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link highlight-nav" id="pro" href="./payment"><b>Pro</b></a>
-                    </li>
-                </ul>
-            </div>
         </div>
     </nav>
 
@@ -46,12 +41,6 @@
                 <div class="container">
                     <div id="pass-msg"></div>
                     <form>
-                        <div class="input-group mb-3 input-group-lg container">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Current Password</span>
-                            </div>
-                            <input type="password" class="form-control" id="curr_pass" placeholder="password">
-                        </div>
                         <div class="input-group mb-3 input-group-lg container">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">New Password</span>
@@ -75,9 +64,10 @@
             <div class="col-md-2 login">
 
             </div>
+
         </div>
+
     </div>
-    
 </body>
 
 </html>

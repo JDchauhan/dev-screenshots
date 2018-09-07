@@ -14,3 +14,18 @@ module.exports.verification_mail = function (email, link) {
         }
     });
 };
+
+module.exports.forgetPass_mail = function (email, link) {
+    var mailOptions = {
+        to: email,
+        subject: 'Password reset link',
+        html: '<p>Please visit the following link to reset your password</p> <br/>' + link
+    };
+    transporter.sendMail(mailOptions, function (err, info) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
+};
