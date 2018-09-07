@@ -2,6 +2,10 @@ body {
     background: url('./header.jpg') no-repeat center center fixed;
 }
 
+.navbar-toggler {
+    border-color: #d1d1d1 !important;
+}
+
 .nav-link {
     color: #C8C3C3 !important;
     font-size: 20px;
@@ -18,7 +22,7 @@ body {
 
 .body-top-container {
     margin-top: 8% !important;
-    position: relative;
+    position: initial;
 }
 
 .spacing {
@@ -583,6 +587,14 @@ input[type=radio] {
     }
 
     .navbar-collapse {
-        margin: 0% -5%;
+        margin: 0% -1%;
+        padding: 5px;
+        background-color: #f1f1f1;
+        border: 5px solid #f1f1f1;
+        border-radius: 5px;
+    }
+
+    .navbar-nav .white {
+        color: #4D4D4D !important
     }
 }
