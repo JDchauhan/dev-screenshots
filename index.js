@@ -17,6 +17,9 @@ mongoose.connect(process.env.DB_CONNECTION_SCREENSHOT, {
     useNewUrlParser: true
 });
 
+mongoose.set('useCreateIndex', true);
+mongoose.set('useFindAndModify', false);
+
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 
