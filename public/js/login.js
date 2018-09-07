@@ -118,20 +118,20 @@ $(function () {
     }
 
     resend_link = function (email) {
+        let data = {};
+        data .email = email;
         $.ajax({
             url: "../reverify",
-            type: 'GET',
+            type: 'POST',
             data: JSON.stringify(data),
             contentType: 'application/json',
             success: function (result) {
-                $('#register-msg').append(
+                $('#login-msg').append(
                     '<div class="alert alert-success alert-dismissible fade show">' +
                     '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
                     '<strong>Congratulations! </strong> Link has been sended successfully.' +
                     '</div>'
                 );
-                $('#resend_link').attr('onclick', 'resend_link(' + result.results.email + ')');
-                $('#resend_link').show();
             },
             error: function (xhr, textStatus, errorThrown) {
                 var errMsg;
