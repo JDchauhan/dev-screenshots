@@ -18,14 +18,17 @@
 			</a>
 
 			<!-- Toggler/collapsibe Button -->
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".collapsibleNavbar">
+			<button class="navbar-dark navbar-toggler" type="button" data-toggle="collapse" data-target=".collapsibleNavbar">
 				<span class="navbar-toggler-icon"></span>
 			</button>
 
 			<div class="collapse navbar-collapse collapsibleNavbar">
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item">
-						<a class="nav-link white" href="./dashboard"><b>Dashboard</b></a>
+						<a class="nav-link white" href="./dashboard"><b>Home</b></a>
+					</li>
+					<li class="nav-item white logged">
+						<a class="nav-link white" onclick="logout()" href="./login?action=logout"><b>Log out</b></a>
 					</li>
 				</ul>
 			</div>
@@ -54,7 +57,7 @@
 				<li><b>30 Days Money Back</b></li>
 				<li>
 					<div class="btn-group btn-group-lg payment-group">
-						<button type="button" id="stripeBtn" class="btn" id="payment">Pay with Stripe</button>
+						<button type="button" id="stripeBtn" class="btn" id="payment">Pay Now</button>
 					</div>
 				</li>
 			</ul>
