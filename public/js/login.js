@@ -154,6 +154,24 @@ $(function () {
                 );
             }
         });
-    }
+    };
+
+    $('.login input').keypress(function (e) {
+        var key = e.which;
+        if (key == 13) // the enter key code
+        {
+            $('#login-btn').click();
+            return false;
+        }
+    });
+
+    $('.register input').keypress(function (e) {
+        var key = e.which;
+        if (key == 13) // the enter key code
+        {
+            $('#register-btn').click();
+            return false;
+        }
+    });
 
 });
