@@ -62,7 +62,7 @@ module.exports.register = function (req, res) {
 
                         Mail.verification_mail(req.body.email, link);
 
-                        return responses.successMsg(res, null);
+                        return responses.successMsg(res, {email: req.body.email});
                     }
                 });
 
@@ -344,7 +344,7 @@ module.exports.forgetPassword = function (req, res) {
 };
 
 module.exports.sendVerificationLink = function (req, res) {
-
+    console.log(req.body.email)
     User.findOne({
         email: req.body.email
     }, function (err, user) {
@@ -380,7 +380,6 @@ module.exports.sendVerificationLink = function (req, res) {
                         var link = 'http://localhost:3000/verify/email/' + token;
 
                         Mail.verification_mail(req.body.email, link);
-
                         return responses.successMsg(res, null);
                     }
                 });

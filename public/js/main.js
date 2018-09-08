@@ -21,6 +21,9 @@ function getCookie(cname) {
     return "";
 }
 
+function logout(){
+    setCookie("token","", -1);
+}
 
 $(function () {
     $(document).on('click', '', function () {
