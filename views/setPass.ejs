@@ -1,38 +1,49 @@
 <% include partials/header.ejs %>
 
 <% if(message) { %>
-    <script>
-        var message = JSON.parse(("<%= message %>").split("&#34;").join("\""));
+<script>
+    var message = JSON.parse(("<%= message %>").split("&#34;").join("\""));
         if(!message.token || message.token === "" ){
-            window.location.href = "/";
+           // window.location.href = "/";
         }
         setCookie("pass_token", message.token, 1);
-    </script>   
+    </script>
 <% } %>
 
 <script src="/js/setPass.js"></script>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top" id="mainNav">
         <div class="container">
 
             <!-- Brand/logo -->
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="https://www.hexerve.com" target="_blank">
                 <figure class="figure">
                     <img src="/hexerve-logo.png" alt="Hexerve">
                     <figcaption class="figure-caption">Screenshot Taker</figcaption>
                 </figure>
             </a>
+            <!-- Toggler/collapsibe Button -->
+            <button class="navbar-dark navbar-toggler" type="button" data-toggle="collapse" data-target=".collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse collapsibleNavbar">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item white">
+                        <a class="nav-link white" href="https://www.hexerve.com/contact" target="_blank"><b>Contact</b></a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
 
-    <div class="spacer"></div>
     <div id="loader" class="container row">
         <img class="hexerve" src="/hexerve.png" />
     </div>
 
-    <div class="fixed-top body-top-container container">
+    <div class="fixed-top body-container body-top-container container">
         <div class="row login-row">
             <div class="col-md-2 login">
 
@@ -49,7 +60,7 @@
                         </div>
                         <div class="input-group mb-3 input-group-lg container">
                             <div class="input-group-prepend">
-                                <span class="input-group-text">Confirm New Password</span>
+                                <span class="input-group-text">Confirm Password</span>
                             </div>
                             <input type="password" class="form-control" id="conf_pass" placeholder="password">
                         </div>
@@ -64,10 +75,28 @@
             <div class="col-md-2 login">
 
             </div>
+        </div>
+    </div>
+
+    <footer class="footer fixed-bottom fill-content bg-dark text-light">
+        <div class="container">
+            <div>
+                <ul class="list-inline text-center font-weight-bold font-italic">
+                    <li class="list-inline-item">About</li>
+                    <li class="list-inline-item">Packages</li>
+                    <li class="list-inline-item">Support</li>
+                    <li class="list-inline-item">Terms &amp; Conditions</li>
+                    <li class="list-inline-item">Privacy Policy</li>
+                    <li class="list-inline-item">Contact Us</li>
+                </ul>
+            </div>
+            <hr class="bg-secondary" />
+            <div class="text-center">
+                <span>Copyright &copy; 2018 Hexerve.</span>
+            </div>
 
         </div>
-
-    </div>
+    </footer>
 </body>
 
 </html>

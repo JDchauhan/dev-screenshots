@@ -20,6 +20,7 @@ $(function () {
 
             }).fail(function (xhr, status, error) {
             if (xhr.status === 0) {
+                $('.alert').hide(500);
                 $('#pass-msg').append(
                     '<div class="alert alert-danger alert-dismissible fade show">' +
                     '<button type="button" class="close" data-dismiss="alert">&times;</button>' +

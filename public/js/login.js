@@ -7,11 +7,15 @@ $(function () {
 
     $('#register').click(function () {
         $('.login').attr("style", "display:none;");
+        $('#email1').val($('#email').val());
+        $('#pass1').val($('#pass').val());
         $('.register').attr("style", "display:inline-block;");
     });
 
     $('#login').click(function () {
         $('.register').attr("style", "display:none;");
+        $('#email').val($('#email1').val());
+        $('#pass').val($('#pass1').val());
         $('.login').attr("style", "display:inline-block;");
     });
 
@@ -41,6 +45,7 @@ $(function () {
                         errMsg += '<br/>Incorrect ' + JSON.parse(xhr.responseText).errors.index.join(", ");
                     }
                 }
+                $('.alert').hide(500);
                 $('#login-msg').append(
                     '<div class="alert alert-danger alert-dismissible fade show">' +
                     '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
@@ -67,6 +72,7 @@ $(function () {
                 $('.register').attr("style", "display:none;");
                 $('.login').attr("style", "display:inline-block;");
 
+                $('.alert').hide(500);
                 $('#login-msg').append(
                     '<div class="alert alert-success alert-dismissible fade show">' +
                     '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
@@ -89,6 +95,7 @@ $(function () {
                     }
                 }
 
+                $('.alert').hide(500);
                 $('#register-msg').append(
                     '<div class="alert alert-danger alert-dismissible fade show">' +
                     '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
@@ -100,6 +107,7 @@ $(function () {
     });
 
     if (window.location.search.substr(1).split("=")[1] === "login_required") {
+        $('.alert').hide(500);
         $('#login-msg').append(
             '<div class="alert alert-danger alert-dismissible fade show">' +
             '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
@@ -109,6 +117,7 @@ $(function () {
     }
 
     if (window.location.search.substr(1).split("=")[1] === "logout") {
+        $('.alert').hide(500);
         $('#login-msg').append(
             '<div class="alert alert-success alert-dismissible fade show">' +
             '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
@@ -126,6 +135,7 @@ $(function () {
             data: JSON.stringify(data),
             contentType: 'application/json',
             success: function (result) {
+                $('.alert').hide(500);
                 $('#login-msg').append(
                     '<div class="alert alert-success alert-dismissible fade show">' +
                     '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
@@ -142,6 +152,7 @@ $(function () {
                     errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
                 }
 
+                $('.alert').hide(500);
                 $('#login-msg').append(
                     '<div class="alert alert-danger alert-dismissible fade show">' +
                     '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
@@ -150,6 +161,24 @@ $(function () {
                 );
             }
         });
-    }
+    };
+
+    $('.login input').keypress(function (e) {
+        var key = e.which;
+        if (key == 13) // the enter key code
+        {
+            $('#login-btn').click();
+            return false;
+        }
+    });
+
+    $('.register input').keypress(function (e) {
+        var key = e.which;
+        if (key == 13) // the enter key code
+        {
+            $('#register-btn').click();
+            return false;
+        }
+    });
 
 });

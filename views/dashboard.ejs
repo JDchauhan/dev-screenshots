@@ -4,11 +4,11 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top">
         <div class="container">
 
             <!-- Brand/logo -->
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="https://www.hexerve.com" target="_blank">
                 <figure class="figure">
                     <img src="/hexerve-logo.png" alt="Hexerve">
                     <figcaption class="figure-caption">Screenshot Taker</figcaption>
@@ -31,6 +31,9 @@
                     <li class="nav-item">
                         <a class="nav-link highlight-nav" id="pro" href="./login?action=login_required"><b>Pro</b></a>
                     </li>
+                    <li class="nav-item white">
+                        <a class="nav-link white" href="https://www.hexerve.com/contact" target="_blank"><b>Contact</b></a>
+                    </li>
                     <li class="nav-item white logged">
                         <a class="nav-link white" onclick="logout()" href="./login?action=logout"><b>Log out</b></a>
                     </li>
@@ -40,8 +43,6 @@
         </div>
     </nav>
 
-
-    <div class="spacer"></div>
     <div id="loader" class="container row">
         <img class="hexerve" src="/hexerve.png" />
     </div>
@@ -62,27 +63,6 @@
 
         <!--checkbox grids-->
         <div class="container checkbox-container">
-            <div class="row device-row">
-                <div class="col-md-4 col-xs4">
-                    <input type="checkbox" id="Laptop HD" onchange='handleChange("Laptop HD");' />
-                    <a href="#" class="checkbox-tooltip" data-toggle="tooltip" data-placement="bottom" title="Laptop HD (1080 * 1920)">
-                        Laptop HD
-                    </a>
-                </div>
-                <div class="col-md-4 col-xs4">
-                    <input type="checkbox" id="Laptop large" onchange='handleChange("Laptop large");' />
-                    <a href="#" class="checkbox-tooltip" data-toggle="tooltip" data-placement="bottom" title="Laptop large (768 * 1366)">
-                        Laptop large
-                    </a>
-                </div>
-                <div class="col-md-4 col-xs4">
-                    <input type="checkbox" id="Laptop wxga–wide" onchange='handleChange("Laptop wxga–wide");' />
-                    <a href="#" class="checkbox-tooltip" data-toggle="tooltip" data-placement="bottom" title="Laptop wxga–wide (800 * 1280)">
-                        Laptop wxga–wide
-                    </a>
-                </div>
-            </div>
-
             <div class="row device-row">
                 <div class="col-md-4 col-xs4">
                     <input type="checkbox" id="iPad Pro" onchange='handleChange("iPad Pro");' />
@@ -121,6 +101,27 @@
                     <input type="checkbox" id="iPhone 5" onchange='handleChange("iPhone 5");' />
                     <a href="#" class="checkbox-tooltip" data-toggle="tooltip" data-placement="bottom" title="iPhone 5 (558 * 320)">
                         iPhone 5
+                    </a>
+                </div>
+            </div>
+
+            <div class="row device-row">
+                <div class="col-md-4 col-xs4">
+                    <input type="checkbox" id="Laptop HD" onchange='handleChange("Laptop HD");' />
+                    <a href="#" class="checkbox-tooltip" data-toggle="tooltip" data-placement="bottom" title="Laptop HD (1080 * 1920)">
+                        Laptop HD
+                    </a>
+                </div>
+                <div class="col-md-4 col-xs4">
+                    <input type="checkbox" id="Laptop large" onchange='handleChange("Laptop large");' />
+                    <a href="#" class="checkbox-tooltip" data-toggle="tooltip" data-placement="bottom" title="Laptop large (768 * 1366)">
+                        Laptop large
+                    </a>
+                </div>
+                <div class="col-md-4 col-xs4">
+                    <input type="checkbox" id="Laptop wxga–wide" onchange='handleChange("Laptop wxga–wide");' />
+                    <a href="#" class="checkbox-tooltip" data-toggle="tooltip" data-placement="bottom" title="Laptop wxga–wide (800 * 1280)">
+                        Laptop wxga–wide
                     </a>
                 </div>
             </div>
@@ -309,6 +310,26 @@
     <audio controls id="success_audio">
         <source src="/success.mp3" type="audio/mp3">
     </audio>
+
+    <footer class="footer fixed-bottom bg-dark text-light">
+        <div class="container">
+            <div>
+                <ul class="list-inline text-center font-weight-bold font-italic">
+                    <li class="list-inline-item">About</li>
+                    <li class="list-inline-item">Packages</li>
+                    <li class="list-inline-item">Support</li>
+                    <li class="list-inline-item">Terms &amp; Conditions</li>
+                    <li class="list-inline-item">Privacy Policy</li>
+                    <li class="list-inline-item">Contact Us</li>
+                </ul>
+            </div>
+            <hr class="bg-secondary" />
+            <div class="text-center">
+                <span>Copyright &copy; 2018 Hexerve.</span>
+            </div>
+
+        </div>
+    </footer>
 </body>
 
 </html>
