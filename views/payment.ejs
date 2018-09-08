@@ -6,11 +6,11 @@
 </head>
 
 <body>
-	<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+	<nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top" id="mainNav">
 		<div class="container">
 
 			<!-- Brand/logo -->
-			<a class="navbar-brand" href="#">
+			<a class="navbar-brand" href="https://www.hexerve.com" target="_blank">
 				<figure class="figure">
 					<img src="/hexerve-logo.png" alt="Hexerve">
 					<figcaption class="figure-caption">Screenshot Taker</figcaption>
@@ -27,6 +27,9 @@
 					<li class="nav-item">
 						<a class="nav-link white" href="./dashboard"><b>Home</b></a>
 					</li>
+					<li class="nav-item white">
+						<a class="nav-link white" href="https://www.hexerve.com/contact" target="_blank"><b>Contact</b></a>
+					</li>
 					<li class="nav-item white logged">
 						<a class="nav-link white" onclick="logout()" href="./login?action=logout"><b>Log out</b></a>
 					</li>
@@ -35,8 +38,6 @@
 
 		</div>
 	</nav>
-
-	<div class="spacer"></div>
 
 	<div id="loader" class="container row">
 		<img class="hexerve" src="/hexerve.png" />
@@ -67,7 +68,25 @@
 
 	</div>
 
+	<footer class="footer fixed-bottom bg-dark text-light">
+		<div class="container">
+			<div>
+				<ul class="list-inline text-center font-weight-bold font-italic">
+					<li class="list-inline-item">About</li>
+					<li class="list-inline-item">Packages</li>
+					<li class="list-inline-item">Support</li>
+					<li class="list-inline-item">Terms &amp; Conditions</li>
+					<li class="list-inline-item">Privacy Policy</li>
+					<li class="list-inline-item">Contact Us</li>
+				</ul>
+			</div>
+			<hr class="bg-secondary" />
+			<div class="text-center">
+				<span>Copyright &copy; 2018 Hexerve.</span>
+			</div>
 
+		</div>
+	</footer>
 
 	<script src="/js/payment.js"></script>
 </body>

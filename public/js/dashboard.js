@@ -31,6 +31,7 @@ $(function () {
 
             }).fail(function (xhr, status, error) {
             if (xhr.status === 0) {
+                $('.alert').hide(500);
                 $('#pass-msg').append(
                     '<div class="alert alert-danger alert-dismissible fade show">' +
                     '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
@@ -317,6 +318,7 @@ function addList() {
         console.log("err");
 
         $("#url_add_err").empty();
+        $('.alert').hide(500);
         $("#url_add_err").append(
             '<div class="alert alert-danger fade in alert-dismissible show">' +
             '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
@@ -386,6 +388,7 @@ function addViewports() {
         console.log("err");
 
         $("#viewport_add_err").empty();
+        $('.alert').hide(500);
         $("#viewport_add_err").append(
             '<div class="alert alert-danger fade in alert-dismissible show">' +
             '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
@@ -544,6 +547,7 @@ $(document).ready(function () {
                 console.log("err");
 
                 $("#url_add_err").empty();
+                $('.alert').hide(500);
                 $("#url_add_err").append(
                     '<div class="alert alert-danger fade in alert-dismissible show">' +
                     '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
@@ -599,4 +603,13 @@ $(document).ready(function () {
             };
         }
     }
+
+    $('input').keypress(function (e) {
+        var key = e.which;
+        if (key == 13) // the enter key code
+        {
+            $('#submit').click();
+            return false;
+        }
+    });
 });

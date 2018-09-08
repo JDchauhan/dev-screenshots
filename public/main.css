@@ -35,8 +35,7 @@ body {
 }
 
 .body-top-container {
-    margin-top: 8% !important;
-    position: initial;
+    top: 13%;
 }
 
 .spacing {
@@ -458,6 +457,11 @@ input[type=radio] {
     border: none !important;
 }
 
+hr {
+    width: 45%;
+    margin: 0% auto;
+}
+
 @-webkit-keyframes spin1 {
     0% {
         -webkit-transform: rotate(0deg);
@@ -534,9 +538,9 @@ input[type=radio] {
     }
 
     .body-container {
-        position: inherit;
-        overflow: scroll;
-        height: 70vh;
+        position: relative;
+        height: inherit;
+        margin-bottom: 5%;
     }
 
     .hidden {
@@ -566,17 +570,6 @@ input[type=radio] {
         max-width: 98% !important
     }
 
-    .navbar-fixed-top {
-        top: -70px;
-        /* you'll have to figure out the exact number here */
-    }
-
-    .navbar-fixed-top,
-    .navbar-fixed-bottom {
-        position: relative;
-        /* this can also be static */
-    }
-
     .navbar-brand {
         margin-left: 25%;
     }
@@ -595,11 +588,6 @@ input[type=radio] {
         border-radius: 4px;
     }
 
-    .body-top-container {
-        height: 75vh;
-        margin-top: 0% !important;
-    }
-
     .navbar-collapse {
         margin: 0% -1%;
         padding: 5px;
@@ -610,5 +598,18 @@ input[type=radio] {
 
     .navbar-nav .white {
         color: #4D4D4D !important
+    }
+
+    .fixed-bottom {
+        position: relative;
+    }
+
+    .fill-content {
+        position: fixed !important;
+        bottom: 7%;
+    }
+
+    footer ul {
+        margin: 0%;
     }
 }
