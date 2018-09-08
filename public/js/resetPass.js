@@ -20,6 +20,7 @@ $(function () {
             var errMsg;
 
             if (xhr.status === 0) {
+                $('.alert').hide(500);
                 $('#pass-msg').append(
                     '<div class="alert alert-danger alert-dismissible fade show">' +
                     '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
@@ -57,6 +58,7 @@ $(function () {
             data: JSON.stringify(data),
             contentType: 'application/json',
             success: function (data) {
+                $('.alert').hide(500);
                 $('#pass-msg').append(
                     '<div class="alert alert-success alert-dismissible fade show">' +
                     '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
@@ -76,6 +78,7 @@ $(function () {
                     }
                 }
 
+                $('.alert').hide(500);
                 $('#pass-msg').append(
                     '<div class="alert alert-danger alert-dismissible fade show">' +
                     '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
