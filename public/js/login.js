@@ -7,11 +7,15 @@ $(function () {
 
     $('#register').click(function () {
         $('.login').attr("style", "display:none;");
+        $('#email1').val($('#email').val());
+        $('#pass1').val($('#pass').val());
         $('.register').attr("style", "display:inline-block;");
     });
 
     $('#login').click(function () {
         $('.register').attr("style", "display:none;");
+        $('#email').val($('#email1').val());
+        $('#pass').val($('#pass1').val());
         $('.login').attr("style", "display:inline-block;");
     });
 
