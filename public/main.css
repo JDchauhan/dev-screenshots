@@ -221,6 +221,10 @@ table
     text-transform: uppercase;
 }
 
+footer ul {
+    margin: 5px auto;
+}
+
 @media only screen and (max-width: 500px) {
     .pricingdiv ul.theplan {
         border-radius: 0;
