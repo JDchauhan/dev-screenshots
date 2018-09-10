@@ -610,10 +610,10 @@ hr {
 
     .fill-content {
         position: fixed !important;
-        bottom: 7%;
+        bottom: 48px;
     }
 
     footer ul {
-        margin: 0%;
+        margin: 5px auto;
     }
 }
