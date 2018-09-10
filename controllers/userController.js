@@ -387,7 +387,7 @@ module.exports.sendVerificationLink = function (req, res) {
     });
 };
 
-module.exports.addMoney = function (req, res, email) {
+module.exports.addMoney = function (req, res, email, plan) {
 
     User.findOne({
         email: email,
@@ -406,6 +406,7 @@ module.exports.addMoney = function (req, res, email) {
             User.findOneAndUpdate({
                     email: email,
                 }, {
+                    plan: plan,
                     expires: expires
                 },
                 function (err, user) {

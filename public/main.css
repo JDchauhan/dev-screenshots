@@ -116,7 +116,7 @@ td.visit_time_td {
     margin-right: 1.5%;
 }
 
-#stripeBtn {
+.stripeBtn {
     background: #38A2E2;
     color: #ffffff;
     font-weight: bold;

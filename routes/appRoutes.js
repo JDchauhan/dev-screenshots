@@ -79,7 +79,7 @@ module.exports = function (app) {
     //transactions
     //app.post('/payment/payumoney',transactionController.payUMoneyPayment);
 
-    app.post('/payment/stripe', transactionController.stripePayment);
+    app.post('/payment/stripe/:planID', transactionController.stripePayment);
 
     //app.post('/payment/payumoney/response', transactionController.payUMoneyPaymentResponse);
 

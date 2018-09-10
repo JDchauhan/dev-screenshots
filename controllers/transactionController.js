@@ -30,13 +30,33 @@ exports.payUMoneyPayment = function (req, res) {
 };
 
 exports.stripePayment = function (req, res) {
-
+    let planID = parseInt(req.params.planID);
     // Token is created using Checkout or Elements!
     // Get the payment token ID submitted by the form:
     const token = req.body.id; // Using Express
 
+    let planAmount = 499;
+    let plan = "lite";
+    switch (planID) {
+        case 1:
+            break;
+        case 2:
+            plan = "professional";
+            planAmount = 999;
+            break;
+        case 3:
+            plan = "enterprise";
+            planAmount = 1999;
+            break;
+        default:
+            console.log(err);
+            return res.send({
+                'status': "Error occured"
+            });
+    }
+
     const charge = stripe.charges.create({
-        amount: 599,
+        amount: planAmount,
         currency: 'usd',
         description: 'Example charge',
         source: token,
@@ -50,7 +70,7 @@ exports.stripePayment = function (req, res) {
 
         Transaction.create({
             email: req.body.email,
-            amount: 5.99,
+            amount: planAmount,
             txnID: charge.id
         }, function (err, response) {
             if (err) {
@@ -58,7 +78,7 @@ exports.stripePayment = function (req, res) {
             }
         });
 
-        userController.addMoney(req, res, req.body.email);
+        userController.addMoney(req, res, req.body.email, plan);
     });
 };
 
