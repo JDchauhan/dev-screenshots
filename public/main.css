@@ -147,12 +147,11 @@ table
     flex-wrap: wrap;
     justify-content: center;
     font-family: 'Source Sans Pro', Arial, sans-serif;
-    font-size: large
 }
 
 .payment-group {
     margin-bottom: 6%;
-    margin-top: 6%;
+    margin-top: 3%;
 }
 
 .pricingdiv ul.theplan {
@@ -166,7 +165,7 @@ table
     color: white;
     background: #b100af;
     position: relative;
-    width: 400px;
+    width: 300px;
     /* width of each table */
     margin-right: 10px;
     /* spacing between tables */
@@ -174,17 +173,17 @@ table
 }
 
 .pricingdiv ul.theplan li {
-    margin: 5px 20px;
+    margin: 1px 20px;
     position: relative;
     text-align: center;
 }
 
 .pricingdiv ul.theplan li.title {
-    font-size: 150%;
+    font-size: 120%;
     font-weight: bold;
     text-align: center;
     margin-top: 20px;
-    margin-bottom: 7%;
+    margin-bottom: 4%;
     text-transform: uppercase;
     padding-bottom: 5px;
     border-bottom: 5px solid white;
@@ -227,8 +226,6 @@ footer ul {
 
 @media only screen and (max-width: 500px) {
     .pricingdiv ul.theplan {
-        border-radius: 0;
-        width: 100%;
         margin-right: 0;
     }
 
