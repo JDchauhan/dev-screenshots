@@ -57,6 +57,7 @@ xmlhttp.onreadystatechange = function () {
             $("#myModal").modal("show");
 
             document.getElementById("loader").style.display = "none";
+            $("footer").removeClass("no-body");
             document.getElementById("body-container").classList.remove("hidden");
             document.getElementById("submit").disabled = false;
 
@@ -115,6 +116,7 @@ xmlhttp.onreadystatechange = function () {
 
             list = [];
             document.getElementById("loader").style.display = "none";
+            $("footer").removeClass("no-body");
             document.getElementById("body-container").classList.remove("hidden");
 
             document.getElementById("submit").disabled = false;
@@ -128,6 +130,7 @@ xmlhttp.onreadystatechange = function () {
         $("#myModal").modal("show");
 
         document.getElementById("loader").style.display = "none";
+        $("footer").removeClass("no-body");
         document.getElementById("body-container").classList.remove("hidden");
         document.getElementById("submit").disabled = false;
     } else if (this.readyState == 4) {
@@ -140,6 +143,7 @@ xmlhttp.onreadystatechange = function () {
         $("#myModal").modal("show");
 
         document.getElementById("loader").style.display = "none";
+        $("footer").removeClass("no-body");
         document.getElementById("body-container").classList.remove("hidden");
         document.getElementById("submit").disabled = false;
     }
@@ -484,6 +488,7 @@ function viewViewports() {
 function submit() {
     document.getElementById("submit").disabled = true;
     document.getElementById("loader").style.display = "block";
+    $("footer").addClass("no-body");
     document.getElementById("body-container").classList.add("hidden");
     filter();
     if (devices.length === 0) {
@@ -493,6 +498,7 @@ function submit() {
         $("#myModal").modal("show");
 
         document.getElementById("loader").style.display = "none";
+        $("footer").removeClass("no-body");
         document.getElementById("body-container").classList.remove("hidden");
         document.getElementById("submit").disabled = false;
 
@@ -503,6 +509,7 @@ function submit() {
         $("#myModal").modal("show");
 
         document.getElementById("loader").style.display = "none";
+        $("footer").removeClass("no-body");
         document.getElementById("body-container").classList.remove("hidden");
         document.getElementById("submit").disabled = false;
 

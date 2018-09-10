@@ -556,8 +556,7 @@ hr {
     }
 
     .hexerve {
-        margin-left: 40%;
-        top: 50%;
+        top: 35%;
     }
 
     .btn-group {
@@ -606,6 +605,11 @@ hr {
 
     .fixed-bottom {
         position: relative;
+    }
+
+    .no-body {
+        position: fixed;
+        margin-bottom: 48px;
     }
 
     .fill-content {
