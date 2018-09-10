@@ -56,7 +56,7 @@ body {
 
 .btn-group {
     margin: auto;
-    margin-top: 2%;
+    margin-top: 1%;
     margin-left: -5%;
 }
 
@@ -222,7 +222,7 @@ table
 }
 
 footer ul {
-    margin: 5px auto;
+    margin: 10px auto;
 }
 
 @media only screen and (max-width: 500px) {

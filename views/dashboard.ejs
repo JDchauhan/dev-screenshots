@@ -16,7 +16,8 @@
             </a>
 
             <!-- Toggler/collapsibe Button -->
-            <button class="navbar-toggler navbar-dark" id="nav-toggler" type="button" data-toggle="collapse" data-target=".collapsibleNavbar">
+            <button class="navbar-toggler navbar-dark" id="nav-toggler" type="button" data-toggle="collapse"
+                data-target=".collapsibleNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -65,15 +66,58 @@
         <div class="container checkbox-container">
             <div class="row device-row">
                 <div class="col-md-4 col-xs4">
+                    <input type="checkbox" id="iMac Retina 5K Display" onchange='handleChange("iMac Retina 5K Display");' />
+                    <a href="#" class="checkbox-tooltip" data-toggle="tooltip" data-placement="bottom" title="Apple iMac Retina 5K Display(1440 * 2560)">
+                        iMac Retina 5K Display
+                    </a>
+                </div>
+                <div class="col-md-4 col-xs4">
+                    <input type="checkbox" id="MacBook Pro 15" onchange='handleChange("MacBook Pro 15");' />
+                    <a href="#" class="checkbox-tooltip" data-toggle="tooltip" data-placement="bottom" title="MacBook Pro 15' (900 * 1440)">
+                        MacBook Pro 15'
+                    </a>
+                </div>
+                <div class="col-md-4 col-xs4">
+                    <input type="checkbox" id="MacBook Pro 13" onchange='handleChange("MacBook Pro 13");' />
+                    <a href="#" class="checkbox-tooltip" data-toggle="tooltip" data-placement="bottom" title="MacBook Pro 13' (800 * 1280)">
+                        MacBook Pro 13'
+                    </a>
+                </div>
+            </div>
+
+            <div class="row device-row">
+                <div class="col-md-4 col-xs4">
+                    <input type="checkbox" id="Laptop HD" onchange='handleChange("Laptop HD");' />
+                    <a href="#" class="checkbox-tooltip" data-toggle="tooltip" data-placement="bottom" title="Laptop HD (1080 * 1920)">
+                        Laptop HD
+                    </a>
+                </div>
+                <div class="col-md-4 col-xs4">
+                    <input type="checkbox" id="Laptop large" onchange='handleChange("Laptop large");' />
+                    <a href="#" class="checkbox-tooltip" data-toggle="tooltip" data-placement="bottom" title="Laptop large (768 * 1366)">
+                        Laptop large
+                    </a>
+                </div>
+                <div class="col-md-4 col-xs4">
                     <input type="checkbox" id="iPad Pro" onchange='handleChange("iPad Pro");' />
                     <a href="#" class="checkbox-tooltip" data-toggle="tooltip" data-placement="bottom" title="iPad Pro (1024 * 1366)">
                         iPad Pro
                     </a>
                 </div>
+            </div>
+
+            <div class="row device-row">
                 <div class="col-md-4 col-xs4">
                     <input type="checkbox" id="iPad Mini" onchange='handleChange("iPad Mini");' />
                     <a href="#" class="checkbox-tooltip" data-toggle="tooltip" data-placement="bottom" title="iPad Mini (768 * 1024)">
                         iPad Mini
+                    </a>
+                </div>
+                <div class="col-md-4 col-xs4">
+                    <input type="checkbox" id="Samsung Galaxy Note 9" onchange='handleChange("Samsung Galaxy Note 9");' />
+                    <a href="#" class="checkbox-tooltip" data-toggle="tooltip" data-placement="bottom" title="Samsung Galaxy Note 9 (2960 * 1440)">
+                        Samsung Galaxy Note 9
+                        <span class="badge badge-new">New</span>
                     </a>
                 </div>
                 <div class="col-md-4 col-xs4">
@@ -98,41 +142,14 @@
                     </a>
                 </div>
                 <div class="col-md-4 col-xs4">
-                    <input type="checkbox" id="iPhone 5" onchange='handleChange("iPhone 5");' />
-                    <a href="#" class="checkbox-tooltip" data-toggle="tooltip" data-placement="bottom" title="iPhone 5 (558 * 320)">
-                        iPhone 5
-                    </a>
-                </div>
-            </div>
-
-            <div class="row device-row">
-                <div class="col-md-4 col-xs4">
-                    <input type="checkbox" id="Laptop HD" onchange='handleChange("Laptop HD");' />
-                    <a href="#" class="checkbox-tooltip" data-toggle="tooltip" data-placement="bottom" title="Laptop HD (1080 * 1920)">
-                        Laptop HD
-                    </a>
-                </div>
-                <div class="col-md-4 col-xs4">
-                    <input type="checkbox" id="Laptop large" onchange='handleChange("Laptop large");' />
-                    <a href="#" class="checkbox-tooltip" data-toggle="tooltip" data-placement="bottom" title="Laptop large (768 * 1366)">
-                        Laptop large
-                    </a>
-                </div>
-                <div class="col-md-4 col-xs4">
-                    <input type="checkbox" id="Laptop wxga–wide" onchange='handleChange("Laptop wxga–wide");' />
-                    <a href="#" class="checkbox-tooltip" data-toggle="tooltip" data-placement="bottom" title="Laptop wxga–wide (800 * 1280)">
-                        Laptop wxga–wide
-                    </a>
-                </div>
-            </div>
-
-            <div class="row device-row">
-                <div class="col-md-4 col-xs4">
                     <input type="checkbox" id="Nexus 6P" onchange='handleChange("Nexus 6P");' />
                     <a href="#" class="checkbox-tooltip" data-toggle="tooltip" data-placement="bottom" title="Nexus 6P (731 * 411)">
                         Nexus 6P
                     </a>
                 </div>
+            </div>
+
+            <div class="row device-row">
                 <div class="col-md-4 col-xs4">
                     <input type="checkbox" id="Samsung Galaxy Note 5" onchange='handleChange("Samsung Galaxy Note 5");' />
                     <a href="#" class="checkbox-tooltip" data-toggle="tooltip" data-placement="bottom" title="Samsung Galaxy Note 5 (853 * 480)">
@@ -144,22 +161,6 @@
                     <input type="checkbox" id="Samsung Galaxy S9" onchange='handleChange("Samsung Galaxy S9");' />
                     <a href="#" class="checkbox-tooltip" data-toggle="tooltip" data-placement="bottom" title="Samsung Galaxy S9 (740 * 360)">
                         Samsung Galaxy S9
-                    </a>
-                </div>
-            </div>
-
-            <div class="row device-row">
-                <div class="col-md-4 col-xs4">
-                    <input type="checkbox" id="Samsung Galaxy S7" onchange='handleChange("Samsung Galaxy S7");' />
-                    <a href="#" class="checkbox-tooltip" data-toggle="tooltip" data-placement="bottom" title="Samsung Galaxy S7 (640 * 360)">
-                        Samsung Galaxy S7
-                    </a>
-                </div>
-                <div class="col-md-4 col-xs4">
-                    <input type="checkbox" id="Samsung Galaxy Note 9" onchange='handleChange("Samsung Galaxy Note 9");' />
-                    <a href="#" class="checkbox-tooltip" data-toggle="tooltip" data-placement="bottom" title="Samsung Galaxy Note 9 (2960 * 1440)">
-                        Samsung Galaxy Note 9
-                        <span class="badge badge-new">New</span>
                     </a>
                 </div>
                 <div class="col-md-4 col-xs4">

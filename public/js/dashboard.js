@@ -150,6 +150,26 @@ xmlhttp.onreadystatechange = function () {
 function getDevice(deviceName) {
     var currDevice = {};
     switch (deviceName) {
+        case "iMac Retina 5K Display":
+            currDevice.name = "iMac Retina 5K Display";
+            currDevice.height = 1440;
+            currDevice.width = 2560;
+            break;
+
+
+        case "MacBook Pro 15":
+            currDevice.name = "MacBook Pro 15";
+            currDevice.height = 900;
+            currDevice.width = 1440;
+            break;
+
+
+        case "MacBook Pro 13":
+            currDevice.name = "MacBook Pro 13";
+            currDevice.height = 800;
+            currDevice.width = 1280;
+            break;
+
         case "Laptop HD":
             currDevice.name = "Laptop HD";
             currDevice.height = 1080;
@@ -240,6 +260,7 @@ function getDevice(deviceName) {
         default:
             currDevice = null;
     }
+    console.log(devices);
     return currDevice;
 }
 
