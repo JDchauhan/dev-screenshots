@@ -65,7 +65,7 @@ module.exports = function (app) {
 
     app.post('/verify/email', User.sendVerificationLink);
 
-    app.post("/", screenshot.capture);
+    app.post("/", screenshot.screenshotTaker);
 
     app.get("/download/:filename", function (req, res) {
         var file = "downloads/" + req.params.filename;

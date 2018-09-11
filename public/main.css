@@ -189,11 +189,15 @@ table
 }
 
 .pricingdiv ul.theplan:nth-of-type(1) {
-    background: #b100af;
+    background: #F88D2B;
 }
 
 .pricingdiv ul.theplan:nth-of-type(2) {
-    background: #2a2cc8;
+    background: #C49A6C;
+}
+
+.pricingdiv ul.theplan:nth-of-type(3) {
+    background: #055864;
 }
 
 .pricingdiv ul.theplan:last-of-type {
