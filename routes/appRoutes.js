@@ -65,7 +65,7 @@ module.exports = function (app) {
 
     app.post('/verify/email', User.sendVerificationLink);
 
-    app.post("/", screenshot.capture);
+    app.post("/", screenshot.screenshotTaker);
 
     app.get("/download/:filename", function (req, res) {
         var file = "downloads/" + req.params.filename;
@@ -79,7 +79,7 @@ module.exports = function (app) {
     //transactions
     //app.post('/payment/payumoney',transactionController.payUMoneyPayment);
 
-    app.post('/payment/stripe', transactionController.stripePayment);
+    app.post('/payment/stripe/:planID', transactionController.stripePayment);
 
     //app.post('/payment/payumoney/response', transactionController.payUMoneyPaymentResponse);
 

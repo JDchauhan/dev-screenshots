@@ -28,5 +28,8 @@ function logout(){
 $(function () {
     $(document).on('click', '', function () {
         $('.alert').hide(500);
+        if($('.collapsibleNavbar').hasClass('show')){
+            $('#nav-toggler').click();
+        }
     });
 });

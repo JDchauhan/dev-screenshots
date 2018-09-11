@@ -1,5 +1,5 @@
-var email = '';
-
+var email = '',
+    planID = 1;
 $(function () {
     if (getCookie("token") === "") {
         window.location.href = "/login?action=login_required";
@@ -40,12 +40,11 @@ $(function () {
         locale: 'auto',
         token: function (token) {
             $.ajax({
-                url: "../payment/stripe",
+                url: "../payment/stripe/" + planID,
                 type: 'POST',
                 data: JSON.stringify(token),
                 contentType: 'application/json',
                 success: function (result) {
-
                     console.log("success");
                 },
                 error: function (xhr, textStatus, errorThrown) {
@@ -55,13 +54,28 @@ $(function () {
         }
     });
 
-    document.getElementById('stripeBtn').addEventListener('click', function (e) {
-        // Open Checkout with further options:
+    $('.payment').on('click', function (e) {
+        planID = parseInt(e.currentTarget.getAttribute("planId"));
+        let planAmount = 499;
+        switch (planID) {
+            case 1:
+                break;
+            case 2:
+                planAmount = 999;
+                break;
+            case 3:
+                planAmount = 1999;
+                break;
+            default:
+                alert("error");
+                return;
+        }
+        //Open Checkout with further options:
         handler.open({
             name: 'Hexerve',
             description: 'Screenshot taker tool',
             zipCode: true,
-            amount: 599,
+            amount: planAmount,
             email: email
         });
         e.preventDefault();

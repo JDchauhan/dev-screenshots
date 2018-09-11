@@ -1,6 +1,7 @@
 var devices = [];
 var url;
 var isGuest;
+var plan = "";
 var list = [];
 
 $(function () {
@@ -17,6 +18,7 @@ $(function () {
         $.get("../user", {},
             function (data, status, xhr) {
                 console.log(data);
+                plan = data.results.user.plan;
                 // let name = data.results.user.name;
 
                 // name = name.charAt(0).toUpperCase() + name.substr(1);
@@ -57,6 +59,7 @@ xmlhttp.onreadystatechange = function () {
             $("#myModal").modal("show");
 
             document.getElementById("loader").style.display = "none";
+            $("footer").removeClass("no-body");
             document.getElementById("body-container").classList.remove("hidden");
             document.getElementById("submit").disabled = false;
 
@@ -115,6 +118,7 @@ xmlhttp.onreadystatechange = function () {
 
             list = [];
             document.getElementById("loader").style.display = "none";
+            $("footer").removeClass("no-body");
             document.getElementById("body-container").classList.remove("hidden");
 
             document.getElementById("submit").disabled = false;
@@ -128,18 +132,21 @@ xmlhttp.onreadystatechange = function () {
         $("#myModal").modal("show");
 
         document.getElementById("loader").style.display = "none";
+        $("footer").removeClass("no-body");
         document.getElementById("body-container").classList.remove("hidden");
         document.getElementById("submit").disabled = false;
     } else if (this.readyState == 4) {
 
         document.getElementById("message-heading").innerHTML = this.statusText;
         document.getElementById("message-body").innerHTML = JSON.parse(this.response).message;
-        if (JSON.parse(this.response).message === "free version can't request more than 3 screenshots.") {
+        if (JSON.parse(this.response).message.split("!")[0] === "plan upgradation required") {
             document.getElementById("message-body").innerHTML += '<br/> <a href="./payment">upgrade to pro</a>';
         }
+
         $("#myModal").modal("show");
 
         document.getElementById("loader").style.display = "none";
+        $("footer").removeClass("no-body");
         document.getElementById("body-container").classList.remove("hidden");
         document.getElementById("submit").disabled = false;
     }
@@ -150,6 +157,26 @@ xmlhttp.onreadystatechange = function () {
 function getDevice(deviceName) {
     var currDevice = {};
     switch (deviceName) {
+        case "iMac Retina 5K Display":
+            currDevice.name = "iMac Retina 5K Display";
+            currDevice.height = 1440;
+            currDevice.width = 2560;
+            break;
+
+
+        case "MacBook Pro 15":
+            currDevice.name = "MacBook Pro 15";
+            currDevice.height = 900;
+            currDevice.width = 1440;
+            break;
+
+
+        case "MacBook Pro 13":
+            currDevice.name = "MacBook Pro 13";
+            currDevice.height = 800;
+            currDevice.width = 1280;
+            break;
+
         case "Laptop HD":
             currDevice.name = "Laptop HD";
             currDevice.height = 1080;
@@ -240,19 +267,89 @@ function getDevice(deviceName) {
         default:
             currDevice = null;
     }
+    console.log(devices);
     return currDevice;
 }
 
-function add(deviceName) {
-    if (isGuest && devices.length > 2) {
-        document.getElementById("message-heading").innerHTML = "<code>Limitations!</code>";
-        document.getElementById("message-body").innerHTML = "You can only choose 3 devices.<br/>" +
-            "Please <a href='../payment'>Upgrade to Pro</a> version for unlimited access.";
-        $("#myModal").modal("show");
+function limitError(count) {
+    document.getElementById("message-heading").innerHTML = "<code>Limitations!</code>";
+    document.getElementById("message-body").innerHTML = "You can only choose " + count + " devices.<br/>" +
+        "Please <a href='../payment'>Upgrade to Pro</a> version for unlimited access.";
+    $("#myModal").modal("show");
+}
 
+function checkDeviceLimitations(){
+    if (isGuest) {
+        if (devices.length > 0) {
+            limitError(1);
+            return -1;
+        }
+    } else {
+        switch (plan) {
+            case "lite":
+                if (devices.length > 4) {
+                    limitError(5);
+                    return -1;
+                }
+                break;
+
+            case "professional":
+                if (devices.length > 14) {
+                    limitError(15);
+                    return -1;
+                }
+                break;
+
+            case "enterprise":
+                break;
+            default:
+                document.getElementById("message-heading").innerHTML = "<code>Error!</code>";
+                document.getElementById("message-body").innerHTML = "Please login again.";
+                $("#myModal").modal("show");
+
+                document.getElementById(deviceName).checked = false;
+                return -1;
+        }
+    }
+}
+function checkUrlLimitations() {
+    if (isGuest) {
+        if (list.length > 0) {
+            return -1;
+        }
+    } else {
+        switch (plan) {
+            case "lite":
+                if (list.length > 4) {
+                    return -1;
+                }
+                break;
+
+            case "professional":
+                if (list.length > 14) {
+                    return -1;
+                }
+                break;
+
+            case "enterprise":
+                break;
+            default:
+                document.getElementById("message-heading").innerHTML = "<code>Error!</code>";
+                document.getElementById("message-body").innerHTML = "Please login again.";
+                $("#myModal").modal("show");
+
+                document.getElementById(deviceName).checked = false;
+                return -1;
+        }
+    }
+}
+
+function add(deviceName) {
+    if (checkDeviceLimitations() == -1) {
         document.getElementById(deviceName).checked = false;
         return;
     }
+
     var currDevice = getDevice(deviceName);
     devices.push(currDevice);
 }
@@ -334,6 +431,9 @@ function addList() {
         name: name,
         url: url
     };
+    if (checkUrlLimitations() == -1) {
+        return;
+    }
     list.push(item);
     viewList();
 }
@@ -410,14 +510,7 @@ function addViewports() {
         height: parseInt(height),
         name: name
     };
-    if (isGuest && devices.length > 2) {
-        document.getElementById("message-heading").innerHTML = "Upgradation Required";
-        document.getElementById("message-body").innerHTML = "You can only choose 3 device.<br/>" +
-            "Please upgrade to pro for enjoying unlimited access " +
-            "<a href='../payment'>Upgrade to Pro</a>.";
-        $("#myModal").modal("show");
-
-        document.getElementById(deviceName).checked = false;
+    if (checkDeviceLimitations() == -1) {
         return;
     }
     devices.push(item);
@@ -463,6 +556,7 @@ function viewViewports() {
 function submit() {
     document.getElementById("submit").disabled = true;
     document.getElementById("loader").style.display = "block";
+    $("footer").addClass("no-body");
     document.getElementById("body-container").classList.add("hidden");
     filter();
     if (devices.length === 0) {
@@ -472,6 +566,7 @@ function submit() {
         $("#myModal").modal("show");
 
         document.getElementById("loader").style.display = "none";
+        $("footer").removeClass("no-body");
         document.getElementById("body-container").classList.remove("hidden");
         document.getElementById("submit").disabled = false;
 
@@ -482,6 +577,7 @@ function submit() {
         $("#myModal").modal("show");
 
         document.getElementById("loader").style.display = "none";
+        $("footer").removeClass("no-body");
         document.getElementById("body-container").classList.remove("hidden");
         document.getElementById("submit").disabled = false;
 
@@ -542,8 +638,8 @@ $(document).ready(function () {
             var curr_data = data[i].split(/,/);
             var name = curr_data[0];
             var url = curr_data[1];
-
             if (!validateURL(url)) {
+                console.log(url);
                 console.log("err");
 
                 $("#url_add_err").empty();
@@ -559,6 +655,15 @@ $(document).ready(function () {
                     name: name,
                     url: url
                 };
+                if (checkUrlLimitations() == -1) {
+                    $("#url_add_err").append(
+                        '<div class="alert alert-danger fade in alert-dismissible show">' +
+                        '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
+                        '<strong>Oops!</strong> Some of your links are not added due to limitation in current package <a href="./payment">upgrade to pro</a>.' +
+                        '</div>'
+                    );  
+                    return;
+                }
                 list.push(item);
                 viewList();
             }

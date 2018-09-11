@@ -34,6 +34,9 @@ var UserSchema = new Schema({
     type: Number,
     default: 0.0
   },
+  plan: {
+    type : String
+  },
   expires: {
     type: Date,
     default: Date.now

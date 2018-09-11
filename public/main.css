@@ -46,7 +46,7 @@ body {
 
 .device-row {
     color: #fff !important;
-    margin-top: 1%;
+    margin-top: 0.5%;
     margin-left: 8%;
 }
 
@@ -56,7 +56,7 @@ body {
 
 .btn-group {
     margin: auto;
-    margin-top: 2%;
+    margin-top: 1%;
     margin-left: -5%;
 }
 
@@ -116,7 +116,7 @@ td.visit_time_td {
     margin-right: 1.5%;
 }
 
-#stripeBtn {
+.stripeBtn {
     background: #38A2E2;
     color: #ffffff;
     font-weight: bold;
@@ -131,7 +131,6 @@ td.visit_time_td {
 }
 
 .highlight-nav {
-    color: magenta !important;
     -webkit-animation: wobble-vertical 2s infinite linear;
     -moz-animation: wobble-vertical 2s infinite linear;
     -o-animation: wobble-vertical 2s infinite linear;
@@ -147,12 +146,11 @@ table
     flex-wrap: wrap;
     justify-content: center;
     font-family: 'Source Sans Pro', Arial, sans-serif;
-    font-size: large
 }
 
 .payment-group {
     margin-bottom: 6%;
-    margin-top: 6%;
+    margin-top: 3%;
 }
 
 .pricingdiv ul.theplan {
@@ -166,7 +164,7 @@ table
     color: white;
     background: #b100af;
     position: relative;
-    width: 400px;
+    width: 300px;
     /* width of each table */
     margin-right: 10px;
     /* spacing between tables */
@@ -174,28 +172,32 @@ table
 }
 
 .pricingdiv ul.theplan li {
-    margin: 5px 20px;
+    margin: 1px 20px;
     position: relative;
     text-align: center;
 }
 
 .pricingdiv ul.theplan li.title {
-    font-size: 150%;
+    font-size: 120%;
     font-weight: bold;
     text-align: center;
     margin-top: 20px;
-    margin-bottom: 7%;
+    margin-bottom: 4%;
     text-transform: uppercase;
     padding-bottom: 5px;
     border-bottom: 5px solid white;
 }
 
 .pricingdiv ul.theplan:nth-of-type(1) {
-    background: #b100af;
+    background: #F88D2B;
 }
 
 .pricingdiv ul.theplan:nth-of-type(2) {
-    background: #2a2cc8;
+    background: #C49A6C;
+}
+
+.pricingdiv ul.theplan:nth-of-type(3) {
+    background: #055864;
 }
 
 .pricingdiv ul.theplan:last-of-type {
@@ -221,10 +223,12 @@ table
     text-transform: uppercase;
 }
 
+footer ul {
+    margin: 10px auto;
+}
+
 @media only screen and (max-width: 500px) {
     .pricingdiv ul.theplan {
-        border-radius: 0;
-        width: 100%;
         margin-right: 0;
     }
 
@@ -519,6 +523,7 @@ hr {
 
     .device-row {
         margin-left: 4%;
+        margin-top: 1%;
     }
 
     .hexerve {
@@ -552,8 +557,7 @@ hr {
     }
 
     .hexerve {
-        margin-left: 40%;
-        top: 50%;
+        top: 35%;
     }
 
     .btn-group {
@@ -604,12 +608,17 @@ hr {
         position: relative;
     }
 
+    .no-body {
+        position: fixed;
+        margin-bottom: 48px;
+    }
+
     .fill-content {
         position: fixed !important;
-        bottom: 7%;
+        bottom: 48px;
     }
 
     footer ul {
-        margin: 0%;
+        margin: 5px auto;
     }
 }
