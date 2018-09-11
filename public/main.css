@@ -131,7 +131,6 @@ td.visit_time_td {
 }
 
 .highlight-nav {
-    color: magenta !important;
     -webkit-animation: wobble-vertical 2s infinite linear;
     -moz-animation: wobble-vertical 2s infinite linear;
     -o-animation: wobble-vertical 2s infinite linear;
