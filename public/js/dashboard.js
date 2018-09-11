@@ -271,39 +271,61 @@ function getDevice(deviceName) {
     return currDevice;
 }
 
-function limitError(count, type) {
+function limitError(count) {
     document.getElementById("message-heading").innerHTML = "<code>Limitations!</code>";
-    document.getElementById("message-body").innerHTML = "You can only choose " + count + " " + type + ".<br/>" +
+    document.getElementById("message-body").innerHTML = "You can only choose " + count + " devices.<br/>" +
         "Please <a href='../payment'>Upgrade to Pro</a> version for unlimited access.";
     $("#myModal").modal("show");
 }
 
-function checkLimitations() {
+function checkDeviceLimitations(){
     if (isGuest) {
         if (devices.length > 0) {
-            limitError(1, "devices");
-            return -1;
-        }
-        if (list.length > 0) {
+            limitError(1);
             return -1;
         }
     } else {
         switch (plan) {
             case "lite":
                 if (devices.length > 4) {
-                    limitError(5, "devices");
-                    return -1;
-                }
-                if (list.length > 4) {
+                    limitError(5);
                     return -1;
                 }
                 break;
 
             case "professional":
                 if (devices.length > 14) {
-                    limitError(15, "devices");
+                    limitError(15);
                     return -1;
                 }
+                break;
+
+            case "enterprise":
+                break;
+            default:
+                document.getElementById("message-heading").innerHTML = "<code>Error!</code>";
+                document.getElementById("message-body").innerHTML = "Please login again.";
+                $("#myModal").modal("show");
+
+                document.getElementById(deviceName).checked = false;
+                return -1;
+        }
+    }
+}
+function checkUrlLimitations() {
+    if (isGuest) {
+        if (list.length > 0) {
+            return -1;
+        }
+    } else {
+        switch (plan) {
+            case "lite":
+                if (list.length > 4) {
+                    return -1;
+                }
+                break;
+
+            case "professional":
                 if (list.length > 14) {
                     return -1;
                 }
@@ -323,7 +345,7 @@ function checkLimitations() {
 }
 
 function add(deviceName) {
-    if (checkLimitations() == -1) {
+    if (checkDeviceLimitations() == -1) {
         document.getElementById(deviceName).checked = false;
         return;
     }
@@ -409,7 +431,7 @@ function addList() {
         name: name,
         url: url
     };
-    if (checkLimitations() == -1) {
+    if (checkUrlLimitations() == -1) {
         return;
     }
     list.push(item);
@@ -488,7 +510,7 @@ function addViewports() {
         height: parseInt(height),
         name: name
     };
-    if (checkLimitations() == -1) {
+    if (checkDeviceLimitations() == -1) {
         return;
     }
     devices.push(item);
@@ -633,7 +655,7 @@ $(document).ready(function () {
                     name: name,
                     url: url
                 };
-                if (checkLimitations() == -1) {
+                if (checkUrlLimitations() == -1) {
                     $("#url_add_err").append(
                         '<div class="alert alert-danger fade in alert-dismissible show">' +
                         '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
