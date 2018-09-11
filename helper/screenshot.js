@@ -30,19 +30,19 @@ module.exports.screenshotTaker = function (req, res) {
                     switch(plan){
                         case "lite":
                             if(req.body.devices.length > 5){
-                                return responses.errorMsg(res, 400, "Bad Request", "your plan can't take more than 3 screenshots.", null);                
+                                return responses.errorMsg(res, 400, "Bad Request", "plan upgradation required!<br/> your plan can't take more than 3 screenshots.", null);                
                             }
                             if (req.body.urls.length > 5) {
-                                return responses.errorMsg(res, 400, "Bad Request", "your plan can't take choose than 3 viewports.", null);
+                                return responses.errorMsg(res, 400, "Bad Request", "plan upgradation required!<br/> your plan can't take choose than 3 viewports.", null);
                             }
                             break;
         
                         case "professional":
                             if(req.body.devices.length > 15){
-                                return responses.errorMsg(res, 400, "Bad Request", "your plan can't take more than 10 screenshots.", null);                
+                                return responses.errorMsg(res, 400, "Bad Request", "plan upgradation required!<br/> your plan can't take more than 10 screenshots.", null);                
                             }
                             if (req.body.urls.length > 15) {
-                                return responses.errorMsg(res, 400, "Bad Request", "your plan can't take choose than 10 viewports.", null);
+                                return responses.errorMsg(res, 400, "Bad Request", "plan upgradation required!<br/> your plan can't take choose than 10 viewports.", null);
                             }
                             break;
         
@@ -57,9 +57,9 @@ module.exports.screenshotTaker = function (req, res) {
         });
     } else {
         if (req.body.devices.length > 1) {
-            return responses.errorMsg(res, 400, "Bad Request", "free version can't request more than 1 screenshots.", null);
+            return responses.errorMsg(res, 400, "Bad Request", "plan upgradation required!<br/> free version can't request more than 1 screenshots.", null);
         }else if(req.body.urls.length > 1) {
-            return responses.errorMsg(res, 400, "Bad Request", "your plan can't take choose than 1 viewports.", null);
+            return responses.errorMsg(res, 400, "Bad Request", "plan upgradation required!<br/> free version can't take choose than 1 viewports.", null);
         } else {
             capture(req, res);
         }
