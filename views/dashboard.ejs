@@ -26,23 +26,29 @@
                     <li class="nav-item white guest">
                         <a class="nav-link white" href="./login"><b>Login / Register</b></a>
                     </li>
-                    <li class="nav-item white logged">
-                        <a class="nav-link white" href="./resetpass"><b>Reset Password</b></a>
-                    </li>
                     <li class="nav-item">
                         <a class="nav-link highlight-nav white" id="pro" href="./login?action=login_required"><b>Plan</b></a>
-                    </li>
-                    <li class="nav-item logged">
-                        <a class="nav-link white" href=""><b>Preset</b></a>
-                    </li>
-                    <li class="nav-item logged">
-                        <a class="nav-link white" href=""><b>Cloud Backup</b></a>
                     </li>
                     <li class="nav-item white">
                         <a class="nav-link white" href="https://www.hexerve.com/contact" target="_blank"><b>Contact</b></a>
                     </li>
-                    <li class="nav-item white logged">
-                        <a class="nav-link white" onclick="logout()" href="./login?action=logout"><b>Log out</b></a>
+                    <li class="nav-item logged dropdown">
+                        <a class="dropdown-toggle nav-link white" data-toggle="dropdown" href="#"><b>My Account</b>
+                            <span class="caret"></span></a>
+                        <ul class="dropdown-menu ">
+                            <li class="nav-item logged">
+                                <a class="nav-link  white" href="./resetpass"><b>Reset Password</b></a>
+                            </li>
+                            <li class="nav-item logged">
+                                <a class="nav-link  white" href=""><b>Preset</b></a>
+                            </li>
+                            <li class="nav-item logged">
+                                <a class="nav-link  white" href=""><b>Cloud Backup</b></a>
+                            </li>
+                            <li class="nav-item logged">
+                                <a class="nav-link  white" onclick="logout()" href="./login?action=logout"><b>Log out</b></a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </div>

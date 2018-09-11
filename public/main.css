@@ -16,6 +16,14 @@ body {
     padding: 0px 10px !important;
 }
 
+ul.dropdown-menu.show {
+    background-color: #F1F1F1;
+}
+
+ul.dropdown-menu.show .white {
+    color: #4D4D4D !important;
+}
+
 .body-container {
     top: 40%;
 }
@@ -621,4 +629,9 @@ hr {
     footer ul {
         margin: 5px auto;
     }
+
+    ul.dropdown-menu.show {
+        background: inherit;
+        border: none;
+    }   
 }

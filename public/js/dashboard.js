@@ -26,6 +26,9 @@ $(function () {
                 // $(".username").text(name);
 
                 // currentUserID = data.results.user._id;
+                $("#pro").empty();
+                $("#pro").append("<b>Plan (" + data.results.user.plan + ")</b>");
+                
                 $(".guest").hide();
                 $(".logged").show();
 
