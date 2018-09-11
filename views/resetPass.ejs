@@ -15,7 +15,8 @@
             </a>
 
             <!-- Toggler/collapsibe Button -->
-            <button class="navbar-dark navbar-toggler" type="button" data-toggle="collapse" data-target=".collapsibleNavbar">
+            <button class="navbar-dark navbar-toggler" id="nav-toggler" type="button" data-toggle="collapse"
+                data-target=".collapsibleNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -24,11 +25,17 @@
                     <li class="nav-item">
                         <a class="nav-link white" href="./dashboard"><b>Home</b></a>
                     </li>
-                    <li class="nav-item white">
-                        <a class="nav-link white" href="https://www.hexerve.com/contact" target="_blank"><b>Contact</b></a>
-                    </li>
                     <li class="nav-item">
                         <a class="nav-link highlight-nav" id="pro" href="./payment"><b>Pro</b></a>
+                    </li>
+                    <li class="nav-item logged">
+                        <a class="nav-link white" href=""><b>Preset</b></a>
+                    </li>
+                    <li class="nav-item logged">
+                        <a class="nav-link white" href=""><b>Cloud Backup</b></a>
+                    </li>
+                    <li class="nav-item white">
+                        <a class="nav-link white" href="https://www.hexerve.com/contact" target="_blank"><b>Contact</b></a>
                     </li>
                     <li class="nav-item white logged">
                         <a class="nav-link white" onclick="logout()" href="./login?action=logout"><b>Log out</b></a>
@@ -84,24 +91,7 @@
     </div>
 
     <footer class="footer fixed-bottom fill-content bg-dark text-light">
-        <div class="container">
-            <div>
-                <ul class="list-inline text-center font-weight-bold font-italic">
-                    <li class="list-inline-item">About</li>
-                    <li class="list-inline-item">Packages</li>
-                    <li class="list-inline-item">Support</li>
-                    <li class="list-inline-item">Terms &amp; Conditions</li>
-                    <li class="list-inline-item">Privacy Policy</li>
-                    <li class="list-inline-item">Contact Us</li>
-                </ul>
-            </div>
-            <hr class="bg-secondary" />
-            <div class="text-center">
-                <span>Copyright &copy; 2018 Hexerve.</span>
-            </div>
-
-        </div>
-    </footer>
+        <% include partials/footer.ejs %>
 
 </body>
 

@@ -1,6 +1,6 @@
 <% include partials/header.ejs %>
 <script id="bolt" src="https://sboxcheckout-static.citruspay.com/bolt/run/bolt.min.js" bolt- color="<color-code>"
-    bolt-logo="<image path>"></script>
+ bolt-logo="<image path>"></script>
 
 <script src="https://checkout.stripe.com/checkout.js"></script>
 </head>
@@ -18,7 +18,7 @@
 			</a>
 
 			<!-- Toggler/collapsibe Button -->
-			<button class="navbar-dark navbar-toggler" type="button" data-toggle="collapse" data-target=".collapsibleNavbar">
+			<button class="navbar-dark navbar-toggler" id="nav-toggler" type="button" data-toggle="collapse" data-target=".collapsibleNavbar">
 				<span class="navbar-toggler-icon"></span>
 			</button>
 
@@ -26,6 +26,12 @@
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item">
 						<a class="nav-link white" href="./dashboard"><b>Home</b></a>
+					</li>
+					<li class="nav-item logged">
+						<a class="nav-link white" href=""><b>Preset</b></a>
+					</li>
+					<li class="nav-item logged">
+						<a class="nav-link white" href=""><b>Cloud Backup</b></a>
 					</li>
 					<li class="nav-item white">
 						<a class="nav-link white" href="https://www.hexerve.com/contact" target="_blank"><b>Contact</b></a>
@@ -43,11 +49,45 @@
 		<img class="hexerve" src="/hexerve.png" />
 	</div>
 
-	<div class="fixed-top body-container body-top-container" id='body-container'>
+	<div class="body-container">
 		<div class="pricingdiv">
 
 			<ul class="theplan">
-				<li class="title"><span class="icon-trophy" style="color:yellow"></span> <b>Pro ( 5.99$ )</b></li>
+				<li class="title"><span class="icon-trophy" style="color:yellow"></span> <b>Lite ( 4.99$ )</b></li>
+				<li><b>Unlimited Screenshots</b></li>
+				<li><b>Unlimited Devices</b></li>
+				<li><b>5 Links</b></li>
+				<li><b>5 Viewports</b></li>
+				<li><b>5 Folder</b></li>
+				<li><b>Single Device login</b></li>
+				<li><b>15 Days Free Support</b></li>
+				<li>
+					<div class="btn-group btn-group-lg payment-group">
+						<button type="button" class="btn stripeBtn payment" planId="1">Pay Now</button>
+					</div>
+				</li>
+			</ul>
+			<ul class="theplan">
+				<li class="title"><span class="icon-trophy" style="color:yellow"></span> <b>Professional ( 9.99$ )</b></li>
+				<li><b>Unlimited Screenshots</b></li>
+				<li><b>Unlimited Devices</b></li>
+				<li><b>15 Viewports</b></li>
+				<li><b>15 Links</b></li>
+				<li><b>15 Folders</b></li>
+				<li><b>5 preset Setting</b></li>
+				<li><b>2 Device login</b></li>
+				<li><b>Free Support</b></li>
+				<li><b>30 Days Money Back</b></li>
+				<li>
+					<div class="btn-group btn-group-lg payment-group">
+						<button type="button" class="btn stripeBtn payment" planId="2">Pay Now</button>
+					</div>
+				</li>
+			</ul>
+			<ul class="theplan">
+				<li class="title"><span class="icon-trophy" style="color:yellow"></span> <b>Enterprise ( 19.99$ )</b></li>
+				<li><b>CSV Upload</b></li>
+				<li><b>Cloud Backup</b></li>
 				<li><b>Unlimited Screenshots</b></li>
 				<li><b>Unlimited Devices</b></li>
 				<li><b>Unlimited Viewports</b></li>
@@ -58,7 +98,7 @@
 				<li><b>30 Days Money Back</b></li>
 				<li>
 					<div class="btn-group btn-group-lg payment-group">
-						<button type="button" id="stripeBtn" class="btn" id="payment">Pay Now</button>
+						<button type="button" class="btn stripeBtn payment" planId="3">Pay Now</button>
 					</div>
 				</li>
 			</ul>
@@ -68,27 +108,10 @@
 
 	</div>
 
-	<footer class="footer fixed-bottom bg-dark text-light">
-		<div class="container">
-			<div>
-				<ul class="list-inline text-center font-weight-bold font-italic">
-					<li class="list-inline-item">About</li>
-					<li class="list-inline-item">Packages</li>
-					<li class="list-inline-item">Support</li>
-					<li class="list-inline-item">Terms &amp; Conditions</li>
-					<li class="list-inline-item">Privacy Policy</li>
-					<li class="list-inline-item">Contact Us</li>
-				</ul>
-			</div>
-			<hr class="bg-secondary" />
-			<div class="text-center">
-				<span>Copyright &copy; 2018 Hexerve.</span>
-			</div>
+	<footer class="footer fixed-bottom  bg-dark text-light">
+		<% include partials/footer.ejs %>
 
-		</div>
-	</footer>
-
-	<script src="/js/payment.js"></script>
+		<script src="/js/payment.js"></script>
 </body>
 
 </html>
