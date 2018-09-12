@@ -26,8 +26,10 @@ $(function () {
 
                 // currentUserID = data.results.user._id;
                 plan = data.results.user.plan;
-                $("#pro").empty();
-                $("#pro").append("<b>Plan (" + data.results.user.plan + ")</b>");
+                if(plan){
+                    $("#pro").empty();
+                    $("#pro").append("<b>Plan (" + plan + ")</b>");
+                }
                 $("#pro").attr("href", "./payment");
 
                 $(".guest").hide();
