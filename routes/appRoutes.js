@@ -6,6 +6,7 @@ module.exports = function (app) {
     var transactionController = require('../controllers/transactionController');
 
     var User = require('../controllers/userController');
+    var Preset = require('../controllers/presetController');
     var screenshot = require('../helper/screenshot');
     var responses = require('../helper/responses');
     var VerifyToken = require('../helper/verifyToken');
@@ -64,6 +65,8 @@ module.exports = function (app) {
     app.get('/verify/email/:token', VerifyToken, User.verify);
 
     app.get("/user", VerifyToken, User.current_user);
+
+    app.post("/preset/add", VerifyToken, Preset.create);
 
     app.get("/payment", function (req, res) {
         res.render("payment");

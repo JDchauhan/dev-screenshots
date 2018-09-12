@@ -37,6 +37,10 @@ var UserSchema = new Schema({
   plan: {
     type : String
   },
+  preset: [{
+    type: Schema.Types.ObjectId,
+    ref: 'preset'
+  }],
   expires: {
     type: Date,
     default: Date.now

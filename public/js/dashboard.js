@@ -26,7 +26,7 @@ $(function () {
 
                 // currentUserID = data.results.user._id;
                 plan = data.results.user.plan;
-                if(plan){
+                if (plan) {
                     $("#pro").empty();
                     $("#pro").append("<b>Plan (" + plan + ")</b>");
                 }
@@ -711,6 +711,49 @@ $(document).ready(function () {
             };
         }
     }
+
+    $(document).on('click', '#preset', function () {
+        let data = {};
+        data.name = "preset2";
+        data.devices = devices;
+
+        $.ajax({
+            url: "../preset/add",
+            type: 'POST',
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            success: function (data) {
+                $('.alert').hide(500);
+                $('.errorDiv').append(
+                    '<div class="alert alert-success alert-dismissible fade show">' +
+                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                    '<strong>Congratulations! </strong>Preset added successfully' +
+                    '</div>'
+                );
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                var errMsg;
+                if (xhr.status === 0) {
+                    errMsg = "Network error.";
+                } else {
+                    errMsg = JSON.parse(xhr.responseText).message;
+                    errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
+
+                    if (errMsg === 'Validation failed.') {
+                        errMsg += '<br/>Incorrect ' + JSON.parse(xhr.responseText).errors.index.join(", ");
+                    }
+                }
+                $('.alert').hide(500);
+                $('.errorDiv').append(
+                    '<div class="alert alert-danger alert-dismissible fade show">' +
+                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                    '<strong>Oops! </strong>' + errMsg +
+                    '</div>'
+                );
+            }
+        });
+
+    });
 
     $('#url').keypress(function (e) {
         var key = e.which;
