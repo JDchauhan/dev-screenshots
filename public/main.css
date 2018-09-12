@@ -16,9 +16,28 @@ body {
     padding: 0px 10px !important;
 }
 
-ul.dropdown-menu.show {
+ul.dropdown-menu.show,
+.preset-form {
     background-color: #F1F1F1;
     min-width: 200px;
+}
+
+.preset-form {
+    min-width: 250px;
+}
+
+.preset-form button {
+    margin-right: 0%;
+}
+
+.preset-form input {
+    width: 100% !important;
+}
+
+.preset-input {
+    display: inline-block !important;
+    margin-left: 5%;
+    width: 58%;
 }
 
 ul.dropdown-menu.show .white {
@@ -631,8 +650,17 @@ hr {
         margin: 5px auto;
     }
 
-    ul.dropdown-menu.show {
+    ul.dropdown-menu.show,
+    .preset-form {
         background: inherit;
         border: none;
-    }   
+    }
+
+    .preset-form {
+        margin-left: 15%;
+        margin-bottom: 0%;
+    }
+    .preset-input {
+        margin: 0%;
+    }
 }

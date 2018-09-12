@@ -712,9 +712,9 @@ $(document).ready(function () {
         }
     }
 
-    $(document).on('click', '#preset', function () {
+    $(document).on('click', '#preset_add', function () {
         let data = {};
-        data.name = "preset2";
+        data.name = $('#preset_name').val();
         data.devices = devices;
 
         $.ajax({
