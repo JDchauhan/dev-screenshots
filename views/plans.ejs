@@ -1,0 +1,80 @@
+<% include partials/header.ejs %>
+<script src="/js/plans.js"></script>
+</head>
+
+<body>
+	<%- include('partials/navbar', {
+			home: true,
+			login: true,
+			plan: false,
+			account: false
+		}); %>
+
+	<div id="loader" class="container row">
+		<img class="hexerve" src="/hexerve.png" />
+	</div>
+
+	<div class="body-container">
+		<div class="pricingdiv">
+
+			<ul class="theplan">
+				<li class="title"><span class="icon-trophy" style="color:yellow"></span> <b>Lite ( 4.99$ )</b></li>
+				<li><b>Unlimited Screenshots</b></li>
+				<li><b>Unlimited Devices</b></li>
+				<li><b>5 Links</b></li>
+				<li><b>5 Viewports</b></li>
+				<li><b>5 Folder</b></li>
+				<li><b>Single Device login</b></li>
+				<li><b>15 Days Free Support</b></li>
+				<li>
+					<div class="btn-group btn-group-lg payment-group">
+						<button type="button" class="btn stripeBtn payment" planId="1">Pay Now</button>
+					</div>
+				</li>
+			</ul>
+			<ul class="theplan">
+				<li class="title"><span class="icon-trophy" style="color:yellow"></span> <b>Professional ( 9.99$ )</b></li>
+				<li><b>Unlimited Screenshots</b></li>
+				<li><b>Unlimited Devices</b></li>
+				<li><b>15 Viewports</b></li>
+				<li><b>15 Links</b></li>
+				<li><b>15 Folders</b></li>
+				<li><b>5 preset Setting</b></li>
+				<li><b>2 Device login</b></li>
+				<li><b>Free Support</b></li>
+				<li><b>30 Days Money Back</b></li>
+				<li>
+					<div class="btn-group btn-group-lg payment-group">
+						<button type="button" class="btn stripeBtn payment" planId="2">Pay Now</button>
+					</div>
+				</li>
+			</ul>
+			<ul class="theplan">
+				<li class="title"><span class="icon-trophy" style="color:yellow"></span> <b>Enterprise ( 19.99$ )</b></li>
+				<li><b>CSV Upload</b></li>
+				<li><b>Cloud Backup</b></li>
+				<li><b>Unlimited Screenshots</b></li>
+				<li><b>Unlimited Devices</b></li>
+				<li><b>Unlimited Viewports</b></li>
+				<li><b>Unlimited Links</b></li>
+				<li><b>Unlimited Folders</b></li>
+				<li><b>Unlimited preset Setting</b></li>
+				<li><b>Free Support</b></li>
+				<li><b>30 Days Money Back</b></li>
+				<li>
+					<div class="btn-group btn-group-lg payment-group">
+						<button type="button" class="btn stripeBtn payment" planId="3">Pay Now</button>
+					</div>
+				</li>
+			</ul>
+
+		</div>
+
+
+	</div>
+
+	<footer class="footer fixed-bottom  bg-dark text-light">
+		<% include partials/footer.ejs %>
+</body>
+
+</html>

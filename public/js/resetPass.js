@@ -1,3 +1,5 @@
+var plan = "";
+
 $(function () {
     if (getCookie("token") === "") {
         window.location.href = "/login?action=login_required";
@@ -15,7 +17,11 @@ $(function () {
                 email = data.results.user.email;
 
                 name = name.charAt(0).toUpperCase() + name.substr(1);
-
+                plan = data.results.user.plan;
+                $("#pro").empty();
+                $("#pro").append("<b>Plan (" + data.results.user.plan + ")</b>");
+                $("#pro").attr("href", "./payment");
+                
             }).fail(function (xhr, status, error) {
             var errMsg;
 

@@ -18,7 +18,6 @@ $(function () {
         $.get("../user", {},
             function (data, status, xhr) {
                 console.log(data);
-                plan = data.results.user.plan;
                 // let name = data.results.user.name;
 
                 // name = name.charAt(0).toUpperCase() + name.substr(1);
@@ -26,13 +25,13 @@ $(function () {
                 // $(".username").text(name);
 
                 // currentUserID = data.results.user._id;
+                plan = data.results.user.plan;
                 $("#pro").empty();
                 $("#pro").append("<b>Plan (" + data.results.user.plan + ")</b>");
-                
+                $("#pro").attr("href", "./payment");
+
                 $(".guest").hide();
                 $(".logged").show();
-
-                $("#pro").attr("href", "./payment");
 
             }).fail(function (xhr, status, error) {
             if (xhr.status === 0) {

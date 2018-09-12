@@ -23,6 +23,8 @@ module.exports = function (app) {
         });
     });
 
+    app.post("/", screenshot.screenshotTaker);
+
     app.get("/login", function (req, res) {
         res.render("login", {
             message: false
@@ -31,6 +33,10 @@ module.exports = function (app) {
 
     app.get("/resetpass", function (req, res) {
         res.render("resetPass");
+    });
+
+    app.get("/plans", function (req, res) {
+        res.render("plans");
     });
 
     app.post("/login", User.login);
@@ -64,8 +70,6 @@ module.exports = function (app) {
     });
 
     app.post('/verify/email', User.sendVerificationLink);
-
-    app.post("/", screenshot.screenshotTaker);
 
     app.get("/download/:filename", function (req, res) {
         var file = "downloads/" + req.params.filename;
