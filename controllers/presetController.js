@@ -38,3 +38,18 @@ module.exports.create = function (req, res) {
 
         });
 };
+
+module.exports.delete = function (req, res) {
+    Preset.findByIdAndRemove(req.body.id,
+        function (err, preset) {
+            if (err) {
+                console.log(err);
+                return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+            }
+            if (!preset) {
+                return responses.errorMsg(res, 404, "Not Found", "preset not found.", null);
+            }
+
+            User.removePreset(req, res, preset._id);
+        });
+};

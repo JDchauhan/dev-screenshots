@@ -366,6 +366,11 @@ table
     margin-right: 35%;
 }
 
+.remove_preset_button {
+    color: red;
+    margin-right: 5%;
+}
+
 #url_add_err {
     width: 95%;
     margin-left: 2.5%;
@@ -660,6 +665,7 @@ hr {
     .preset-form {
         margin-left: 12%;
     }
+
     .preset-input {
         margin: 0%;
     }

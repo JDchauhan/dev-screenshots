@@ -30,11 +30,44 @@ $(function () {
                 for (let i = 0; i < preset.length; i++) {
                     $('#preset-list').append(
                         '<li class="nav-item logged">' +
-                        '<a class="nav-link  white" href="#" id="preset_' + i + '"><b>' + preset[i].name + '</b></a>' +
+                        '<a class="nav-link d-inline  white" href="#" id="preset_' + i + '"><b>' + preset[i].name + '</b></a>' +
+                        '<button id="delete_preset_' + i + '" class="close remove_preset_button">×</button>' +
                         '</li>'
                     );
                     $(document).on('click', '#preset_' + i, function(){
                         devices = preset[i].devices;
+                    });
+
+                    $(document).on('click', '#delete_preset_' + i, function(){
+                        let data = {
+                            id: preset[i]._id
+                        };
+                
+                        $.ajax({
+                            url: "../preset",
+                            type: 'DELETE',
+                            data: JSON.stringify(data),
+                            contentType: 'application/json',
+                            success: function (result) {
+                                $('.errorDiv').append(
+                                    '<div class="alert alert-success alert-dismissible fade show">' +
+                                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                                    '<strong>Congratulations! </strong>Preset successfully removed' +
+                                    '</div>'
+                                );
+                            },
+                            error: function (xhr, textStatus, errorThrown) {
+                                let errMsg = xhr.responseJSON.message;
+                                errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
+                                    
+                                $('.errorDiv').append(
+                                    '<div class="alert alert-danger alert-dismissible fade show">' +
+                                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                                    '<strong>Oops! </strong>' + errMsg +
+                                    '</div>'
+                                );
+                            }
+                        });
                     });
                 }
                 plan = data.results.user.plan;
@@ -730,7 +763,7 @@ $(document).ready(function () {
         data.devices = devices;
 
         $.ajax({
-            url: "../preset/add",
+            url: "../preset",
             type: 'POST',
             data: JSON.stringify(data),
             contentType: 'application/json',

@@ -465,3 +465,21 @@ module.exports.addPreset = function (req, res, id) {
         return responses.successMsg(res, null);
     });
 }
+
+module.exports.removePreset = function (req, res, id) {
+    if (!req.id || req.id.length !== 24) {
+        return responses.errorMsg(res, 401, "Unauthorized", "failed to authenticate token.", null);
+    }
+
+    User.update({}, {
+        $pull: { preset: id },
+    }, function (err, user) {
+        if (err) {
+            return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+        }
+        if (!user) {
+            return responses.errorMsg(res, 404, "Not Found", "user not found.", null);
+        }
+        return responses.successMsg(res, null);
+    });
+}
