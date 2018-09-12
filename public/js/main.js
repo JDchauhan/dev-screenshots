@@ -21,14 +21,16 @@ function getCookie(cname) {
     return "";
 }
 
-function logout(){
-    setCookie("token","", -1);
+function logout() {
+    setCookie("token", "", -1);
 }
 
 $(function () {
-    $(document).on('click', '', function () {
-        $('.alert').hide(500);
-        if($('.collapsibleNavbar').hasClass('show')){
+    $(document).on('click', '', function (e) {
+        if (e.target.getAttribute("onclick") !== "addList()") {
+            $('.alert').hide(500);
+        }
+        if ($('.collapsibleNavbar').hasClass('show')) {
             $('#nav-toggler').click();
         }
     });

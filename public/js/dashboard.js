@@ -280,7 +280,7 @@ function limitError(count) {
     $("#myModal").modal("show");
 }
 
-function checkDeviceLimitations(){
+function checkDeviceLimitations() {
     if (isGuest) {
         if (devices.length > 0) {
             limitError(1);
@@ -305,15 +305,14 @@ function checkDeviceLimitations(){
             case "enterprise":
                 break;
             default:
-                document.getElementById("message-heading").innerHTML = "<code>Error!</code>";
-                document.getElementById("message-body").innerHTML = "Please login again.";
-                $("#myModal").modal("show");
-
-                document.getElementById(deviceName).checked = false;
-                return -1;
+                if (devices.length > 0) {
+                    limitError(1);
+                    return -1;
+                }
         }
     }
 }
+
 function checkUrlLimitations() {
     if (isGuest) {
         if (list.length > 0) {
@@ -336,12 +335,9 @@ function checkUrlLimitations() {
             case "enterprise":
                 break;
             default:
-                document.getElementById("message-heading").innerHTML = "<code>Error!</code>";
-                document.getElementById("message-body").innerHTML = "Please login again.";
-                $("#myModal").modal("show");
-
-                document.getElementById(deviceName).checked = false;
-                return -1;
+                if (list.length > 0) {
+                    return -1;
+                }
         }
     }
 }
@@ -416,15 +412,12 @@ function addList() {
     if (!validateURL(url)) {
         console.log("err");
 
-        $("#url_add_err").empty();
-        $('.alert').hide(500);
         $("#url_add_err").append(
             '<div class="alert alert-danger fade in alert-dismissible show">' +
             '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
-            '<strong>Invalid URL!</strong> Make sure you have include http/https protocol.' +
+            '<strong>Invalid URLs!</strong> Make sure you have include http/https protocol.' +
             '</div>'
         );
-
         return;
     }
     $('#name_insert').val('');
@@ -434,6 +427,12 @@ function addList() {
         url: url
     };
     if (checkUrlLimitations() == -1) {
+        $("#url_add_err").append(
+            '<div class="alert alert-danger fade in alert-dismissible show">' +
+            '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
+            '<strong>Oops!</strong> Some of your links are not added due to limitation in current package <a href="./payment">upgrade to pro</a>.' +
+            '</div>'
+        );
         return;
     }
     list.push(item);
@@ -663,7 +662,7 @@ $(document).ready(function () {
                         '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
                         '<strong>Oops!</strong> Some of your links are not added due to limitation in current package <a href="./payment">upgrade to pro</a>.' +
                         '</div>'
-                    );  
+                    );
                     return;
                 }
                 list.push(item);
@@ -711,7 +710,15 @@ $(document).ready(function () {
         }
     }
 
-    $('input').keypress(function (e) {
+    $('#url').keypress(function (e) {
+        var key = e.which;
+        if (key == 13) // the enter key code
+        {
+            $('#submit').click();
+            return false;
+        }
+    });
+    $('.device-row input').keypress(function (e) {
         var key = e.which;
         if (key == 13) // the enter key code
         {
