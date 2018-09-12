@@ -18,6 +18,7 @@ body {
 
 ul.dropdown-menu.show {
     background-color: #F1F1F1;
+    min-width: 200px;
 }
 
 ul.dropdown-menu.show .white {
