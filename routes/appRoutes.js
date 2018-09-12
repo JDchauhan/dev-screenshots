@@ -66,6 +66,8 @@ module.exports = function (app) {
 
     app.get("/user", VerifyToken, User.current_user);
 
+    app.get("/user/preset", VerifyToken, User.current_user_preset);
+
     app.post("/preset/add", VerifyToken, Preset.create);
 
     app.get("/payment", function (req, res) {

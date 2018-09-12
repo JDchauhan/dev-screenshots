@@ -62,7 +62,9 @@ module.exports.register = function (req, res) {
 
                         Mail.verification_mail(req.body.email, link);
 
-                        return responses.successMsg(res, {email: req.body.email});
+                        return responses.successMsg(res, {
+                            email: req.body.email
+                        });
                     }
                 });
 
@@ -127,6 +129,30 @@ module.exports.current_user = function (req, res) {
         };
         return responses.successMsg(res, results);
     });
+};
+
+module.exports.current_user_preset = function (req, res) {
+    if (!req.id || req.id.length !== 24) {
+        return responses.errorMsg(res, 401, "Unauthorized", "failed to authenticate token.", null);
+    }
+
+    User.findById(req.id,{password: 0, __v: 0})
+        .populate("preset", "-__v")
+        .exec(
+            function (err, user) {
+
+                if (err) {
+                    return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+                }
+
+                if (!user) {
+                    return responses.errorMsg(res, 404, "Not Found", "user not found.", null);
+                }
+                results = {
+                    user: user
+                };
+                return responses.successMsg(res, results);
+            });
 };
 
 module.exports.changePassword = function (req, res) {
@@ -422,12 +448,14 @@ module.exports.addMoney = function (req, res, email, plan) {
     });
 }
 
-module.exports.addPreset = function(req, res, id){
+module.exports.addPreset = function (req, res, id) {
     if (!req.id || req.id.length !== 24) {
         return responses.errorMsg(res, 401, "Unauthorized", "failed to authenticate token.", null);
     }
 
-    User.findByIdAndUpdate(req.id, {preset: id}, function (err, user) {
+    User.findByIdAndUpdate(req.id, {
+        preset: id
+    }, function (err, user) {
         if (err) {
             return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
         }

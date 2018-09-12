@@ -3,6 +3,7 @@ var url;
 var isGuest;
 var plan = "";
 var list = [];
+var preset = [];
 
 $(function () {
     $(".guest").show();
@@ -15,7 +16,7 @@ $(function () {
                 'authorization': getCookie("token")
             }
         });
-        $.get("../user", {},
+        $.get("../user/preset", {},
             function (data, status, xhr) {
                 console.log(data);
                 // let name = data.results.user.name;
@@ -25,6 +26,17 @@ $(function () {
                 // $(".username").text(name);
 
                 // currentUserID = data.results.user._id;
+                preset = data.results.user.preset;
+                for (let i = 0; i < preset.length; i++) {
+                    $('#preset-list').append(
+                        '<li class="nav-item logged">' +
+                        '<a class="nav-link  white" href="#" id="preset_' + i + '"><b>' + preset[i].name + '</b></a>' +
+                        '</li>'
+                    );
+                    $(document).on('click', '#preset_' + i, function(){
+                        devices = preset[i].devices;
+                    });
+                }
                 plan = data.results.user.plan;
                 if (plan) {
                     $("#pro").empty();
