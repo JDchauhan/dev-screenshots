@@ -454,7 +454,7 @@ module.exports.addPreset = function (req, res, id) {
     }
 
     User.findByIdAndUpdate(req.id, {
-        preset: id
+        $push: {preset: id}
     }, function (err, user) {
         if (err) {
             return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
@@ -462,7 +462,7 @@ module.exports.addPreset = function (req, res, id) {
         if (!user) {
             return responses.errorMsg(res, 404, "Not Found", "user not found.", null);
         }
-        return responses.successMsg(res, null);
+        return responses.successMsg(res, {_id: id});
     });
 }
 
@@ -480,6 +480,6 @@ module.exports.removePreset = function (req, res, id) {
         if (!user) {
             return responses.errorMsg(res, 404, "Not Found", "user not found.", null);
         }
-        return responses.successMsg(res, null);
+        return responses.successMsg(res, {_id: id});
     });
 }

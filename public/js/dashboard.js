@@ -29,16 +29,17 @@ $(function () {
                 preset = data.results.user.preset;
                 for (let i = 0; i < preset.length; i++) {
                     $('#preset-list').append(
-                        '<li class="nav-item logged">' +
-                        '<a class="nav-link d-inline  white" href="#" id="preset_' + i + '"><b>' + preset[i].name + '</b></a>' +
-                        '<button id="delete_preset_' + i + '" class="close remove_preset_button">×</button>' +
+                        '<li class="nav-item logged" id="preset_item_' + preset[i]._id + '">' +
+                        '<a class="nav-link d-inline  white" href="#" id="preset_' + preset[i]._id + '"><b>' + preset[i].name + '</b></a>' +
+                        '<button id="delete_preset_' + preset[i]._id + '" class="close remove_preset_button">×</button>' +
                         '</li>'
                     );
-                    $(document).on('click', '#preset_' + i, function(){
-                        devices = preset[i].devices;
+                    $(document).on('click', '#preset_' + preset[i]._id, function(){
+                        let index = preset.findIndex(x => x._id === response.results._id);
+                        devices = preset[index].devices;
                     });
 
-                    $(document).on('click', '#delete_preset_' + i, function(){
+                    $(document).on('click', '#delete_preset_' + preset[i]._id, function(){
                         let data = {
                             id: preset[i]._id
                         };
@@ -48,13 +49,14 @@ $(function () {
                             type: 'DELETE',
                             data: JSON.stringify(data),
                             contentType: 'application/json',
-                            success: function (result) {
+                            success: function (response) {
                                 $('.errorDiv').append(
                                     '<div class="alert alert-success alert-dismissible fade show">' +
                                     '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
                                     '<strong>Congratulations! </strong>Preset successfully removed' +
                                     '</div>'
                                 );
+                                $('#preset_item_' + response.results._id).remove();
                             },
                             error: function (xhr, textStatus, errorThrown) {
                                 let errMsg = xhr.responseJSON.message;
@@ -767,7 +769,7 @@ $(document).ready(function () {
             type: 'POST',
             data: JSON.stringify(data),
             contentType: 'application/json',
-            success: function (data) {
+            success: function (response) {
                 $('.alert').hide(500);
                 $('.errorDiv').append(
                     '<div class="alert alert-success alert-dismissible fade show">' +
@@ -775,6 +777,51 @@ $(document).ready(function () {
                     '<strong>Congratulations! </strong>Preset added successfully' +
                     '</div>'
                 );
+                preset.push(data);
+                $('#preset-list').append(
+                    '<li class="nav-item logged" id="preset_item_' + response.results._id + '">' +
+                    '<a class="nav-link d-inline  white" href="#" id="preset_' + response.results._id + '"><b>' + data.name + '</b></a>' +
+                    '<button id="delete_preset_' + response.results._id + '" class="close remove_preset_button">×</button>' +
+                    '</li>'
+                );
+                $(document).on('click', '#preset_' + response.results._id, function(){
+                    let index = preset.findIndex(x => x._id === response.results._id);
+                    devices = preset[index].devices;
+                });
+
+                $(document).on('click', '#delete_preset_' + response.results._id, function(){
+                    
+                    let data = {
+                        id: response.results._id
+                    };
+                    
+                    $.ajax({
+                        url: "../preset",
+                        type: 'DELETE',
+                        data: JSON.stringify(data),
+                        contentType: 'application/json',
+                        success: function (result) {
+                            $('.errorDiv').append(
+                                '<div class="alert alert-success alert-dismissible fade show">' +
+                                '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                                '<strong>Congratulations! </strong>Preset successfully removed' +
+                                '</div>'
+                            );
+                            $('#preset_item_' + response.results._id).remove();
+                        },
+                        error: function (xhr, textStatus, errorThrown) {
+                            let errMsg = xhr.responseJSON.message;
+                            errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
+                                
+                            $('.errorDiv').append(
+                                '<div class="alert alert-danger alert-dismissible fade show">' +
+                                '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                                '<strong>Oops! </strong>' + errMsg +
+                                '</div>'
+                            );
+                        }
+                    });
+                }); 
             },
             error: function (xhr, textStatus, errorThrown) {
                 var errMsg;
