@@ -33,26 +33,30 @@
                 <li class="nav-item white logged">
                     <a class="nav-link white" href="https://www.hexerve.com/contact" target="_blank"><b>Contact</b></a>
                 </li>
+                <% if(account){ %>
                 <li class="nav-item logged dropdown">
                     <a class="dropdown-toggle nav-link white" data-toggle="dropdown" href="#"><b>Preset</b>
                         <span class="caret"></span></a>
-                    <form class="dropdown-menu preset-form form-inline">
-                        <div class="form-group preset-input">
-                            <input type="text" class="form-control" placeholder="name" id="preset_name">
-                        </div>
-                        <button type="button" class="btn btn-default" id="preset_add">Submit</button>
-                    </form>
+                    <!-- <div class="dropdown-menu "> -->
+                    <ul class="dropdown-menu ">
+                        <li class="nav-item logged">
+                            <form class="form-inline preset-form">
+                                <div class="form-group preset-input">
+                                    <input type="text" class="form-control" placeholder="name" id="preset_name">
+                                </div>
+                                <button type="button" class="btn btn-default" id="preset_add">Submit</button>
+                            </form>
+                        </li>
+                    </ul>
+
+                    <!-- </div> -->
                 </li>
-                <% if(account){ %>
                 <li class="nav-item logged dropdown">
                     <a class="dropdown-toggle nav-link white" data-toggle="dropdown" href="#"><b>My Account</b>
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu ">
                         <li class="nav-item logged">
                             <a class="nav-link  white" href="./resetpass"><b>Reset Password</b></a>
-                        </li>
-                        <li class="nav-item logged">
-                            <a class="nav-link  white" href="#" id="preset"><b>Preset</b></a>
                         </li>
                         <li class="nav-item logged">
                             <a class="nav-link  white" href=""><b>Cloud Backup</b></a>

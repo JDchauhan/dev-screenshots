@@ -24,6 +24,7 @@ ul.dropdown-menu.show,
 
 .preset-form {
     min-width: 250px;
+    margin-bottom: 0% !important;
 }
 
 .preset-form button {
@@ -36,8 +37,8 @@ ul.dropdown-menu.show,
 
 .preset-input {
     display: inline-block !important;
-    margin-left: 5%;
-    width: 58%;
+    margin-left: 1%;
+    width: 64%;
 }
 
 ul.dropdown-menu.show .white {
@@ -657,8 +658,7 @@ hr {
     }
 
     .preset-form {
-        margin-left: 15%;
-        margin-bottom: 0%;
+        margin-left: 12%;
     }
     .preset-input {
         margin: 0%;
