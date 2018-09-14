@@ -30,8 +30,14 @@ $(function () {
             data: JSON.stringify(data),
             contentType: 'application/json',
             success: function (data) {
-                setCookie("token", data.results.token, 1);
-                window.location.href = "/";
+                if(data.results.admin){
+                    console.log("here");
+                    setCookie("token", data.results.token, 1);
+                    window.location.href = "./admin";    
+                }else{
+                    setCookie("token", data.results.token, 1);
+                    window.location.href = "/";
+                }
             },
             error: function (xhr, textStatus, errorThrown) {
                 var errMsg;

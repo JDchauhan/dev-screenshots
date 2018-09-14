@@ -1,0 +1,82 @@
+<% include partials/header.ejs %>
+<script src="/js/admin.js"></script>
+</head>
+
+<body>
+	<%- include('partials/navbar', {
+			home: true,
+			login: false,
+			plan: false,
+			account: true
+		}); %>
+
+	<div id="loader" class="container row">
+		<img class="hexerve" src="/hexerve.png" />
+	</div>
+
+	<div class="body-container">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6">
+					<div id="search-msg"></div>
+					<form>
+						<div class="input-group mb-3 input-group-lg container">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Email</span>
+							</div>
+							<input type="text" class="form-control" name="email" id="email" placeholder="example@gmail.com">
+						</div>
+						<div class="wrapper text-center">
+							<div class="btn-group btn-group-lg">
+								<button type="button" id="search-btn" class="btn wobble-vertical">Search</button>
+							</div>
+						</div>
+					</form>
+				</div>
+
+				<div class="col-md-6">
+					<div id="list-msg"></div>
+					<form>
+						<div class="input-group mb-3 input-group-lg container">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Email</span>
+							</div>
+							<input type="text" class="form-control" name="email" id="email" placeholder="example@gmail.com">
+						</div>
+						<div class="input-group mb-3 input-group-lg container">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Current Package</span>
+							</div>
+							<input type="text" class="form-control" name="email" id="email" placeholder="example@gmail.com">
+						</div>
+						<div class="input-group mb-3 input-group-lg container">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Package Ends</span>
+							</div>
+							<input type="text" class="form-control" name="email" id="email" placeholder="example@gmail.com">
+						</div>
+						<div class="input-group mb-3 input-group-lg container">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Make Admin</span>
+							</div>
+							<input type="text" class="form-control" name="email" id="email" placeholder="yes">
+						</div>
+						<div class="wrapper text-center">
+							<div class="btn-group btn-group-lg">
+								<button type="button" id="search-btn" class="btn wobble-vertical">Update</button>
+							</div>
+						</div>
+					</form>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+
+
+	<footer class="footer fixed-bottom  bg-dark text-light">
+		<% include partials/footer.ejs %>
+</body>
+
+</html>

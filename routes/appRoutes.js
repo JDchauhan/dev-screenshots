@@ -40,6 +40,10 @@ module.exports = function (app) {
         res.render("plans");
     });
 
+    app.get("/admin", function (req, res) {
+        res.render("admin");
+    });
+
     app.post("/login", User.login);
 
     app.post("/register", User.register);

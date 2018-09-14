@@ -10,6 +10,10 @@ var UserSchema = new Schema({
     maxlength: [30, 'name does not exceeds 30 characters'],
     required: [true, 'please enter your name']
   },
+  isAdmin: {
+    type: Boolean,
+    default: false
+  },
   email: {
     type: String,
     lowercase: true,
@@ -29,10 +33,6 @@ var UserSchema = new Schema({
   },
   password: {
     type: String,
-  },
-  balance: {
-    type: Number,
-    default: 0.0
   },
   plan: {
     type : String

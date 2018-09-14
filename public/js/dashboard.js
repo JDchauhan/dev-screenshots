@@ -19,6 +19,9 @@ $(function () {
         $.get("../user/preset", {},
             function (data, status, xhr) {
                 console.log(data);
+                if (data.results.user.isAdmin) {
+                    window.location.href = "./admin";
+                }
                 // let name = data.results.user.name;
 
                 // name = name.charAt(0).toUpperCase() + name.substr(1);
