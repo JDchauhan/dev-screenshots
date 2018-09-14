@@ -13,10 +13,11 @@
 	<div id="loader" class="container row">
 		<img class="hexerve" src="/hexerve.png" />
 	</div>
-
+	<br />
+	<br />
 	<div class="body-container container">
-		<div class="row login-row">
-			<div class="col-md-6 login">
+		<div class="row">
+			<div class="col-md-6">
 				<div id="search-msg"></div>
 				<form>
 					<div class="input-group mb-3 input-group-lg container">
@@ -31,13 +32,12 @@
 						</div>
 					</div>
 				</form>
-				<br/>
-				<br/>
-				<br/>
+				<br />
+				<br />
+				<br />
 			</div>
 
-			<!-- Register -->
-			<div class="col-md-6 register">
+			<div class="col-md-6">
 				<div id="list-msg"></div>
 				<form>
 					<div class="input-group mb-3 input-group-lg container">
@@ -50,23 +50,23 @@
 						<div class="input-group-prepend">
 							<span class="input-group-text">Current Package</span>
 						</div>
-						<input type="text" class="form-control" name="email" id="email" placeholder="example@gmail.com">
+						<input type="text" class="form-control" name="package" id="package" placeholder="Lite">
 					</div>
 					<div class="input-group mb-3 input-group-lg container">
 						<div class="input-group-prepend">
 							<span class="input-group-text">Package Ends</span>
 						</div>
-						<input type="text" class="form-control" name="email" id="email" placeholder="example@gmail.com">
+						<input type="number" class="form-control" name="days" id="days" placeholder="30">
 					</div>
 					<div class="input-group mb-3 input-group-lg container">
 						<div class="input-group-prepend">
 							<span class="input-group-text">Make Admin</span>
 						</div>
-						<input type="text" class="form-control" name="email" id="email" placeholder="yes">
+						<input type="text" class="form-control" name="admin" id="admin" placeholder="yes">
 					</div>
 					<div class="wrapper text-center">
 						<div class="btn-group btn-group-lg">
-							<button type="button" id="search-btn" class="btn wobble-vertical">Update</button>
+							<button type="button" id="update-btn" class="btn wobble-vertical">Update</button>
 						</div>
 					</div>
 				</form>
