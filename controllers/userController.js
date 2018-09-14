@@ -471,7 +471,7 @@ module.exports.removePreset = function (req, res, id) {
         return responses.errorMsg(res, 401, "Unauthorized", "failed to authenticate token.", null);
     }
 
-    User.update({}, {
+    User.updateOne({}, {
         $pull: { preset: id },
     }, function (err, user) {
         if (err) {

@@ -35,7 +35,7 @@ $(function () {
                         '</li>'
                     );
                     $(document).on('click', '#preset_' + preset[i]._id, function(){
-                        let index = preset.findIndex(x => x._id === response.results._id);
+                        let index = preset.findIndex(x => x._id === preset[i]._id);
                         devices = preset[index].devices;
                     });
 
@@ -57,6 +57,8 @@ $(function () {
                                     '</div>'
                                 );
                                 $('#preset_item_' + response.results._id).remove();
+                                let index = preset.findIndex(x => x._id === response.results._id);
+                                preset.splice(index, 1);
                             },
                             error: function (xhr, textStatus, errorThrown) {
                                 let errMsg = xhr.responseJSON.message;
@@ -777,6 +779,7 @@ $(document).ready(function () {
                     '<strong>Congratulations! </strong>Preset added successfully' +
                     '</div>'
                 );
+                data._id = response.results._id;
                 preset.push(data);
                 $('#preset-list').append(
                     '<li class="nav-item logged" id="preset_item_' + response.results._id + '">' +
@@ -808,6 +811,9 @@ $(document).ready(function () {
                                 '</div>'
                             );
                             $('#preset_item_' + response.results._id).remove();
+                            let index = preset.findIndex(x => x._id === response.results._id);
+                            preset.splice(index, 1);
+                            
                         },
                         error: function (xhr, textStatus, errorThrown) {
                             let errMsg = xhr.responseJSON.message;
