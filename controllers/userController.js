@@ -138,7 +138,10 @@ module.exports.current_user_preset = function (req, res) {
         return responses.errorMsg(res, 401, "Unauthorized", "failed to authenticate token.", null);
     }
 
-    User.findById(req.id,{password: 0, __v: 0})
+    User.findById(req.id, {
+            password: 0,
+            __v: 0
+        })
         .populate("preset", "-__v")
         .exec(
             function (err, user) {
@@ -456,7 +459,9 @@ module.exports.addPreset = function (req, res, id) {
     }
 
     User.findByIdAndUpdate(req.id, {
-        $push: {preset: id}
+        $push: {
+            preset: id
+        }
     }, function (err, user) {
         if (err) {
             return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
@@ -464,7 +469,9 @@ module.exports.addPreset = function (req, res, id) {
         if (!user) {
             return responses.errorMsg(res, 404, "Not Found", "user not found.", null);
         }
-        return responses.successMsg(res, {_id: id});
+        return responses.successMsg(res, {
+            _id: id
+        });
     });
 }
 
@@ -474,7 +481,9 @@ module.exports.removePreset = function (req, res, id) {
     }
 
     User.updateOne({}, {
-        $pull: { preset: id },
+        $pull: {
+            preset: id
+        },
     }, function (err, user) {
         if (err) {
             return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
@@ -482,6 +491,110 @@ module.exports.removePreset = function (req, res, id) {
         if (!user) {
             return responses.errorMsg(res, 404, "Not Found", "user not found.", null);
         }
-        return responses.successMsg(res, {_id: id});
+        return responses.successMsg(res, {
+            _id: id
+        });
+    });
+}
+
+module.exports.getUserData = function (req, res) {
+    AuthoriseUser.getUser(req, res, function (user) {
+        user.password = undefined;
+        user.__v = undefined;
+
+        if (user.isAdmin) {
+            User.findOne({
+                email: req.params.email
+            }, {
+                email: 1,
+                expires: 1,
+                plan: 1,
+                isAdmin: 1
+            }, function (err, user) {
+                if (err) {
+                    console.log(err);
+                    return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+                }
+
+                if (!user) {
+                    return responses.errorMsg(res, 404, "Not Found", "user not found.", null);
+                }
+
+                let temp = user.expires;
+                temp = user.expires - (new Date());
+                temp = parseInt(temp / (3600000 * 24));
+                // let time = new Date();
+                // let expires = time.setDate(time.getDate() + 15);
+                return responses.successMsg(res, {
+                    user: {
+                        email: user.email,
+                        expires: temp,
+                        plan: user.plan,
+                        isAdmin: user.isAdmin
+                    }
+                });
+            });
+
+        } else {
+            return responses.errorMsg(res, 401, "Unauthorized", "failed to authenticate token.", null);
+        }
+
+    });
+}
+
+module.exports.updateUser = function (req, res) {
+    AuthoriseUser.getUser(req, res, function (user) {
+        user.password = undefined;
+        user.__v = undefined;
+
+        if (user.isAdmin) {
+            let data = {};
+            if (req.body.isAdmin !== "" && req.body.isAdmin !== undefined) {
+                let val = (req.body.isAdmin).toLowerCase();
+                if (val === "true") {
+                    data.isAdmin = true;
+                } else {
+                    data.isAdmin = false;
+                }
+            }
+            if (req.body.plan && req.body.plan != "") {
+                data.plan = (req.body.plan).toLowerCase();
+            }
+            if (req.body.days && req.body.days != "") {
+                let days = parseInt(req.body.days);
+                let time = new Date();
+                data.expires = time.setDate(time.getDate() + days);
+            }
+
+            User.findOneAndUpdate({
+                    email: req.params.email
+                },
+                data,
+                function (err, user) {
+                    if (err) {
+                        if (err.name && err.name == "ValidationError") {
+                            errors = {
+                                "index": Object.keys(err.errors)
+                            };
+                            return responses.errorMsg(res, 400, "Bad Request", "validation failed.", errors);
+
+                        } else if (err.name && err.name == "CastError") {
+                            errors = {
+                                "index": err.path
+                            };
+                            return responses.errorMsg(res, 400, "Bad Request", "cast error.", errors);
+
+                        } else {
+                            console.log(err);
+                            return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+                        }
+                    }
+                    return responses.successMsg(res, null);
+                });
+
+        } else {
+            return responses.errorMsg(res, 401, "Unauthorized", "failed to authenticate token.", null);
+        }
+
     });
 }
