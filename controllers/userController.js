@@ -153,10 +153,26 @@ module.exports.current_user_preset = function (req, res) {
                 if (!user) {
                     return responses.errorMsg(res, 404, "Not Found", "user not found.", null);
                 }
-                results = {
-                    user: user
-                };
-                return responses.successMsg(res, results);
+
+                if (user.plan && user.expires < Date.now()) {
+                    User.findByIdAndUpdate(user._id, {
+                        plan: undefined
+                    }, function (err, user) {
+                        if (err) {
+                            return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+                        }
+                        results = {
+                            user: user
+                        };
+                        results.user.plan = undefined;
+                        return responses.successMsg(res, results);
+                    });
+                } else {
+                    results = {
+                        user: user
+                    };
+                    return responses.successMsg(res, results);
+                }
             });
 };
 
