@@ -37,16 +37,16 @@ $(function () {
                         '<button id="delete_preset_' + preset[i]._id + '" class="close remove_preset_button">×</button>' +
                         '</li>'
                     );
-                    $(document).on('click', '#preset_' + preset[i]._id, function(){
+                    $(document).on('click', '#preset_' + preset[i]._id, function () {
                         let index = preset.findIndex(x => x._id === preset[i]._id);
                         devices = preset[index].devices;
                     });
 
-                    $(document).on('click', '#delete_preset_' + preset[i]._id, function(){
+                    $(document).on('click', '#delete_preset_' + preset[i]._id, function () {
                         let data = {
                             id: preset[i]._id
                         };
-                
+
                         $.ajax({
                             url: "../preset",
                             type: 'DELETE',
@@ -66,7 +66,7 @@ $(function () {
                             error: function (xhr, textStatus, errorThrown) {
                                 let errMsg = xhr.responseJSON.message;
                                 errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
-                                    
+
                                 $('.errorDiv').append(
                                     '<div class="alert alert-danger alert-dismissible fade show">' +
                                     '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
@@ -765,6 +765,16 @@ $(document).ready(function () {
     }
 
     $(document).on('click', '#preset_add', function () {
+        if (plan == "enterprise") {
+
+        } else if (plan == "professional" && preset.length < 5) {
+
+        } else {
+            document.getElementById("message-heading").innerHTML = "Uprgadation Required";
+            document.getElementById("message-body").innerHTML = 'Oops! You just reached the limit <br/> <a href="./payment">upgrade to pro</a>';
+            $("#myModal").modal("show");
+            return;
+        }
         let data = {};
         data.name = $('#preset_name').val();
         data.devices = devices;
@@ -790,17 +800,17 @@ $(document).ready(function () {
                     '<button id="delete_preset_' + response.results._id + '" class="close remove_preset_button">×</button>' +
                     '</li>'
                 );
-                $(document).on('click', '#preset_' + response.results._id, function(){
+                $(document).on('click', '#preset_' + response.results._id, function () {
                     let index = preset.findIndex(x => x._id === response.results._id);
                     devices = preset[index].devices;
                 });
 
-                $(document).on('click', '#delete_preset_' + response.results._id, function(){
-                    
+                $(document).on('click', '#delete_preset_' + response.results._id, function () {
+
                     let data = {
                         id: response.results._id
                     };
-                    
+
                     $.ajax({
                         url: "../preset",
                         type: 'DELETE',
@@ -816,12 +826,12 @@ $(document).ready(function () {
                             $('#preset_item_' + response.results._id).remove();
                             let index = preset.findIndex(x => x._id === response.results._id);
                             preset.splice(index, 1);
-                            
+
                         },
                         error: function (xhr, textStatus, errorThrown) {
                             let errMsg = xhr.responseJSON.message;
                             errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
-                                
+
                             $('.errorDiv').append(
                                 '<div class="alert alert-danger alert-dismissible fade show">' +
                                 '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
@@ -830,7 +840,7 @@ $(document).ready(function () {
                             );
                         }
                     });
-                }); 
+                });
             },
             error: function (xhr, textStatus, errorThrown) {
                 var errMsg;
