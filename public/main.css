@@ -673,4 +673,9 @@ hr {
     .preset-input {
         margin: 0%;
     }
+
+    .eqiWidthInput {
+        width: 100% !important;
+    }
+    
 }
