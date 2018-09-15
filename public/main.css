@@ -49,6 +49,10 @@ ul.dropdown-menu.show .white {
     top: 40%;
 }
 
+#body-container {
+    margin-top: 10%;
+}
+
 .height-30 {
     height: 30px;
 }
