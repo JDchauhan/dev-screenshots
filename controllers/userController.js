@@ -567,7 +567,7 @@ module.exports.updateUser = function (req, res) {
             }
 
             User.findOneAndUpdate({
-                    email: req.params.email
+                    email: req.body.email
                 },
                 data,
                 function (err, user) {
