@@ -677,5 +677,9 @@ hr {
     .eqiWidthInput {
         width: 100% !important;
     }
+
+    .mid-25 {
+        margin: 25% 0%;
+    }
     
 }
