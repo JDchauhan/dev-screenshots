@@ -571,6 +571,33 @@ hr {
     .btn-group {
         margin-left: -2%;
     }
+
+    .navbar-collapse {
+        margin: 0% -1%;
+        padding: 5px;
+        background-color: #f1f1f1;
+        border: 5px solid #f1f1f1;
+        border-radius: 5px;
+    }
+
+    .navbar-nav .white {
+        color: #4D4D4D !important
+    }
+
+    ul.dropdown-menu.show,
+    .preset-form {
+        background: inherit;
+        border: none;
+    }
+
+    .preset-form {
+        margin-left: 12%;
+    }
+
+    .preset-input {
+        margin: 0%;
+    }
+
 }
 
 @media screen and (max-width: 480px) {
@@ -630,18 +657,6 @@ hr {
         border-radius: 4px;
     }
 
-    .navbar-collapse {
-        margin: 0% -1%;
-        padding: 5px;
-        background-color: #f1f1f1;
-        border: 5px solid #f1f1f1;
-        border-radius: 5px;
-    }
-
-    .navbar-nav .white {
-        color: #4D4D4D !important
-    }
-
     .fixed-bottom {
         position: relative;
     }
@@ -658,20 +673,6 @@ hr {
 
     footer ul {
         margin: 5px auto;
-    }
-
-    ul.dropdown-menu.show,
-    .preset-form {
-        background: inherit;
-        border: none;
-    }
-
-    .preset-form {
-        margin-left: 12%;
-    }
-
-    .preset-input {
-        margin: 0%;
     }
 
     .eqiWidthInput {
