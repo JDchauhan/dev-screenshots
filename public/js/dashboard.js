@@ -273,6 +273,12 @@ function getDevice(deviceName) {
             currDevice.width = 375;
             break;
 
+        case "iPhone XR":
+            currDevice.name = "iPhone XR";
+            currDevice.height = 896;
+            currDevice.width = 414;
+            break;
+
         case "iPhone 8 Plus":
             currDevice.name = "iPhone 8 Plus";
             currDevice.height = 736;
