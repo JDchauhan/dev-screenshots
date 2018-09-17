@@ -53,6 +53,7 @@ $(function () {
                             data: JSON.stringify(data),
                             contentType: 'application/json',
                             success: function (response) {
+                                $('.alert').hide(500);
                                 $('.errorDiv').append(
                                     '<div class="alert alert-success alert-dismissible fade show">' +
                                     '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
@@ -66,7 +67,7 @@ $(function () {
                             error: function (xhr, textStatus, errorThrown) {
                                 let errMsg = xhr.responseJSON.message;
                                 errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
-
+                                $('.alert').hide(500);
                                 $('.errorDiv').append(
                                     '<div class="alert alert-danger alert-dismissible fade show">' +
                                     '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
@@ -465,7 +466,7 @@ function addList() {
     var url = $('#url_insert').val();
     if (!validateURL(url)) {
         console.log("err");
-
+        $('.alert').hide(500);
         $("#url_add_err").append(
             '<div class="alert alert-danger fade in alert-dismissible show">' +
             '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
@@ -481,6 +482,7 @@ function addList() {
         url: url
     };
     if (checkUrlLimitations() == -1) {
+        $('.alert').hide(500);
         $("#url_add_err").append(
             '<div class="alert alert-danger fade in alert-dismissible show">' +
             '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
@@ -711,6 +713,7 @@ $(document).ready(function () {
                     url: url
                 };
                 if (checkUrlLimitations() == -1) {
+                    $('.alert').hide(500);
                     $("#url_add_err").append(
                         '<div class="alert alert-danger fade in alert-dismissible show">' +
                         '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
@@ -817,6 +820,7 @@ $(document).ready(function () {
                         data: JSON.stringify(data),
                         contentType: 'application/json',
                         success: function (result) {
+                            $('.alert').hide(500);
                             $('.errorDiv').append(
                                 '<div class="alert alert-success alert-dismissible fade show">' +
                                 '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
@@ -831,7 +835,7 @@ $(document).ready(function () {
                         error: function (xhr, textStatus, errorThrown) {
                             let errMsg = xhr.responseJSON.message;
                             errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
-
+                            $('.alert').hide(500);
                             $('.errorDiv').append(
                                 '<div class="alert alert-danger alert-dismissible fade show">' +
                                 '<button type="button" class="close" data-dismiss="alert">&times;</button>' +

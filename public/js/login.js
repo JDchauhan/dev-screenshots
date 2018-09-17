@@ -1,4 +1,34 @@
 var resend_link;
+
+function isEmail(email) {
+    if (email != "" && email.lastIndexOf('.') != -1 && email.lastIndexOf('@') != -1 &&
+        email.lastIndexOf('.') - email.lastIndexOf("@") > 2) {
+        return true;
+    }
+    return false;
+}
+
+function isMobile(mobile) {
+    if (isNaN(mobile) || mobile.length < 5) {
+        return false;
+    }
+    return true;
+}
+
+function isText(text) {
+    if (text.length > 2) {
+        return true;
+    }
+    return false;
+}
+
+function isPass(pass) {
+    if (pass.length < 8) {
+        return false;
+    }
+    return true;
+}
+
 $(function () {
     $('#resend_link').hide();
     if (getCookie("token") !== "") {
@@ -24,17 +54,39 @@ $(function () {
         data.email = $('#email').val();
         data.password = $('#pass').val();
 
+        if (!isEmail(data.email)) {
+            $('.alert').hide(500);
+            $('#login-msg').append(
+                '<div class="alert alert-danger alert-dismissible fade show">' +
+                '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                '<strong>Oops! </strong> Invalid email.' +
+                '</div>'
+            );
+            return;
+        }
+
+        if (!isPass(data.password)) {
+            $('.alert').hide(500);
+            $('#login-msg').append(
+                '<div class="alert alert-danger alert-dismissible fade show">' +
+                '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                '<strong>Oops! </strong> Invalid password(password must be greater than 8 characters)' +
+                '</div>'
+            );
+            return;
+        }
+
         $.ajax({
             url: "../login",
             type: 'POST',
             data: JSON.stringify(data),
             contentType: 'application/json',
             success: function (data) {
-                if(data.results.admin){
+                if (data.results.admin) {
                     console.log("here");
                     setCookie("token", data.results.token, 1);
-                    window.location.href = "./admin";    
-                }else{
+                    window.location.href = "./admin";
+                } else {
                     setCookie("token", data.results.token, 1);
                     window.location.href = "/";
                 }
@@ -68,6 +120,50 @@ $(function () {
         data.password = $('#pass1').val();
         data.name = $('#name').val();
         data.mobile = $('#mobile').val();
+
+        if (!isText(data.name)) {
+            $('.alert').hide(500);
+            $('#register-msg').append(
+                '<div class="alert alert-danger alert-dismissible fade show">' +
+                '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                '<strong>Oops! </strong> Invalid name(must be greater than 3 characters)' +
+                '</div>'
+            );
+            return;
+        }
+
+        if (!isEmail(data.email)) {
+            $('.alert').hide(500);
+            $('#register-msg').append(
+                '<div class="alert alert-danger alert-dismissible fade show">' +
+                '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                '<strong>Oops! </strong> Invalid email.' +
+                '</div>'
+            );
+            return;
+        }
+
+        if (!isMobile(data.mobile)) {
+            $('.alert').hide(500);
+            $('#register-msg').append(
+                '<div class="alert alert-danger alert-dismissible fade show">' +
+                '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                '<strong>Oops! </strong> Invalid mobile.' +
+                '</div>'
+            );
+            return;
+        }
+
+        if (!isPass(data.password)) {
+            $('.alert').hide(500);
+            $('#register-msg').append(
+                '<div class="alert alert-danger alert-dismissible fade show">' +
+                '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                '<strong>Oops! </strong> Invalid password(password must be greater than 8 characters)' +
+                '</div>'
+            );
+            return;
+        }
 
         $.ajax({
             url: "../register",
@@ -134,7 +230,7 @@ $(function () {
 
     resend_link = function (email) {
         let data = {};
-        data .email = email;
+        data.email = email;
         $.ajax({
             url: "../reverify",
             type: 'POST',

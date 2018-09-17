@@ -26,10 +26,11 @@ function logout() {
 }
 
 $(function () {
+    $(document).on('click', 'input', function(){
+        $('.alert').hide(500);
+    });
+
     $(document).on('click', '', function (e) {
-        if (e.target.getAttribute("onclick") !== "addList()") {
-            $('.alert').hide(500);
-        }
         if ($('.collapsibleNavbar').hasClass('show')) {
             $('#nav-toggler').click();
         }
