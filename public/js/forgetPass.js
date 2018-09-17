@@ -3,6 +3,17 @@ $(function () {
         let data = {};
         data.email = $('#email').val();
 
+        if(!isEmail(data.email)){
+            $('.alert').hide(500);
+            $('#pass-msg').append(
+                '<div class="alert alert-danger alert-dismissible fade show">' +
+                '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                '<strong>Oops! </strong>Incorrect email' +
+                '</div>'
+            );
+            return;
+        }
+
         $.ajax({
             url: "../password/forget",
             type: 'PUT',
