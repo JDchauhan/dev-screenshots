@@ -1,16 +1,13 @@
 <% include partials/header.ejs %>
-<script id="bolt" src="https://sboxcheckout-static.citruspay.com/bolt/run/bolt.min.js" bolt- color="<color-code>"
- bolt-logo="<image path>"></script>
-
-<script src="https://checkout.stripe.com/checkout.js"></script>
+<script src="/js/plans.js"></script>
 </head>
 
 <body>
 	<%- include('partials/navbar', {
 			home: true,
-			login: false,
+			login: true,
 			plan: false,
-			account: true
+			account: false
 		}); %>
 
 	<div id="loader" class="container row">
@@ -78,8 +75,6 @@
 
 	<footer class="footer fixed-bottom  bg-dark text-light">
 		<% include partials/footer.ejs %>
-
-		<script src="/js/payment.js"></script>
 </body>
 
 </html>

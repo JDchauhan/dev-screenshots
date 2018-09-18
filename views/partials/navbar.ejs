@@ -1,0 +1,74 @@
+<nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top">
+    <div class="container">
+        <!-- Brand/logo -->
+        <a class="navbar-brand" href="https://www.hexerve.com" target="_blank">
+            <figure class="figure">
+                <img src="/hexerve-logo.png" alt="Hexerve">
+                <figcaption class="figure-caption">Screenshot Taker</figcaption>
+            </figure>
+        </a>
+
+        <!-- Toggler/collapsibe Button -->
+        <button class="navbar-toggler navbar-dark" id="nav-toggler" type="button" data-toggle="collapse" data-target=".collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse collapsibleNavbar">
+            <ul class="navbar-nav ml-auto">
+                <% if(home){ %>
+                <li class="nav-item">
+                    <a class="nav-link white" href="./dashboard"><b>Home</b></a>
+                </li>
+                <% } %>
+                <% if(login){ %>
+                <li class="nav-item white guest">
+                    <a class="nav-link white" href="./login"><b>Login / Register</b></a>
+                </li>
+                <% } %>
+                <% if(plan){ %>
+                <li class="nav-item">
+                    <a class="nav-link highlight-nav white" id="pro" href="./plans"><b>Plan</b></a>
+                </li>
+                <% } %>
+                <li class="nav-item white logged">
+                    <a class="nav-link white" href="https://www.hexerve.com/contact" target="_blank"><b>Contact</b></a>
+                </li>
+                <% if(account){ %>
+                <li class="nav-item logged dropdown">
+                    <a class="dropdown-toggle nav-link white" data-toggle="dropdown" href="#"><b>Preset</b>
+                        <span class="caret"></span></a>
+                    <!-- <div class="dropdown-menu "> -->
+                    <ul class="dropdown-menu" id="preset-list">
+                        <li class="nav-item logged">
+                            <form class="form-inline preset-form">
+                                <div class="form-group preset-input">
+                                    <input type="text" class="form-control" placeholder="name" id="preset_name">
+                                </div>
+                                <button type="button" class="btn btn-default" id="preset_add">Submit</button>
+                            </form>
+                        </li>
+                    </ul>
+
+                    <!-- </div> -->
+                </li>
+                <li class="nav-item logged dropdown">
+                    <a class="dropdown-toggle nav-link white" data-toggle="dropdown" href="#"><b>My Account</b>
+                        <span class="caret"></span></a>
+                    <ul class="dropdown-menu ">
+                        <li class="nav-item logged">
+                            <a class="nav-link  white" href="./resetpass"><b>Reset Password</b></a>
+                        </li>
+                        <li class="nav-item logged">
+                            <a class="nav-link  white" href=""><b>Cloud Backup</b></a>
+                        </li>
+                        <li class="nav-item logged">
+                            <a class="nav-link  white" onclick="logout()" href="./login?action=logout"><b>Log out</b></a>
+                        </li>
+                    </ul>
+                </li>
+                <% } %>
+            </ul>
+        </div>
+
+    </div>
+</nav>
