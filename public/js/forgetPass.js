@@ -1,4 +1,5 @@
 $(function () {
+    $('#admin').hide();
     $('#reset_btn').click(function(){
         let data = {};
         data.email = $('#email').val();
