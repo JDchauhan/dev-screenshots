@@ -50,7 +50,7 @@ ul.dropdown-menu.show .white {
 }
 
 #body-container {
-    margin-top: 10%;
+    margin-top: 15%;
 }
 
 .height-30 {
@@ -562,6 +562,13 @@ hr {
     }
 }
 
+
+@media screen and (max-width: 1500px) {
+    #body-container {
+        margin-top: 10% !important;
+    }
+}
+
 @media screen and (max-width: 768px) {
     .body-container {
         top: 40%;
@@ -690,5 +697,5 @@ hr {
     .mid-25 {
         margin: 25% 0%;
     }
-    
+
 }
