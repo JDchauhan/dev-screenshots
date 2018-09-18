@@ -37,22 +37,23 @@ $(function () {
                         '<button id="delete_preset_' + preset[i]._id + '" class="close remove_preset_button">×</button>' +
                         '</li>'
                     );
-                    $(document).on('click', '#preset_' + preset[i]._id, function(){
+                    $(document).on('click', '#preset_' + preset[i]._id, function () {
                         let index = preset.findIndex(x => x._id === preset[i]._id);
                         devices = preset[index].devices;
                     });
 
-                    $(document).on('click', '#delete_preset_' + preset[i]._id, function(){
+                    $(document).on('click', '#delete_preset_' + preset[i]._id, function () {
                         let data = {
                             id: preset[i]._id
                         };
-                
+
                         $.ajax({
                             url: "../preset",
                             type: 'DELETE',
                             data: JSON.stringify(data),
                             contentType: 'application/json',
                             success: function (response) {
+                                $('.alert').hide(500);
                                 $('.errorDiv').append(
                                     '<div class="alert alert-success alert-dismissible fade show">' +
                                     '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
@@ -66,7 +67,7 @@ $(function () {
                             error: function (xhr, textStatus, errorThrown) {
                                 let errMsg = xhr.responseJSON.message;
                                 errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
-                                    
+                                $('.alert').hide(500);
                                 $('.errorDiv').append(
                                     '<div class="alert alert-danger alert-dismissible fade show">' +
                                     '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
@@ -196,7 +197,7 @@ xmlhttp.onreadystatechange = function () {
         document.getElementById("message-heading").innerHTML = this.statusText;
         document.getElementById("message-body").innerHTML = JSON.parse(this.response).message;
         if (JSON.parse(this.response).message.split("!")[0] === "plan upgradation required") {
-            document.getElementById("message-body").innerHTML += '<br/> <a href="./payment">upgrade to pro</a>';
+            document.getElementById("message-body").innerHTML += '<br/> <a href="./payment">Upgrade your Plan</a>';
         }
 
         $("#myModal").modal("show");
@@ -272,6 +273,12 @@ function getDevice(deviceName) {
             currDevice.width = 375;
             break;
 
+        case "iPhone XR":
+            currDevice.name = "iPhone XR";
+            currDevice.height = 896;
+            currDevice.width = 414;
+            break;
+
         case "iPhone 8 Plus":
             currDevice.name = "iPhone 8 Plus";
             currDevice.height = 736;
@@ -330,7 +337,7 @@ function getDevice(deviceName) {
 function limitError(count) {
     document.getElementById("message-heading").innerHTML = "<code>Limitations!</code>";
     document.getElementById("message-body").innerHTML = "You can only choose " + count + " devices.<br/>" +
-        "Please <a href='../payment'>Upgrade to Pro</a> version for unlimited access.";
+        "Please <a href='../payment'>Upgrade your Plan</a> version for unlimited access.";
     $("#myModal").modal("show");
 }
 
@@ -465,7 +472,7 @@ function addList() {
     var url = $('#url_insert').val();
     if (!validateURL(url)) {
         console.log("err");
-
+        $('.alert').hide(500);
         $("#url_add_err").append(
             '<div class="alert alert-danger fade in alert-dismissible show">' +
             '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
@@ -481,10 +488,11 @@ function addList() {
         url: url
     };
     if (checkUrlLimitations() == -1) {
+        $('.alert').hide(500);
         $("#url_add_err").append(
             '<div class="alert alert-danger fade in alert-dismissible show">' +
             '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
-            '<strong>Oops!</strong> Some of your links are not added due to limitation in current package <a href="./payment">upgrade to pro</a>.' +
+            '<strong>Oops!</strong> Some of your links are not added due to limitation in current package <a href="./payment">Upgrade your Plan</a>.' +
             '</div>'
         );
         return;
@@ -711,10 +719,11 @@ $(document).ready(function () {
                     url: url
                 };
                 if (checkUrlLimitations() == -1) {
+                    $('.alert').hide(500);
                     $("#url_add_err").append(
                         '<div class="alert alert-danger fade in alert-dismissible show">' +
                         '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
-                        '<strong>Oops!</strong> Some of your links are not added due to limitation in current package <a href="./payment">upgrade to pro</a>.' +
+                        '<strong>Oops!</strong> Some of your links are not added due to limitation in current package <a href="./payment">Upgrade your Plan</a>.' +
                         '</div>'
                     );
                     return;
@@ -765,6 +774,16 @@ $(document).ready(function () {
     }
 
     $(document).on('click', '#preset_add', function () {
+        if (plan == "enterprise") {
+
+        } else if (plan == "professional" && preset.length < 5) {
+
+        } else {
+            document.getElementById("message-heading").innerHTML = "Uprgadation Required";
+            document.getElementById("message-body").innerHTML = 'Oops! You just reached the limit <br/> <a href="./payment">Upgrade your Plan</a>';
+            $("#myModal").modal("show");
+            return;
+        }
         let data = {};
         data.name = $('#preset_name').val();
         data.devices = devices;
@@ -790,23 +809,24 @@ $(document).ready(function () {
                     '<button id="delete_preset_' + response.results._id + '" class="close remove_preset_button">×</button>' +
                     '</li>'
                 );
-                $(document).on('click', '#preset_' + response.results._id, function(){
+                $(document).on('click', '#preset_' + response.results._id, function () {
                     let index = preset.findIndex(x => x._id === response.results._id);
                     devices = preset[index].devices;
                 });
 
-                $(document).on('click', '#delete_preset_' + response.results._id, function(){
-                    
+                $(document).on('click', '#delete_preset_' + response.results._id, function () {
+
                     let data = {
                         id: response.results._id
                     };
-                    
+
                     $.ajax({
                         url: "../preset",
                         type: 'DELETE',
                         data: JSON.stringify(data),
                         contentType: 'application/json',
                         success: function (result) {
+                            $('.alert').hide(500);
                             $('.errorDiv').append(
                                 '<div class="alert alert-success alert-dismissible fade show">' +
                                 '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
@@ -816,12 +836,12 @@ $(document).ready(function () {
                             $('#preset_item_' + response.results._id).remove();
                             let index = preset.findIndex(x => x._id === response.results._id);
                             preset.splice(index, 1);
-                            
+
                         },
                         error: function (xhr, textStatus, errorThrown) {
                             let errMsg = xhr.responseJSON.message;
                             errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
-                                
+                            $('.alert').hide(500);
                             $('.errorDiv').append(
                                 '<div class="alert alert-danger alert-dismissible fade show">' +
                                 '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
@@ -830,7 +850,7 @@ $(document).ready(function () {
                             );
                         }
                     });
-                }); 
+                });
             },
             error: function (xhr, textStatus, errorThrown) {
                 var errMsg;

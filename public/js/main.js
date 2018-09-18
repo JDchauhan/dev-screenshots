@@ -25,11 +25,41 @@ function logout() {
     setCookie("token", "", -1);
 }
 
+function isEmail(email) {
+    if (email != "" && email.lastIndexOf('.') != -1 && email.lastIndexOf('@') != -1 &&
+        email.lastIndexOf('.') - email.lastIndexOf("@") > 2) {
+        return true;
+    }
+    return false;
+}
+
+function isMobile(mobile) {
+    if (isNaN(mobile) || mobile.length < 5) {
+        return false;
+    }
+    return true;
+}
+
+function isText(text) {
+    if (text.length > 2) {
+        return true;
+    }
+    return false;
+}
+
+function isPass(pass) {
+    if (pass.length < 8) {
+        return false;
+    }
+    return true;
+}
+
 $(function () {
+    $(document).on('click', 'input', function(){
+        $('.alert').hide(500);
+    });
+
     $(document).on('click', '', function (e) {
-        if (e.target.getAttribute("onclick") !== "addList()") {
-            $('.alert').hide(500);
-        }
         if ($('.collapsibleNavbar').hasClass('show')) {
             $('#nav-toggler').click();
         }
