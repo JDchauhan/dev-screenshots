@@ -387,6 +387,14 @@ table
     margin-bottom: 0px;
 }
 
+.tc {
+    font-size: large;
+}
+
+.tc a {
+    font-weight: bold;
+}
+
 .spacer_sm_1 {
     padding-right: 5%;
 }

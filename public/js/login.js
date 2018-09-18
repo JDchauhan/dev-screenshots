@@ -91,6 +91,16 @@ $(function () {
         data.password = $('#pass1').val();
         data.name = $('#name').val();
         data.mobile = $('#mobile').val();
+        if ($('#tc').prop('checked') === false) {
+            $('.alert').hide(500);
+            $('#register-msg').append(
+                '<div class="alert alert-danger alert-dismissible fade show">' +
+                '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                '<strong>Oops! </strong> To proceed further please accept our Terms and Conditions' +
+                '</div>'
+            );
+            return;
+        }
 
         if (!isText(data.name)) {
             $('.alert').hide(500);
