@@ -1,6 +1,7 @@
 var resend_link;
 
 $(function () {
+    $('#admin').hide();
     $('#resend_link').hide();
     if (getCookie("token") !== "") {
         window.location.href = "/";

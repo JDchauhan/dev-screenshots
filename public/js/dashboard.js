@@ -6,6 +6,7 @@ var list = [];
 var preset = [];
 
 $(function () {
+    $('#admin').hide();
     $(".guest").show();
     $(".logged").hide();
     if (getCookie("token") === "") {
@@ -20,7 +21,7 @@ $(function () {
             function (data, status, xhr) {
                 console.log(data);
                 if (data.results.user.isAdmin) {
-                    window.location.href = "./admin";
+                    $('#admin').show();
                 }
                 // let name = data.results.user.name;
 
