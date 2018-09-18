@@ -1,4 +1,5 @@
 $(function () {
+    $('#admin').hide();
     if (getCookie("token") !== "") {
         window.location.href = "/";
     }

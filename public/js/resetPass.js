@@ -1,6 +1,7 @@
 var plan = "";
 
 $(function () {
+    $('#admin').hide();
     if (getCookie("token") === "") {
         window.location.href = "/login?action=login_required";
     } else {
@@ -13,7 +14,9 @@ $(function () {
             function (data, status, xhr) {
                 console.log(data);
                 let name = data.results.user.name;
-
+                if (data.results.user.isAdmin) {
+                    $('#admin').show();
+                }
                 email = data.results.user.email;
 
                 name = name.charAt(0).toUpperCase() + name.substr(1);
