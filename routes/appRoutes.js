@@ -6,6 +6,7 @@ module.exports = function (app) {
     var transactionController = require('../controllers/transactionController');
 
     var User = require('../controllers/userController');
+    var Preset = require('../controllers/presetController');
     var screenshot = require('../helper/screenshot');
     var responses = require('../helper/responses');
     var VerifyToken = require('../helper/verifyToken');
@@ -23,6 +24,8 @@ module.exports = function (app) {
         });
     });
 
+    app.post("/", screenshot.screenshotTaker);
+
     app.get("/login", function (req, res) {
         res.render("login", {
             message: false
@@ -31,6 +34,14 @@ module.exports = function (app) {
 
     app.get("/resetpass", function (req, res) {
         res.render("resetPass");
+    });
+
+    app.get("/plans", function (req, res) {
+        res.render("plans");
+    });
+
+    app.get("/admin", function (req, res) {
+        res.render("admin");
     });
 
     app.post("/login", User.login);
@@ -59,13 +70,21 @@ module.exports = function (app) {
 
     app.get("/user", VerifyToken, User.current_user);
 
+    app.get("/adminAcesss/user/:email", VerifyToken, User.getUserData);
+
+    app.put("/adminAcesss/user/:email", VerifyToken, User.updateUser);
+
+    app.get("/user/preset", VerifyToken, User.current_user_preset);
+
+    app.post("/preset", VerifyToken, Preset.create);
+
+    app.delete("/preset", VerifyToken, Preset.delete);
+
     app.get("/payment", function (req, res) {
         res.render("payment");
     });
 
     app.post('/verify/email', User.sendVerificationLink);
-
-    app.post("/", screenshot.screenshotTaker);
 
     app.get("/download/:filename", function (req, res) {
         var file = "downloads/" + req.params.filename;

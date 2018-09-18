@@ -3,6 +3,7 @@ var url;
 var isGuest;
 var plan = "";
 var list = [];
+var preset = [];
 
 $(function () {
     $(".guest").show();
@@ -15,10 +16,12 @@ $(function () {
                 'authorization': getCookie("token")
             }
         });
-        $.get("../user", {},
+        $.get("../user/preset", {},
             function (data, status, xhr) {
                 console.log(data);
-                plan = data.results.user.plan;
+                if (data.results.user.isAdmin) {
+                    window.location.href = "./admin";
+                }
                 // let name = data.results.user.name;
 
                 // name = name.charAt(0).toUpperCase() + name.substr(1);
@@ -26,10 +29,63 @@ $(function () {
                 // $(".username").text(name);
 
                 // currentUserID = data.results.user._id;
+                preset = data.results.user.preset;
+                for (let i = 0; i < preset.length; i++) {
+                    $('#preset-list').append(
+                        '<li class="nav-item logged" id="preset_item_' + preset[i]._id + '">' +
+                        '<a class="nav-link d-inline  white" href="#" id="preset_' + preset[i]._id + '"><b>' + preset[i].name + '</b></a>' +
+                        '<button id="delete_preset_' + preset[i]._id + '" class="close remove_preset_button">×</button>' +
+                        '</li>'
+                    );
+                    $(document).on('click', '#preset_' + preset[i]._id, function(){
+                        let index = preset.findIndex(x => x._id === preset[i]._id);
+                        devices = preset[index].devices;
+                    });
+
+                    $(document).on('click', '#delete_preset_' + preset[i]._id, function(){
+                        let data = {
+                            id: preset[i]._id
+                        };
+                
+                        $.ajax({
+                            url: "../preset",
+                            type: 'DELETE',
+                            data: JSON.stringify(data),
+                            contentType: 'application/json',
+                            success: function (response) {
+                                $('.errorDiv').append(
+                                    '<div class="alert alert-success alert-dismissible fade show">' +
+                                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                                    '<strong>Congratulations! </strong>Preset successfully removed' +
+                                    '</div>'
+                                );
+                                $('#preset_item_' + response.results._id).remove();
+                                let index = preset.findIndex(x => x._id === response.results._id);
+                                preset.splice(index, 1);
+                            },
+                            error: function (xhr, textStatus, errorThrown) {
+                                let errMsg = xhr.responseJSON.message;
+                                errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
+                                    
+                                $('.errorDiv').append(
+                                    '<div class="alert alert-danger alert-dismissible fade show">' +
+                                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                                    '<strong>Oops! </strong>' + errMsg +
+                                    '</div>'
+                                );
+                            }
+                        });
+                    });
+                }
+                plan = data.results.user.plan;
+                if (plan) {
+                    $("#pro").empty();
+                    $("#pro").append("<b>Plan (" + plan + ")</b>");
+                }
+                $("#pro").attr("href", "./payment");
+
                 $(".guest").hide();
                 $(".logged").show();
-
-                $("#pro").attr("href", "./payment");
 
             }).fail(function (xhr, status, error) {
             if (xhr.status === 0) {
@@ -278,7 +334,7 @@ function limitError(count) {
     $("#myModal").modal("show");
 }
 
-function checkDeviceLimitations(){
+function checkDeviceLimitations() {
     if (isGuest) {
         if (devices.length > 0) {
             limitError(1);
@@ -303,15 +359,14 @@ function checkDeviceLimitations(){
             case "enterprise":
                 break;
             default:
-                document.getElementById("message-heading").innerHTML = "<code>Error!</code>";
-                document.getElementById("message-body").innerHTML = "Please login again.";
-                $("#myModal").modal("show");
-
-                document.getElementById(deviceName).checked = false;
-                return -1;
+                if (devices.length > 0) {
+                    limitError(1);
+                    return -1;
+                }
         }
     }
 }
+
 function checkUrlLimitations() {
     if (isGuest) {
         if (list.length > 0) {
@@ -334,12 +389,9 @@ function checkUrlLimitations() {
             case "enterprise":
                 break;
             default:
-                document.getElementById("message-heading").innerHTML = "<code>Error!</code>";
-                document.getElementById("message-body").innerHTML = "Please login again.";
-                $("#myModal").modal("show");
-
-                document.getElementById(deviceName).checked = false;
-                return -1;
+                if (list.length > 0) {
+                    return -1;
+                }
         }
     }
 }
@@ -414,15 +466,12 @@ function addList() {
     if (!validateURL(url)) {
         console.log("err");
 
-        $("#url_add_err").empty();
-        $('.alert').hide(500);
         $("#url_add_err").append(
             '<div class="alert alert-danger fade in alert-dismissible show">' +
             '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
-            '<strong>Invalid URL!</strong> Make sure you have include http/https protocol.' +
+            '<strong>Invalid URLs!</strong> Make sure you have include http/https protocol.' +
             '</div>'
         );
-
         return;
     }
     $('#name_insert').val('');
@@ -432,6 +481,12 @@ function addList() {
         url: url
     };
     if (checkUrlLimitations() == -1) {
+        $("#url_add_err").append(
+            '<div class="alert alert-danger fade in alert-dismissible show">' +
+            '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
+            '<strong>Oops!</strong> Some of your links are not added due to limitation in current package <a href="./payment">upgrade to pro</a>.' +
+            '</div>'
+        );
         return;
     }
     list.push(item);
@@ -661,7 +716,7 @@ $(document).ready(function () {
                         '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
                         '<strong>Oops!</strong> Some of your links are not added due to limitation in current package <a href="./payment">upgrade to pro</a>.' +
                         '</div>'
-                    );  
+                    );
                     return;
                 }
                 list.push(item);
@@ -709,7 +764,107 @@ $(document).ready(function () {
         }
     }
 
-    $('input').keypress(function (e) {
+    $(document).on('click', '#preset_add', function () {
+        let data = {};
+        data.name = $('#preset_name').val();
+        data.devices = devices;
+
+        $.ajax({
+            url: "../preset",
+            type: 'POST',
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            success: function (response) {
+                $('.alert').hide(500);
+                $('.errorDiv').append(
+                    '<div class="alert alert-success alert-dismissible fade show">' +
+                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                    '<strong>Congratulations! </strong>Preset added successfully' +
+                    '</div>'
+                );
+                data._id = response.results._id;
+                preset.push(data);
+                $('#preset-list').append(
+                    '<li class="nav-item logged" id="preset_item_' + response.results._id + '">' +
+                    '<a class="nav-link d-inline  white" href="#" id="preset_' + response.results._id + '"><b>' + data.name + '</b></a>' +
+                    '<button id="delete_preset_' + response.results._id + '" class="close remove_preset_button">×</button>' +
+                    '</li>'
+                );
+                $(document).on('click', '#preset_' + response.results._id, function(){
+                    let index = preset.findIndex(x => x._id === response.results._id);
+                    devices = preset[index].devices;
+                });
+
+                $(document).on('click', '#delete_preset_' + response.results._id, function(){
+                    
+                    let data = {
+                        id: response.results._id
+                    };
+                    
+                    $.ajax({
+                        url: "../preset",
+                        type: 'DELETE',
+                        data: JSON.stringify(data),
+                        contentType: 'application/json',
+                        success: function (result) {
+                            $('.errorDiv').append(
+                                '<div class="alert alert-success alert-dismissible fade show">' +
+                                '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                                '<strong>Congratulations! </strong>Preset successfully removed' +
+                                '</div>'
+                            );
+                            $('#preset_item_' + response.results._id).remove();
+                            let index = preset.findIndex(x => x._id === response.results._id);
+                            preset.splice(index, 1);
+                            
+                        },
+                        error: function (xhr, textStatus, errorThrown) {
+                            let errMsg = xhr.responseJSON.message;
+                            errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
+                                
+                            $('.errorDiv').append(
+                                '<div class="alert alert-danger alert-dismissible fade show">' +
+                                '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                                '<strong>Oops! </strong>' + errMsg +
+                                '</div>'
+                            );
+                        }
+                    });
+                }); 
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                var errMsg;
+                if (xhr.status === 0) {
+                    errMsg = "Network error.";
+                } else {
+                    errMsg = JSON.parse(xhr.responseText).message;
+                    errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
+
+                    if (errMsg === 'Validation failed.') {
+                        errMsg += '<br/>Incorrect ' + JSON.parse(xhr.responseText).errors.index.join(", ");
+                    }
+                }
+                $('.alert').hide(500);
+                $('.errorDiv').append(
+                    '<div class="alert alert-danger alert-dismissible fade show">' +
+                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                    '<strong>Oops! </strong>' + errMsg +
+                    '</div>'
+                );
+            }
+        });
+
+    });
+
+    $('#url').keypress(function (e) {
+        var key = e.which;
+        if (key == 13) // the enter key code
+        {
+            $('#submit').click();
+            return false;
+        }
+    });
+    $('.device-row input').keypress(function (e) {
         var key = e.which;
         if (key == 13) // the enter key code
         {

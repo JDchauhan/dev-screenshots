@@ -16,6 +16,35 @@ body {
     padding: 0px 10px !important;
 }
 
+ul.dropdown-menu.show,
+.preset-form {
+    background-color: #F1F1F1;
+    min-width: 200px;
+}
+
+.preset-form {
+    min-width: 250px;
+    margin-bottom: 0% !important;
+}
+
+.preset-form button {
+    margin-right: 0%;
+}
+
+.preset-form input {
+    width: 100% !important;
+}
+
+.preset-input {
+    display: inline-block !important;
+    margin-left: 1%;
+    width: 64%;
+}
+
+ul.dropdown-menu.show .white {
+    color: #4D4D4D !important;
+}
+
 .body-container {
     top: 40%;
 }
@@ -51,7 +80,7 @@ body {
 }
 
 .login-row {
-    margin-top: 15%;
+    margin-top: 8%;
 }
 
 .btn-group {
@@ -337,6 +366,11 @@ table
     margin-right: 35%;
 }
 
+.remove_preset_button {
+    color: red;
+    margin-right: 5%;
+}
+
 #url_add_err {
     width: 95%;
     margin-left: 2.5%;
@@ -620,5 +654,19 @@ hr {
 
     footer ul {
         margin: 5px auto;
+    }
+
+    ul.dropdown-menu.show,
+    .preset-form {
+        background: inherit;
+        border: none;
+    }
+
+    .preset-form {
+        margin-left: 12%;
+    }
+
+    .preset-input {
+        margin: 0%;
     }
 }

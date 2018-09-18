@@ -26,39 +26,45 @@ module.exports.screenshotTaker = function (req, res) {
                 req.id = decoded.id;
                 AuthoriseUser.getUser(req, res, function (user) {
                     plan = user.plan;
-        
-                    switch(plan){
+
+                    switch (plan) {
                         case "lite":
-                            if(req.body.devices.length > 5){
-                                return responses.errorMsg(res, 400, "Bad Request", "plan upgradation required!<br/> your plan can't take more than 3 screenshots.", null);                
+                            if (req.body.devices.length > 5) {
+                                return responses.errorMsg(res, 400, "Bad Request", "plan upgradation required!<br/> your plan can't take more than 3 screenshots.", null);
                             }
                             if (req.body.urls.length > 5) {
                                 return responses.errorMsg(res, 400, "Bad Request", "plan upgradation required!<br/> your plan can't take choose than 3 viewports.", null);
                             }
                             break;
-        
+
                         case "professional":
-                            if(req.body.devices.length > 15){
-                                return responses.errorMsg(res, 400, "Bad Request", "plan upgradation required!<br/> your plan can't take more than 10 screenshots.", null);                
+                            if (req.body.devices.length > 15) {
+                                return responses.errorMsg(res, 400, "Bad Request", "plan upgradation required!<br/> your plan can't take more than 10 screenshots.", null);
                             }
                             if (req.body.urls.length > 15) {
                                 return responses.errorMsg(res, 400, "Bad Request", "plan upgradation required!<br/> your plan can't take choose than 10 viewports.", null);
                             }
                             break;
-        
+
                         case "enterprise":
                             break;
-                        default:  
-                            return responses.errorMsg(res, 500, "Internal Server Error", "some error occured, In case problem persists try login again.", null);
+                        default:
+                            if (req.body.devices.length > 1) {
+                                return responses.errorMsg(res, 400, "Bad Request", "plan upgradation required!<br/> free version can't request more than 1 screenshots.", null);
+                            } else if (req.body.urls.length > 1) {
+                                return responses.errorMsg(res, 400, "Bad Request", "plan upgradation required!<br/> free version can't take choose than 1 viewports.", null);
+                            } else {
+                                capture(req, res);
+                            }
                     }
                     capture(req, res);
-                });        
+                });
             }
         });
     } else {
         if (req.body.devices.length > 1) {
             return responses.errorMsg(res, 400, "Bad Request", "plan upgradation required!<br/> free version can't request more than 1 screenshots.", null);
-        }else if(req.body.urls.length > 1) {
+        } else if (req.body.urls.length > 1) {
             return responses.errorMsg(res, 400, "Bad Request", "plan upgradation required!<br/> free version can't take choose than 1 viewports.", null);
         } else {
             capture(req, res);
