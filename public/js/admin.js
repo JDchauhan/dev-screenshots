@@ -12,7 +12,7 @@ $(function () {
                 console.log(data);
 
                 if (!data.results.user.isAdmin) {
-                    window.location.href = "./admin";
+                    window.location.href = "./";
                 }
                 let name = data.results.user.name;
 

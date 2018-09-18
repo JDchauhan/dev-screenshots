@@ -18,6 +18,7 @@ module.exports.register = function (req, res) {
 
     req.body.password = hashedPassword;
     req.isAdmin = false;
+    req.plan = "enterprise";
     User.create(req.body,
         function (err, user) {
             if (err) {
