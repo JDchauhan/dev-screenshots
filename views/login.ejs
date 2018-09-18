@@ -14,7 +14,7 @@
         <img class="hexerve" src="/hexerve.png" />
     </div>
 
-    <div class="fixed-top body-container body-top-container container">
+    <div class="body-container container mid-25">
         <div class="row login-row">
             <!--Description-->
             <div class="col-md-6">
@@ -29,7 +29,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">Email</span>
                         </div>
-                        <input type="text" class="form-control" name="email" id="email" placeholder="example@gmail.com">
+                        <input type="email" class="form-control" name="email" id="email" placeholder="example@gmail.com">
                     </div>
                     <div class="input-group mb-3 input-group-lg container">
                         <div class="input-group-prepend">
@@ -83,6 +83,13 @@
                         </div>
                         <input type="password" class="form-control" name="pass" id="pass1" placeholder="password">
                     </div>
+                    <!-- <div class="input-group mb-3 input-group-lg container">
+                        <input type="checkbox" class="" name="pass" id="pass1">
+                        
+                    </div> -->
+                    <div class="input-group mb-3 input-group-lg container checkbox">
+                        <label class="white tc"><input type="checkbox" id="tc"> I have read and accepted all the <a class="white tc" href="https://www.hexerve.com/terms-and-conditions">T &amp; C</a></label>
+                    </div>
                     <div class="wrapper text-center">
                         <div class="btn-group btn-group-lg">
                             <button type="button" id="login" class="btn wobble-vertical">Login</button>
@@ -110,7 +117,7 @@
 
     <% } %>
 
-    <footer class="footer fixed-bottom fill-content bg-dark text-light">
+    <footer class="footer fixed-bottom bg-dark text-light">
         <% include partials/footer.ejs %>
 </body>
 

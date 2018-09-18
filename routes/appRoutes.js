@@ -72,7 +72,7 @@ module.exports = function (app) {
 
     app.get("/adminAcesss/user/:email", VerifyToken, User.getUserData);
 
-    app.put("/adminAcesss/user/:email", VerifyToken, User.updateUser);
+    app.put("/adminAcesss/user", VerifyToken, User.updateUser);
 
     app.get("/user/preset", VerifyToken, User.current_user_preset);
 

@@ -46,6 +46,18 @@ $(function () {
         let old_pass = $("#curr_pass").val();
         let new_pass = $("#pass").val();
 
+        if (isText(old_pass) && isText(new_pass)) {
+            $('.alert').hide(500);
+            $('#pass-msg').append(
+                '<div class="alert alert-danger alert-dismissible fade show">' +
+                '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                '<strong>Oops! </strong>Password must be 8 character long'  +
+                '</div>'
+            );
+        } else {
+            return;
+        }
+
         if (new_pass !== $("#conf_pass").val()) {
             alert("new password and confirm password does not match");
             return;
