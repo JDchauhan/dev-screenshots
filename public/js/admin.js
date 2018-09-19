@@ -52,7 +52,7 @@ $(function () {
 
                 $('#email1').val(data.results.user.email);
                 $('#plan').val(data.results.user.plan);
-                $('#admin').val(data.results.user.isAdmin);
+                $('#isadmin').val("" + data.results.user.isAdmin);
                 $('#days').val(data.results.user.expires);
 
             }).fail(function (xhr, status, error) {
