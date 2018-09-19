@@ -589,6 +589,18 @@ hr {
     }
 }
 
+@media screen and (min-width: 1500px) {
+    .theplan li {
+        padding: 2px;
+        font-size: large
+    }
+    .pricingdiv {
+        margin-top: 2%;
+    }
+    .pricingdiv ul.theplan {
+        width: 400px;
+    }
+}
 
 @media screen and (max-width: 1500px) {
     #body-container {
