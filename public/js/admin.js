@@ -1,5 +1,6 @@
 $(function () {
     $('#admin').hide();
+
     if (getCookie("token") === "") {
         window.location.href = "/login?action=login_required";
     } else {
@@ -18,6 +19,12 @@ $(function () {
                 let name = data.results.user.name;
 
                 email = data.results.user.email;
+                plan = data.results.user.plan;
+                if (plan) {
+                    $("#pro").empty();
+                    $("#pro").append("Plan (" + plan + ")");
+                }
+                $("#pro").attr("href", "./payment");
 
                 name = name.charAt(0).toUpperCase() + name.substr(1);
 
