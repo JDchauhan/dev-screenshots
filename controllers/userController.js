@@ -524,6 +524,7 @@ module.exports.getUserData = function (req, res) {
                 email: req.params.email
             }, {
                 email: 1,
+                name: 1,
                 expires: 1,
                 plan: 1,
                 isAdmin: 1
@@ -545,6 +546,7 @@ module.exports.getUserData = function (req, res) {
                 return responses.successMsg(res, {
                     user: {
                         email: user.email,
+                        name: user.name,
                         expires: temp,
                         plan: user.plan,
                         isAdmin: user.isAdmin

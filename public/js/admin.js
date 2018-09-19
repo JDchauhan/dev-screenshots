@@ -51,6 +51,7 @@ $(function () {
                 console.log(data);
 
                 $('#email1').val(data.results.user.email);
+                $('#name').val(data.results.user.name);
                 $('#plan').val(data.results.user.plan);
                 $('#isadmin').val("" + data.results.user.isAdmin);
                 $('#days').val(data.results.user.expires);
