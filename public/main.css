@@ -326,10 +326,6 @@ table
     text-decoration: none;
 }
 
-#loader {
-    display: none;
-}
-
 .navbar-collapse {
     background: rgb(77, 77, 77);
     width: 100vw;
