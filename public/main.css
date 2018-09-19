@@ -34,14 +34,14 @@ body {
     -webkit-transition: width .3s ease;
 }
 
-.nav-link:hover {
-    color: #38A2E2 !important;
-}
-
 .effect:hover:after {
     width: 100%;
     left: 0;
     background: #38A2E2;
+}
+
+.link-w:hover {
+    color: #fff !important;
 }
 
 /* nav animation ends */

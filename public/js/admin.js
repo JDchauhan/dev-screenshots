@@ -84,7 +84,7 @@ $(function () {
         let data = {};
         data.email = $('#email1').val();
         data.plan = $('#plan').val();
-        data.isAdmin = $('#admin').val();
+        data.isAdmin = $('#isadmin').val();
         data.days = $('#days').val();
 
         $.ajax({
