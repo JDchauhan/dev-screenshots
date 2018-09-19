@@ -16,28 +16,29 @@
         <div class="collapse navbar-collapse collapsibleNavbar">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item" id="admin">
-                    <a class="nav-link white" href="/admin"><b>Admin</b></a>
+                    <a class="nav-link effect white" href="/admin">Admin</a>
                 </li>
                 <% if(home){ %>
                 <li class="nav-item">
-                    <a class="nav-link white" href="/dashboard"><b>Home</b></a>
+                    <a class="nav-link effect white" href="/dashboard">Home</a>
                 </li>
                 <% } %>
                 <% if(login){ %>
                 <li class="nav-item white guest">
-                    <a class="nav-link white" href="/login"><b>Login / Register</b></a>
+                    <a class="nav-link effect white" href="/login">Login / Register</a>
                 </li>
                 <% } %>
                 <% if(plan){ %>
                 <li class="nav-item">
-                    <a class="nav-link highlight-nav white" id="pro" href="/plans"><b>Pricing</b></a>
+                    <a class="nav-link effect highlight-nav white" id="pro" href="/plans">Pricing</a>
                 </li>
                 <% } %>
                 <% if(account){ %>
-                <li class="nav-item logged dropdown">
-                    <a class="dropdown-toggle nav-link white" data-toggle="dropdown" href="#"><b>Preset</b>
-                        <span class="caret"></span></a>
-                    <!-- <div class="dropdown-menu "> -->
+                <li class="nav-item logged dropdown" id="preset_nav_list">
+                    <a class="dropdown-toggle nav-link white" data-toggle="dropdown" href="#">Preset
+                        <span class="caret"></span>
+                    </a>
+                    <!-- <div class="dropdown-menu"> -->
                     <ul class="dropdown-menu" id="preset-list">
                         <li class="nav-item logged">
                             <form class="form-inline preset-form">
@@ -51,24 +52,29 @@
 
                     <!-- </div> -->
                 </li>
-                <li class="nav-item logged dropdown">
-                    <a class="dropdown-toggle nav-link white" data-toggle="dropdown" href="#"><b>My Account</b>
+                <% } %>
+                <li class="nav-item">
+                    <a class="nav-link white effect" href="">Tutorials</a>
+                </li>
+                <% if(account){ %>
+                <li class="nav-item logged dropdown" id="account-list">
+                    <a class="dropdown-toggle nav-link white" data-toggle="dropdown" href="#">My Account
                         <span class="caret"></span></a>
-                    <ul class="dropdown-menu ">
+                    <ul class="dropdown-menu" id="account-list-menu">
                         <li class="nav-item logged">
-                            <a class="nav-link  white" href="/resetpass"><b>Reset Password</b></a>
+                            <a class="nav-link  white" href="/resetpass">Reset Password</a>
                         </li>
                         <li class="nav-item logged">
-                            <a class="nav-link  white" href=""><b>Cloud Backup</b></a>
+                            <a class="nav-link  white" href="">Cloud Backup</a>
                         </li>
                         <li class="nav-item logged">
-                            <a class="nav-link  white" onclick="logout()" href="./login?action=logout"><b>Log out</b></a>
+                            <a class="nav-link  white" onclick="logout()" href="./login?action=logout">Log out</a>
                         </li>
                     </ul>
                 </li>
                 <% } %>
-                <li class="nav-item white logged">
-                    <a class="nav-link white" href="https://www.hexerve.com/contact" target="_blank"><b>Contact</b></a>
+                <li class="nav-item white effect logged">
+                    <a class="nav-link white" href="https://www.hexerve.com/contact" target="_blank">Contact</a>
                 </li>
             </ul>
         </div>

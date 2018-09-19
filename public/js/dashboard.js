@@ -82,7 +82,7 @@ $(function () {
                 plan = data.results.user.plan;
                 if (plan) {
                     $("#pro").empty();
-                    $("#pro").append("<b>Plan (" + plan + ")</b>");
+                    $("#pro").append("Plan (" + plan + ")");
                 }
                 $("#pro").attr("href", "./payment");
 
