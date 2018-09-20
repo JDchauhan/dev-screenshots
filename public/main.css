@@ -16,6 +16,36 @@ body {
     padding: 0px 10px !important;
 }
 
+/* nav animation begins */
+.effect {
+    position: relative;
+}
+
+.effect:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px;
+    display: block;
+    margin-top: 5px;
+    right: 0;
+    background: #38A2E2;
+    transition: width .3s ease;
+    -webkit-transition: width .3s ease;
+}
+
+.effect:hover:after {
+    width: 100%;
+    left: 0;
+    background: #38A2E2;
+}
+
+.link-w:hover {
+    color: #fff !important;
+}
+
+/* nav animation ends */
+
 ul.dropdown-menu.show,
 .preset-form {
     background-color: #F1F1F1;
@@ -296,10 +326,6 @@ table
     text-decoration: none;
 }
 
-#loader {
-    display: none;
-}
-
 .navbar-collapse {
     background: rgb(77, 77, 77);
     width: 100vw;
@@ -562,6 +588,20 @@ hr {
     }
 }
 
+@media screen and (min-width: 1500px) {
+    .theplan li {
+        padding: 2px;
+        font-size: large
+    }
+
+    .pricingdiv {
+        margin-top: 2%;
+    }
+
+    .pricingdiv ul.theplan {
+        width: 400px;
+    }
+}
 
 @media screen and (max-width: 1500px) {
     #body-container {

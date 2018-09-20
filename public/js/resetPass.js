@@ -23,7 +23,7 @@ $(function () {
                 plan = data.results.user.plan;
                 if (plan) {
                     $("#pro").empty();
-                    $("#pro").append("<b>Plan (" + plan + ")</b>");
+                    $("#pro").append("Plan (" + plan + ")");
                 }
                 $("#pro").attr("href", "./payment");
 
@@ -110,5 +110,11 @@ $(function () {
                 );
             }
         });
-    })
+    });
+    
+    setTimeout(function(){
+        $('#loader').hide();
+        $('nav').show();
+        $('.body-container').show();
+    }, 100);
 });

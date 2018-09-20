@@ -64,4 +64,20 @@ $(function () {
             $('#nav-toggler').click();
         }
     });
+
+    $(document).on('mouseover', '#preset_nav_list', function(){
+        $('#preset-list').addClass('show');
+    });
+
+    $(document).on('mouseout', '#preset_nav_list', function(){
+        $('#preset-list').removeClass('show');
+    });
+
+    $(document).on('mouseover', '#account-list', function(){
+        $('#account-list-menu').addClass('show')
+    });
+
+    $(document).on('mouseout', '#account-list', function(){
+        $('#account-list-menu').removeClass('show');
+    });
 });
