@@ -1,5 +1,6 @@
 $(function () {
     $('#admin').hide();
+
     if (getCookie("token") === "") {
         window.location.href = "/login?action=login_required";
     } else {
@@ -18,6 +19,12 @@ $(function () {
                 let name = data.results.user.name;
 
                 email = data.results.user.email;
+                plan = data.results.user.plan;
+                if (plan) {
+                    $("#pro").empty();
+                    $("#pro").append("Plan (" + plan + ")");
+                }
+                $("#pro").attr("href", "./payment");
 
                 name = name.charAt(0).toUpperCase() + name.substr(1);
 
@@ -44,8 +51,9 @@ $(function () {
                 console.log(data);
 
                 $('#email1').val(data.results.user.email);
+                $('#name').val(data.results.user.name);
                 $('#plan').val(data.results.user.plan);
-                $('#admin').val(data.results.user.isAdmin);
+                $('#isadmin').val("" + data.results.user.isAdmin);
                 $('#days').val(data.results.user.expires);
 
             }).fail(function (xhr, status, error) {
@@ -77,7 +85,7 @@ $(function () {
         let data = {};
         data.email = $('#email1').val();
         data.plan = $('#plan').val();
-        data.isAdmin = $('#admin').val();
+        data.isAdmin = $('#isadmin').val();
         data.days = $('#days').val();
 
         $.ajax({
@@ -116,5 +124,10 @@ $(function () {
                 );
             }
         });
-    })
+    });
+    setTimeout(function(){
+        $('#loader').hide();
+        $('nav').show();
+        $('.body-container').show();
+    }, 100);
 });

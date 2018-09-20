@@ -65,4 +65,10 @@ $(function () {
             });
         }
     });
+    
+    setTimeout(function(){
+        $('#loader').hide();
+        $('nav').show();
+        $('.body-container').show();
+    }, 100);
 });

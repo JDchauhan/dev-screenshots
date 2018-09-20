@@ -90,4 +90,10 @@ $(function () {
     window.addEventListener('popstate', function () {
         handler.close();
     });
+
+    setTimeout(function(){
+        $('#loader').hide();
+        $('nav').show();
+        $('.body-container').show();
+    }, 100);
 });
