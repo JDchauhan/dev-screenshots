@@ -381,7 +381,7 @@ module.exports.forgetPassword = function (req, res) {
 
                         var link = 'https://screenshot.hexerve.com/verify/email/' + token;
 
-                        Mail.verification_mail(req.body.email, link);
+                        Mail.forgetPass_mail(req.body.email, link);
 
                         return responses.successMsg(res, null);
 
