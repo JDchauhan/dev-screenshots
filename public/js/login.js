@@ -54,14 +54,9 @@ $(function () {
             data: JSON.stringify(data),
             contentType: 'application/json',
             success: function (data) {
-                if (data.results.admin) {
-                    console.log("here");
-                    setCookie("token", data.results.token, 1);
-                    window.location.href = "./admin";
-                } else {
-                    setCookie("token", data.results.token, 1);
-                    window.location.href = "/";
-                }
+                setCookie("token", data.results.token, 1);
+                window.location.href = "/";
+
             },
             error: function (xhr, textStatus, errorThrown) {
                 var errMsg;
@@ -264,7 +259,7 @@ $(function () {
             return false;
         }
     });
-    setTimeout(function(){
+    setTimeout(function () {
         $('#loader').hide();
         $('nav').show();
         $('.body-container').show();
