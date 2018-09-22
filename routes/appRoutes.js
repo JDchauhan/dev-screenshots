@@ -40,6 +40,10 @@ module.exports = function (app) {
         res.render("plans");
     });
 
+    app.get("/profile", function (req, res) {
+        res.render("profile");
+    });
+
     app.get("/admin", function (req, res) {
         res.render("admin");
     });
@@ -69,6 +73,8 @@ module.exports = function (app) {
     app.get('/verify/email/:token', VerifyToken, User.verify);
 
     app.get("/user", VerifyToken, User.current_user);
+
+    app.put("/user", VerifyToken, User.updatePersonalInfo);
 
     app.get("/adminAcesss/user/:email", VerifyToken, User.getUserData);
 

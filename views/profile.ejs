@@ -1,0 +1,54 @@
+<% include partials/header.ejs %>
+<script src="/js/profile.js"></script>
+</head>
+
+<body>
+	<%- include('partials/navbar', {
+			home: true,
+			login: false,
+			plan: true,
+			account: true
+		}); %>
+
+	<div id="loader" class="container row">
+		<img class="hexerve" src="/hexerve.png" />
+	</div>
+	<br />
+	<br />
+	<div class="body-container container" style="display:none">
+		<div class="row">
+			<div class="col-md-6">
+			</div>
+
+			<div class="col-md-6">
+				<div id="list-msg"></div>
+				<form>
+					<div class="input-group mb-3 input-group-lg container">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Name</span>
+						</div>
+						<input type="text" class="form-control" name="name" id="name" placeholder="name">
+					</div>
+					<div class="input-group mb-3 input-group-lg container">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Mobile</span>
+						</div>
+                        <input type="number" class="form-control" name="mobile" id="mobile" placeholder="18002740561">
+					</div>
+					<div class="wrapper text-center">
+						<div class="btn-group btn-group-lg">
+							<button type="button" id="update-btn" class="btn wobble-vertical">Update</button>
+						</div>
+					</div>
+				</form>
+
+			</div>
+		</div>
+
+	</div>
+
+	<footer class="footer fixed-bottom bg-dark text-light">
+		<% include partials/footer.ejs %>
+</body>
+
+</html>
