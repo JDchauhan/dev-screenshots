@@ -248,7 +248,7 @@ table
     margin-bottom: 4%;
     text-transform: uppercase;
     padding-bottom: 5px;
-    border-bottom: 5px solid white;
+    border-bottom: 2px solid white;
 }
 
 .pricingdiv ul.theplan:nth-of-type(1) {

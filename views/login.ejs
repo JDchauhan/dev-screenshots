@@ -1,124 +1,132 @@
 <% include partials/header.ejs %>
-<script src="/js/login.js"></script>
-</head>
+    <script src="/js/login.js"></script>
+    </head>
 
-<body>
-    <%- include('partials/navbar', {
+    <body>
+        <%- include('partials/navbar', {
             home: true,
             login: false,
             plan: true,
             account: false
         }); %>
 
-    <div id="loader" class="container row">
-        <img class="hexerve" src="/hexerve.png" />
-    </div>
+            <div id="loader" class="container row">
+                <img class="hexerve" src="/hexerve.png" />
+            </div>
 
-    <div class="body-container container mid-25"  style="display:none">
-        <div class="row login-row">
-            <!--Description-->
-            <div class="col-md-6">
+            <div class="body-container container mid-25" style="display:none">
+                <div class="row login-row">
+                    <!--Description-->
+                    <div class="col-md-6">
+
+                    </div>
+
+                    <!--Login-->
+                    <div class="col-md-6 login">
+                        <div id="login-msg"></div>
+                        <form>
+                            <div class="input-group mb-3 input-group-lg container">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Email</span>
+                                </div>
+                                <input type="email" class="form-control" name="email" id="email" placeholder="example@gmail.com">
+                            </div>
+                            <div class="input-group mb-3 input-group-lg container">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Password</span>
+                                </div>
+                                <input type="password" class="form-control" name="pass" id="pass" placeholder="password">
+                            </div>
+                            <div class="container lead height-30">
+                                <span class="pull-left">
+                                    <a class="resend_link link-w" id="resend_link">Resend Link</a>
+                                </span>
+                                <span class="pull-right">
+                                    <a href="./password/forget" class="link-w">Forget Password</a>
+                                </span>
+                            </div>
+
+                            <div class="wrapper text-center">
+                                <div class="btn-group btn-group-lg">
+                                    <button type="button" id="login-btn" class="btn wobble-vertical">Login</button>
+                                    <button type="button" id="register" class="btn wobble-vertical">Register</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Register -->
+                    <div class="col-md-6 register" style="display: none;">
+                        <div id="register-msg"></div>
+                        <form>
+                            <div class="input-group mb-3 input-group-lg container">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Name</span>
+                                </div>
+                                <input type="text" class="form-control" name="name" id="name" placeholder="example">
+                            </div>
+                            <div class="input-group mb-3 input-group-lg container">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Email</span>
+                                </div>
+                                <input type="text" class="form-control" name="email" id="email1" placeholder="example@gmail.com">
+                            </div>
+                            <div class="input-group mb-3 input-group-lg container">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Mobile</span>
+                                </div>
+                                <input type="text" class="form-control" name="mobile" id="mobile" placeholder="+1 800 274 0561">
+                            </div>
+                            <div class="input-group mb-3 input-group-lg container">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Password</span>
+                                </div>
+                                <input type="password" class="form-control" name="pass" id="pass1" placeholder="password">
+                            </div>
+                            <div class="input-group mb-3 input-group-lg container checkbox">
+                                <label class="white tc"><input type="checkbox" id="tc"> I have read and accepted all the
+                                    <a class="white tc" href="https://www.hexerve.com/terms-and-conditions">T &amp; C</a></label>
+                            </div>
+                            <div class="wrapper text-center">
+                                <div class="btn-group btn-group-lg">
+                                    <button type="button" id="login" class="btn wobble-vertical">Login</button>
+                                    <button type="button" id="register-btn" class="btn wobble-vertical">Register</button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
 
             </div>
 
-            <!--Login-->
-            <div class="col-md-6 login">
-                <div id="login-msg"></div>
-                <form>
-                    <div class="input-group mb-3 input-group-lg container">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Email</span>
-                        </div>
-                        <input type="email" class="form-control" name="email" id="email" placeholder="example@gmail.com">
-                    </div>
-                    <div class="input-group mb-3 input-group-lg container">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Password</span>
-                        </div>
-                        <input type="password" class="form-control" name="pass" id="pass" placeholder="password">
-                    </div>
-                    <div class="container lead height-30">
-                        <span class="pull-left">
-                            <a class="resend_link link-w" id="resend_link">Resend Link</a>
-                        </span>
-                        <span class="pull-right">
-                            <a href="./password/forget" class="link-w">Forget Password</a>
-                        </span>
-                    </div>
+            <% if(message) { %>
+                <% if(message === "verified") { %>
+                    <script>
+                        $('#login-msg').append(
+                            '<div class="alert alert-success alert-dismissible fade show">' +
+                            '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                            '<strong>Congratulation! </strong> Verification Successful.' +
+                            '</div>'
+                        );
+                    </script>
+                <% } %>
+                <% if(message === "err") { %>
+                    <script>
+                        var errTxt = "<%= errText %>";
+                        $('#login-msg').append(
+                            '<div class="alert alert-danger alert-dismissible fade show">' +
+                            '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                            '<strong>Oops! </strong> ' + errTxt + '.' +
+                            '</div>'
+                        );
+                    </script>
+                <% } %>
 
-                    <div class="wrapper text-center">
-                        <div class="btn-group btn-group-lg">
-                            <button type="button" id="login-btn" class="btn wobble-vertical">Login</button>
-                            <button type="button" id="register" class="btn wobble-vertical">Register</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+            <% } %>
 
-            <!-- Register -->
-            <div class="col-md-6 register" style="display: none;">
-                <div id="register-msg"></div>
-                <form>
-                    <div class="input-group mb-3 input-group-lg container">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Name</span>
-                        </div>
-                        <input type="text" class="form-control" name="name" id="name" placeholder="example">
-                    </div>
-                    <div class="input-group mb-3 input-group-lg container">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Email</span>
-                        </div>
-                        <input type="text" class="form-control" name="email" id="email1" placeholder="example@gmail.com">
-                    </div>
-                    <div class="input-group mb-3 input-group-lg container">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Mobile</span>
-                        </div>
-                        <input type="text" class="form-control" name="mobile" id="mobile" placeholder="+1 800 274 0561">
-                    </div>
-                    <div class="input-group mb-3 input-group-lg container">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Password</span>
-                        </div>
-                        <input type="password" class="form-control" name="pass" id="pass1" placeholder="password">
-                    </div>
-                    <!-- <div class="input-group mb-3 input-group-lg container">
-                        <input type="checkbox" class="" name="pass" id="pass1">
-                        
-                    </div> -->
-                    <div class="input-group mb-3 input-group-lg container checkbox">
-                        <label class="white tc"><input type="checkbox" id="tc"> I have read and accepted all the <a class="white tc" href="https://www.hexerve.com/terms-and-conditions">T &amp; C</a></label>
-                    </div>
-                    <div class="wrapper text-center">
-                        <div class="btn-group btn-group-lg">
-                            <button type="button" id="login" class="btn wobble-vertical">Login</button>
-                            <button type="button" id="register-btn" class="btn wobble-vertical">Register</button>
-                        </div>
-                    </div>
-                </form>
-
-            </div>
-        </div>
-
-    </div>
-
-    <% if(message) { %>
-    <% if(message === "verified") { %>
-    <script>
-        $('#login-msg').append(
-            '<div class="alert alert-success alert-dismissible fade show">' +
-            '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-            '<strong>Congratulation! </strong> Verification Successful.' +
-            '</div>'
-        );
-    </script>
-    <% } %>
-
-    <% } %>
-
-    <footer class="footer fixed-bottom bg-dark text-light">
+        <footer class="footer fixed-bottom bg-dark text-light">
         <% include partials/footer.ejs %>
-</body>
+    </body>
 
-</html>
+    </html>
