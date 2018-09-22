@@ -50,3 +50,26 @@ module.exports.forgetPass_mail = function (email, link) {
         }
     });
 };
+
+module.exports.passUpdate_mail = function (email) {
+    ejs.renderFile(__dirname + "/email.ejs", {
+        task: 'Update Password'
+    }, function (err, data) {
+        if (err) {
+            console.log(err);
+        } else {
+            var mailOptions = {
+                to: email,
+                subject: 'Password Updated',
+                html: data
+            };
+            transporter.sendMail(mailOptions, function (err, info) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log('Email sent: ' + info.response);
+                }
+            });
+        }
+    });
+};

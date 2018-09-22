@@ -402,11 +402,15 @@
 								<p class="lead"></p>
 								<p>Thank you for your request.</p>
 								<!-- Callout Panel -->
+								<% if(task == "Update Password"){ %>
+									<p>Your password has been updated successfully.</p>
+								<% } else { %>
 								<p class="callout">
 									To <%= task %> <a href="<%= taskhref %>">Click here ! &raquo;</a>
 								</p><!-- /Callout Panel -->
-								<p> In case you haven't requested don't worry you are safe.</p>
-								
+
+								<% } %>
+
 								<!-- social & contact -->
 								<table class="social" width="100%">
 									<tr>
@@ -417,8 +421,8 @@
 													<td>
 														<p class="">Connect with Us:</p>
 														<p class="">
-															<a href="https://www.facebook.com/Hexerve-Solutions-1988584404491035/" target="_blank" class="soc-btn fb">Facebook</a> 
-															<a href="https://twitter.com/HexerveSolution" class="soc-btn tw" target="_blank">Twitter</a> 
+															<a href="https://www.facebook.com/Hexerve-Solutions-1988584404491035/" target="_blank" class="soc-btn fb">Facebook</a>
+															<a href="https://twitter.com/HexerveSolution" class="soc-btn tw" target="_blank">Twitter</a>
 														</p>
 													</td>
 												</tr>

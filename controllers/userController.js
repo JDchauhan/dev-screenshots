@@ -315,6 +315,7 @@ function updatePassword(id, pass, callback) {
             if (err) {
                 callback(false);
             }
+            Mail.passUpdate_mail(user.email);
             callback(true);
         });
 }
