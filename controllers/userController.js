@@ -569,6 +569,7 @@ module.exports.getUserData = function (req, res) {
                         email: user.email,
                         name: user.name,
                         expires: temp,
+                        expiresOn: user.expires,
                         plan: user.plan,
                         isAdmin: user.isAdmin
                     }
