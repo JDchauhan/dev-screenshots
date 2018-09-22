@@ -3,7 +3,7 @@ var config = require('../config');
 var transporter = config.transporter;
 
 module.exports.verification_mail = function (email, link) {
-    ejs.renderFile(__dirname + "\\email.ejs", {
+    ejs.renderFile(__dirname + "/email.ejs", {
         task: 'Verify Your Account',
         taskhref: link
     }, function (err, data) {
@@ -27,7 +27,7 @@ module.exports.verification_mail = function (email, link) {
 };
 
 module.exports.forgetPass_mail = function (email, link) {
-    ejs.renderFile(__dirname + "\\email.ejs", {
+    ejs.renderFile(__dirname + "/email.ejs", {
         task: 'Reset Password',
         taskhref: link
     }, function (err, data) {

@@ -61,7 +61,7 @@ $(function () {
 
     $('.payment').on('click', function (e) {
         planID = parseInt(e.currentTarget.getAttribute("planId"));
-        let planAmount = 499;
+        let planAmount = 100;
         switch (planID) {
             case 1:
                 break;
