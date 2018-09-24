@@ -1,5 +1,5 @@
 body {
-    background: url('./header.jpg') no-repeat center center fixed;
+    background: url('./header.png') no-repeat center center fixed;
 }
 
 .navbar-toggler {
@@ -286,6 +286,10 @@ table
     text-transform: uppercase;
 }
 
+footer, .checkbox-container {
+    background-color: rgba(0, 0, 0, 0.7) 
+}
+
 footer ul {
     margin: 10px auto;
 }
@@ -327,7 +331,7 @@ table
 }
 
 .navbar-collapse {
-    background: rgb(77, 77, 77);
+    background-color: rgba(0, 0, 0, 0.4)
     width: 100vw;
     margin: 0%;
 }
