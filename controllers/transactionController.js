@@ -6,6 +6,9 @@ Transaction = mongoose.model('transaction');
 var stripe = require("stripe")(config.stripeKey);
 
 var userController = require('../controllers/userController');
+var AuthoriseUser = require('../helper/authoriseUser');
+
+var responses = require('../helper/responses'); 
 
 var jsSHA = require("jssha");
 exports.payUMoneyPayment = function (req, res) {
@@ -115,4 +118,20 @@ exports.payUMoneyPaymentResponse = function (req, res) {
             'status': "Error occured"
         });
     }
+}
+
+exports.getAllTransactions = function (req, res) {
+    AuthoriseUser.getUser(req, res, function (user) {
+        Transaction.find({email: user.email}, {_id: 0, __v: 0}, function(err, transactions){
+            if(err){console.log(err);
+                return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+            }
+    
+            if(!transactions){
+                return responses.errorMsg(res, 404, "Not Found", "transactions not found.", null);
+            }
+    
+            return responses.successMsg(res, transactions);
+        });    
+    });    
 }
