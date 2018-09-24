@@ -20,7 +20,7 @@ $(function () {
 
                 email = data.results.user.email;
 
-                name = name.charAt(0).toUpperCase() + name.substr(1);
+                // name = name.charAt(0).toUpperCase() + name.substr(1);
 
             }).fail(function (xhr, status, error) {
             if (xhr.status === 0) {

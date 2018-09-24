@@ -22,9 +22,12 @@ $(function () {
                 $('#name').val(data.results.user.name);
                 $('#mobile').val(data.results.user.mobile);
                 plan = data.results.user.plan;
+                plan = plan.charAt(0).toUpperCase() + plan.substr(1);
+                let daysLeft = parseInt((new Date(data.results.user.expires) - new Date()) / (3600 * 24 * 1000));
+
                 if (plan) {
                     $("#pro").empty();
-                    $("#pro").append("Plan (" + plan + ")");
+                    $("#pro").append(plan + " ( " + daysLeft + " Days Left )");
                 }
                 $("#pro").attr("href", "./payment");
 
@@ -73,12 +76,12 @@ $(function () {
                     } else {
                         errMsg = JSON.parse(xhr.responseText).message;
                         errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
-    
+
                         if (errMsg === 'Validation failed.') {
                             errMsg += '<br/>Incorrect ' + JSON.parse(xhr.responseText).errors.index.join(", ");
                         }
                     }
-    
+
                     $('.alert').hide(500);
                     $('#list-msg').append(
                         '<div class="alert alert-danger alert-dismissible fade show">' +
@@ -88,7 +91,7 @@ $(function () {
                     );
                 }
             });
-        } else if(!isText(name)) {
+        } else if (!isText(name)) {
             $('.alert').hide(500);
             $('#list-msg').append(
                 '<div class="alert alert-danger alert-dismissible fade show">' +
@@ -96,7 +99,7 @@ $(function () {
                 '<strong>Oops! </strong>Invalid name' +
                 '</div>'
             );
-        }else {
+        } else {
             $('.alert').hide(500);
             $('#list-msg').append(
                 '<div class="alert alert-danger alert-dismissible fade show">' +

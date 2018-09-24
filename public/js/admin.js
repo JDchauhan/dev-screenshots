@@ -20,28 +20,31 @@ $(function () {
 
                 email = data.results.user.email;
                 plan = data.results.user.plan;
+                plan = plan.charAt(0).toUpperCase() + plan.substr(1);
+                let daysLeft = parseInt((new Date(data.results.user.expires) - new Date()) / (3600 * 24 * 1000));
+
                 if (plan) {
                     $("#pro").empty();
-                    $("#pro").append("Plan (" + plan + ")");
+                    $("#pro").append(plan + " ( " + daysLeft + " Days Left )");
                 }
                 $("#pro").attr("href", "./payment");
 
-                name = name.charAt(0).toUpperCase() + name.substr(1);
+                // name = name.charAt(0).toUpperCase() + name.substr(1);
 
             }).fail(function (xhr, status, error) {
-                if (xhr.status === 0) {
-                    $('.alert').hide(500);
-                    $('#search-msg').append(
-                        '<div class="alert alert-danger alert-dismissible fade show">' +
-                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                        '<strong>Oops! </strong>Network error.</div>'
-                    );
-                    return;
-                }
+            if (xhr.status === 0) {
+                $('.alert').hide(500);
+                $('#search-msg').append(
+                    '<div class="alert alert-danger alert-dismissible fade show">' +
+                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                    '<strong>Oops! </strong>Network error.</div>'
+                );
+                return;
+            }
 
-                setCookie("token", "", -1);
-                window.location.href = "/login?action=login_required";
-            });
+            setCookie("token", "", -1);
+            window.location.href = "/login?action=login_required";
+        });
     }
 
     $(document).on('click', '#search-btn', function () {
@@ -56,31 +59,31 @@ $(function () {
                 $('#isadmin').val("" + data.results.user.isAdmin);
                 $('#days').val(data.results.user.expires);
                 $('#timestamp').attr('title', "" + new Date(data.results.user.expiresOn));
-                $('[data-toggle="tooltip"]').tooltip(); 
+                $('[data-toggle="tooltip"]').tooltip();
 
             }).fail(function (xhr, status, error) {
-                if (xhr.status === 0) {
-                    $('.alert').hide(500);
-                    $('#search-msg').append(
-                        '<div class="alert alert-danger alert-dismissible fade show">' +
-                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                        '<strong>Oops! </strong>Network error.</div>'
-                    );
-                    return;
-                } else {
-                    errMsg = JSON.parse(xhr.responseText).message;
-                    errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
+            if (xhr.status === 0) {
+                $('.alert').hide(500);
+                $('#search-msg').append(
+                    '<div class="alert alert-danger alert-dismissible fade show">' +
+                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                    '<strong>Oops! </strong>Network error.</div>'
+                );
+                return;
+            } else {
+                errMsg = JSON.parse(xhr.responseText).message;
+                errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
 
-                    $('.alert').hide(500);
-                    $('#search-msg').append(
-                        '<div class="alert alert-danger alert-dismissible fade show">' +
-                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                        '<strong>Oops! </strong>' + errMsg + '</div>'
-                    );
-                }
+                $('.alert').hide(500);
+                $('#search-msg').append(
+                    '<div class="alert alert-danger alert-dismissible fade show">' +
+                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                    '<strong>Oops! </strong>' + errMsg + '</div>'
+                );
+            }
 
-                console.log(xhr);
-            });
+            console.log(xhr);
+        });
     });
 
     $(document).on('click', '#update-btn', function () {
@@ -127,7 +130,7 @@ $(function () {
             }
         });
     });
-    setTimeout(function(){
+    setTimeout(function () {
         $('#loader').hide();
         $('nav').show();
         $('.body-container').show();
