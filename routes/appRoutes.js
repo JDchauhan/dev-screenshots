@@ -79,6 +79,10 @@ module.exports = function (app) {
 
     app.get("/user/transaction", VerifyToken, Transaction.getAllTransactions);
 
+    app.get("/transaction", function (req, res) {
+        res.render("transactions");
+    });
+
     app.get("/adminAcesss/user/:email", VerifyToken, User.getUserData);
 
     app.put("/adminAcesss/user", VerifyToken, User.updateUser);

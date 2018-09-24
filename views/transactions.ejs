@@ -1,0 +1,38 @@
+<% include partials/header.ejs %>
+<script src="/js/transaction.js"></script>
+</head>
+
+<body>
+    <%- include('partials/navbar', {
+            home: true,
+            login: false,
+            plan: true,
+            account: false
+        }); %>
+
+    <div id="loader" class="container row">
+        <img class="hexerve" src="/hexerve.png" />
+    </div>
+
+    <div class="body-container container mid-25" style="display:none">
+        <div id="err-msg"></div>
+        <div class="table-responsive table-dark">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>ID</th>
+                        <th>Amount</th>
+                        <th>Date/Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+
+        <footer class="footer fixed-bottom text-light">
+            <% include partials/footer.ejs %>
+</body>
+
+</html>

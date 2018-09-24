@@ -10,6 +10,11 @@ body {
     border-color: #d1d1d1 !important;
 }
 
+.table-dark {
+    background-color: #c6c8ca !important;
+    color: #000 !important;
+}
+
 .nav-link {
     color: #C8C3C3 !important;
     font-size: 20px;
