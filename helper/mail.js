@@ -12,6 +12,7 @@ module.exports.verification_mail = function (email, link) {
         } else {
             var mailOptions = {
                 to: email,
+                from: 'Hexerve Solutions <hexerve@gmail.com>',
                 subject: 'Account Verification',
                 html: data
             };
