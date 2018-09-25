@@ -48,13 +48,23 @@ $(function () {
         function (data, status, xhr) {
             console.log(data);
 
+            if(data.results.length === 0){
+                $('.alert').hide(500);
+                $('#err-msg').append(
+                    '<div class="alert alert-danger alert-dismissible fade show">' +
+                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                    '<strong>Oops! </strong>No record found.</div>'
+                );
+                return;    
+            }
+
             for(let i = 0; i < data.results.length; i++){
                 $('tbody').append(
                     '<tr>' +
                         '<td>' + i + '</td>' +
-                        '<td>' + data.results[i].txnID + '</td>' +
-                        '<td>' + data.results[i].amount + '</td>' +
-                        '<td>' + new Date(data.results[i].generation_timestamp) + '</td>' +
+                        '<td class="break">' + data.results[i].txnID + '</td>' +
+                        '<td class=""><b>$ ' + (parseInt(data.results[i].amount) / 100) + '</b></td>' +
+                        '<td>' + (String)(new Date(data.results[i].generation_timestamp)).split(' GMT')[0] + '</td>' +
                     '</tr>'
                 );
             }

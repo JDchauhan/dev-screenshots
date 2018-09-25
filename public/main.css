@@ -122,6 +122,10 @@ ul.dropdown-menu.show .white {
     margin-left: 8%;
 }
 
+.break {
+    word-break: break-all;
+}
+
 .login-row {
     margin-top: 8%;
 }
