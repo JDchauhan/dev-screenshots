@@ -6,6 +6,7 @@ module.exports = function (app) {
     var transactionController = require('../controllers/transactionController');
 
     var User = require('../controllers/userController');
+    var Transaction = require('../controllers/transactionController');
     var Preset = require('../controllers/presetController');
     var screenshot = require('../helper/screenshot');
     var responses = require('../helper/responses');
@@ -40,6 +41,10 @@ module.exports = function (app) {
         res.render("plans");
     });
 
+    app.get("/profile", function (req, res) {
+        res.render("profile");
+    });
+
     app.get("/admin", function (req, res) {
         res.render("admin");
     });
@@ -67,8 +72,16 @@ module.exports = function (app) {
     app.put("/password/set", User.setPassword);
 
     app.get('/verify/email/:token', VerifyToken, User.verify);
-
+    
     app.get("/user", VerifyToken, User.current_user);
+
+    app.put("/user", VerifyToken, User.updatePersonalInfo);
+
+    app.get("/user/transaction", VerifyToken, Transaction.getAllTransactions);
+
+    app.get("/transaction", function (req, res) {
+        res.render("transactions");
+    });
 
     app.get("/adminAcesss/user/:email", VerifyToken, User.getUserData);
 
