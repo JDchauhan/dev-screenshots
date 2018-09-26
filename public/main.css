@@ -1,9 +1,18 @@
 body {
-    background: url('./header.jpg') no-repeat center center fixed;
+    background: url('./screenshot-taker.png') no-repeat center center fixed;
+}
+
+.navbar {
+    background-color: rgba(0,0,0,0.7);
 }
 
 .navbar-toggler {
     border-color: #d1d1d1 !important;
+}
+
+.table-dark {
+    background-color: #c6c8ca !important;
+    color: #000 !important;
 }
 
 .nav-link {
@@ -111,6 +120,10 @@ ul.dropdown-menu.show .white {
     color: #fff !important;
     margin-top: 0.5%;
     margin-left: 8%;
+}
+
+.break {
+    word-break: break-all;
 }
 
 .login-row {
@@ -286,6 +299,10 @@ table
     text-transform: uppercase;
 }
 
+footer, .checkbox-container {
+    background-color: rgba(0, 0, 0, 0.7) 
+}
+
 footer ul {
     margin: 10px auto;
 }
@@ -327,7 +344,7 @@ table
 }
 
 .navbar-collapse {
-    background: rgb(77, 77, 77);
+    background-color: rgba(0, 0, 0, 0.4)
     width: 100vw;
     margin: 0%;
 }

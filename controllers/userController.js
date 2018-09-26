@@ -235,8 +235,8 @@ module.exports.verify = function (req, res) {
         userID: req.id
     }, function (err, verified) {
         if (err) {
-           // return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
-           res.render('login', {
+            // return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+            res.render('login', {
                 message: 'err',
                 errText: 'Some error has occured'
             });
@@ -315,6 +315,7 @@ function updatePassword(id, pass, callback) {
             if (err) {
                 callback(false);
             }
+            Mail.passUpdate_mail(user.email);
             callback(true);
         });
 }
@@ -568,6 +569,7 @@ module.exports.getUserData = function (req, res) {
                         email: user.email,
                         name: user.name,
                         expires: temp,
+                        expiresOn: user.expires,
                         plan: user.plan,
                         isAdmin: user.isAdmin
                     }
@@ -639,4 +641,40 @@ module.exports.updateUser = function (req, res) {
         }
 
     });
-}
+};
+
+module.exports.updatePersonalInfo = function (req, res) {
+    AuthoriseUser.getUser(req, res, function (user) {
+        User.findOneAndUpdate({
+            _id: user._id
+        }, {
+            name: req.body.name,
+            mobile: req.body.mobile
+        }, function (err, user) {
+            if (err) {
+                if (err.name && err.name == "ValidationError") {
+                    errors = {
+                        "index": Object.keys(err.errors)
+                    };
+                    return responses.errorMsg(res, 400, "Bad Request", "validation failed.", errors);
+
+                } else if (err.name && err.name == "CastError") {
+                    errors = {
+                        "index": err.path
+                    };
+                    return responses.errorMsg(res, 400, "Bad Request", "cast error.", errors);
+
+                } else {
+                    console.log(err);
+                    return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+                }
+            }
+
+            if (!user) {
+                return responses.errorMsg(res, 404, "Not Found", "user not found.", null);
+            }
+
+            return responses.successMsg(res, null);
+        });
+    });
+};
