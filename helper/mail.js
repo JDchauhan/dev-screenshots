@@ -12,7 +12,7 @@ module.exports.verification_mail = function (email, link) {
         } else {
             var mailOptions = {
                 to: email,
-                from: 'Hexerve Solutions <hexerve@gmail.com>',
+                from: 'Hexerve Solutions <info@hexerve.com>',
                 subject: 'Account Verification',
                 html: data
             };
@@ -37,6 +37,7 @@ module.exports.forgetPass_mail = function (email, link) {
         } else {
             var mailOptions = {
                 to: email,
+                from: 'Hexerve Solutions <info@hexerve.com>',
                 subject: 'Password reset link',
                 //html: '<p>Please visit the following link to reset your password</p> <br/>' + link
                 html: data
@@ -61,6 +62,7 @@ module.exports.passUpdate_mail = function (email) {
         } else {
             var mailOptions = {
                 to: email,
+                from: 'Hexerve Solutions <info@hexerve.com>',
                 subject: 'Password Updated',
                 html: data
             };
