@@ -17,8 +17,8 @@ module.exports.register = function (req, res) {
     var hashedPassword = bcrypt.hashSync(req.body.password, 8);
 
     req.body.password = hashedPassword;
-    req.isAdmin = false;
-    req.plan = "enterprise";
+    req.body.isAdmin = false;
+    req.body.plan = "enterprise";
     User.create(req.body,
         function (err, user) {
             if (err) {

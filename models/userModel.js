@@ -42,8 +42,7 @@ var UserSchema = new Schema({
     ref: 'preset'
   }],
   expires: {
-    type: Date,
-    default: Date.now
+    type: Date
   },
   active: {
     type: Boolean,
