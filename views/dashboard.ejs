@@ -14,7 +14,7 @@
         <img class="hexerve" src="/hexerve.png" />
     </div>
 
-    <div class="body-container" id='body-container'  style="display:none">
+    <div class="body-container" id='body-container' style="display:none">
         <div class="container errorDiv"></div>
 
         <!--searchbox-->
@@ -167,27 +167,40 @@
 
                 <div class="list" id="list"></div>
 
-                <form class="form-inline">
-                    <div class="form-group inline_form input-group mb-3 container addWidth">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Folder name</span>
+                <form class="container padding-0-2">
+
+                    <div class="row nomar">
+                        <div class="col-md-4">
+                            <div class="form-group input-group  panel">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Folder name</span>
+                                </div>
+                                <input type="text" class="form-control" name="url" id="name_insert" placeholder="Hexerve">
+                            </div>
                         </div>
-                        <input type="text" class="form-control" name="url" id="name_insert" placeholder="Hexerve">
-                    </div>
-                    <div class="form-group inline_form input-group mb-3 container half-width">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">URL </span>
+                        <div class="col-md-7">
+                            <div class="form-group input-group  panel">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">URL </span>
+                                </div>
+                                <input type="text" class="form-control" name="url" id="url_insert" placeholder="https://www.hexerve.com" />
+                            </div>
                         </div>
-                        <input type="text" class="form-control" name="url" id="url_insert" placeholder="https://www.hexerve.com" />
-                    </div>
-                    <div class="form-group inline_form input-group mb-3 container right_5">
-                        <button type="button" class="btn btn-secondary add_button" onclick="addList()">Add</button>
+                        <div class="col-md-1">
+                            <div class="form-group input-group  panel">
+                                <button type="button" class="btn btn-secondary add_button" onclick="addList()">Add</button>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-12">
+                            <div class="form-group input-group  panel">
+                                <input type="file" class="custom-file-input" name="File Upload" id="txtFileUpload"
+                                    accept=".csv" />
+                                <label class="custom-file-label" for="customFile">Upload CSV</label>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input" name="File Upload" id="txtFileUpload" accept=".csv" />
-                        <label class="custom-file-label" for="customFile">Upload CSV</label>
-                    </div>
                 </form>
 
                 <div id="url_add_err">

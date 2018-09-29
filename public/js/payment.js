@@ -16,6 +16,7 @@ $(function () {
                 let name = data.results.user.name;
                 if (data.results.user.isAdmin) {
                     $('#admin').show();
+                    $('#pro').hide();
                 }
 
                 email = data.results.user.email;
@@ -61,7 +62,7 @@ $(function () {
 
     $('.payment').on('click', function (e) {
         planID = parseInt(e.currentTarget.getAttribute("planId"));
-        let planAmount = 100;
+        let planAmount = 499;
         switch (planID) {
             case 1:
                 break;

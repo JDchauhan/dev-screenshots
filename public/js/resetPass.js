@@ -14,9 +14,7 @@ $(function () {
             function (data, status, xhr) {
                 console.log(data);
                 let name = data.results.user.name;
-                if (data.results.user.isAdmin) {
-                    $('#admin').show();
-                }
+                
                 email = data.results.user.email;
 
                 name = name.charAt(0).toUpperCase() + name.substr(1);
@@ -30,6 +28,10 @@ $(function () {
                 }
                 $("#pro").attr("href", "./payment");
 
+                if (data.results.user.isAdmin) {
+                    $('#admin').show();
+                    $('#pro').hide();
+                }
 
             }).fail(function (xhr, status, error) {
             var errMsg;
