@@ -12,9 +12,6 @@ $(function () {
             function (data, status, xhr) {
                 console.log(data);
                 let name = data.results.user.name;
-                if (data.results.user.isAdmin) {
-                    $('#admin').show();
-                }
 
                 email = data.results.user.email;
 
@@ -27,6 +24,11 @@ $(function () {
                     $("#pro").append(plan + " ( " + daysLeft + " Days Left )");
                 }
                 $("#pro").attr("href", "./payment");
+
+                if (data.results.user.isAdmin) {
+                    $('#admin').show();
+                    $('#pro').hide();
+                }
 
             }).fail(function (xhr, status, error) {
             if (xhr.status === 0) {

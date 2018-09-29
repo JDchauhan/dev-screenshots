@@ -23,12 +23,8 @@ $(function () {
                 plan = plan.charAt(0).toUpperCase() + plan.substr(1);
                 let daysLeft = parseInt((new Date(data.results.user.expires) - new Date()) / (3600 * 24 * 1000));
 
-                if (plan) {
-                    $("#pro").empty();
-                    $("#pro").append(plan + " ( " + daysLeft + " Days Left )");
-                }
-                $("#pro").attr("href", "./payment");
-
+                $("#pro").hide();
+                
                 // name = name.charAt(0).toUpperCase() + name.substr(1);
 
             }).fail(function (xhr, status, error) {

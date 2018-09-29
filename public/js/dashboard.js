@@ -20,9 +20,6 @@ $(function () {
         $.get("../user/preset", {},
             function (data, status, xhr) {
                 console.log(data);
-                if (data.results.user.isAdmin) {
-                    $('#admin').show();
-                }
                 // let name = data.results.user.name;
 
                 // name = name.charAt(0).toUpperCase() + name.substr(1);
@@ -88,7 +85,11 @@ $(function () {
                     $("#pro").append(plan + " ( " + daysLeft + " Days Left )");
                 }
                 $("#pro").attr("href", "./payment");
-
+                if (data.results.user.isAdmin) {
+                    $('#admin').show();
+                    $('#pro').hide();
+                }
+                
                 $(".guest").hide();
                 $(".logged").show();
 

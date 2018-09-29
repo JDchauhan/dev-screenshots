@@ -16,6 +16,7 @@ $(function () {
                 let name = data.results.user.name;
                 if (data.results.user.isAdmin) {
                     $('#admin').show();
+                    $('#pro').hide();
                 }
 
                 email = data.results.user.email;
