@@ -611,10 +611,6 @@ module.exports.updateUser = function (req, res) {
                     
                 } else {
                     data.isAdmin = false;
-                    data.plan = "enterprise";
-                    
-                    let time = new Date();
-                    data.expires = time.setDate(time.getDate() + 15);                    
                 }
             }
 

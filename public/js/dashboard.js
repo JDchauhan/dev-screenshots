@@ -77,12 +77,12 @@ $(function () {
                     });
                 }
                 plan = data.results.user.plan;
-                plan = plan.charAt(0).toUpperCase() + plan.substr(1);
+                getPlan = plan.charAt(0).toUpperCase() + plan.substr(1);
                 let daysLeft = parseInt((new Date(data.results.user.expires) - new Date()) / (3600 * 24 * 1000));
 
-                if (plan) {
+                if (getPlan) {
                     $("#pro").empty();
-                    $("#pro").append(plan + " ( " + daysLeft + " Days Left )");
+                    $("#pro").append(getPlan + " ( " + daysLeft + " Days Left )");
                 }
                 $("#pro").attr("href", "./payment");
                 if (data.results.user.isAdmin) {
@@ -92,6 +92,7 @@ $(function () {
                 
                 $(".guest").hide();
                 $(".logged").show();
+                isGuest = false;
 
             }).fail(function (xhr, status, error) {
             if (xhr.status === 0) {
