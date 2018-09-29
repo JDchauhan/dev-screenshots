@@ -49,7 +49,7 @@ $(function () {
         }
 
         $.ajax({
-            url: "../login",
+            url: "/login",
             type: 'POST',
             data: JSON.stringify(data),
             contentType: 'application/json',
@@ -143,7 +143,7 @@ $(function () {
         }
 
         $.ajax({
-            url: "../register",
+            url: "/register",
             type: 'POST',
             data: JSON.stringify(data),
             contentType: 'application/json',
@@ -242,10 +242,22 @@ $(function () {
         });
     };
 
+    var isFirefox = typeof InstallTrigger !== 'undefined';
     $('.login input').keypress(function (e) {
         var key = e.which;
         if (key == 13) // the enter key code
         {
+            if (isFirefox && ($('#email').val() === "" || $('#pass').val() === "")) {
+                $('.alert').hide(500);
+                $('#login-msg').append(
+                    '<div class="alert alert-danger alert-dismissible fade show">' +
+                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                    '<strong>Oops! </strong>Missing Credentials. ' +
+                    '</div>'
+                );
+                return false;
+            }
+
             $('#login-btn').click();
             return false;
         }
@@ -255,6 +267,18 @@ $(function () {
         var key = e.which;
         if (key == 13) // the enter key code
         {
+            if (isFirefox && ($('#email1').val() === "" || $('#pass1').val() === "" || $('#name').val() === "" ||
+                    $('#mobile').val() === "")) {
+                $('.alert').hide(500);
+                $('#register-msg').append(
+                    '<div class="alert alert-danger alert-dismissible fade show">' +
+                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                    '<strong>Oops! </strong>Missing Credentials. ' +
+                    '</div>'
+                );
+                return false;
+            }
+
             $('#register-btn').click();
             return false;
         }
