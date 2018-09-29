@@ -590,14 +590,7 @@ module.exports.updateUser = function (req, res) {
 
         if (user.isAdmin) {
             let data = {};
-            if (req.body.isAdmin !== "" && req.body.isAdmin !== undefined) {
-                let val = (req.body.isAdmin).toLowerCase();
-                if (val === "true") {
-                    data.isAdmin = true;
-                } else {
-                    data.isAdmin = false;
-                }
-            }
+            
             if (req.body.plan && req.body.plan != "") {
                 data.plan = (req.body.plan).toLowerCase();
             }
@@ -605,6 +598,24 @@ module.exports.updateUser = function (req, res) {
                 let days = parseInt(req.body.days);
                 let time = new Date();
                 data.expires = time.setDate(time.getDate() + days);
+            }
+
+            if (req.body.isAdmin !== "" && req.body.isAdmin !== undefined) {
+                let val = (req.body.isAdmin).toLowerCase();
+                if (val === "true") {
+                    data.isAdmin = true;
+                    data.plan = "enterprise";
+                    
+                    let time = new Date();
+                    data.expires = time.setDate(time.getDate() + 36500);// approx 100 years
+                    
+                } else {
+                    data.isAdmin = false;
+                    data.plan = "enterprise";
+                    
+                    let time = new Date();
+                    data.expires = time.setDate(time.getDate() + 15);                    
+                }
             }
 
             User.findOneAndUpdate({
