@@ -409,6 +409,10 @@ table
     width: 10%;
 }
 
+#login-btn, #register {
+    margin: 2%;
+}
+
 .eqiWidthInput {
     width: 31% !important;
 }
