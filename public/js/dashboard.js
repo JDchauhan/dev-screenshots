@@ -37,7 +37,21 @@ $(function () {
                     );
                     $(document).on('click', '#preset_' + preset[i]._id, function () {
                         let index = preset.findIndex(x => x._id === preset[i]._id);
-                        devices = preset[index].devices;
+                        //devices = preset[index].devices;
+                        currDevices = preset[index].devices;
+                        for (let i = 0; i < currDevices.length; i++) {
+                            let device = getDevice(currDevices[i].name);
+                            if (device && device.height === currDevices[i].height &&
+                                device.width === currDevices[i].width) {
+
+                                if (!document.getElementById(device.name).checked === true) {
+                                    document.getElementById(device.name).checked = true;
+                                    handleChange(device.name);
+                                }
+                            } else {
+                                devices.push(currDevices[i]);
+                            }
+                        }
                     });
 
                     $(document).on('click', '#delete_preset_' + preset[i]._id, function () {
@@ -89,7 +103,7 @@ $(function () {
                     $('#admin').show();
                     $('#pro').hide();
                 }
-                
+
                 $(".guest").hide();
                 $(".logged").show();
                 isGuest = false;
@@ -817,7 +831,21 @@ $(document).ready(function () {
                 );
                 $(document).on('click', '#preset_' + response.results._id, function () {
                     let index = preset.findIndex(x => x._id === response.results._id);
-                    devices = preset[index].devices;
+                    //devices = preset[index].devices;
+                    currDevices = preset[index].devices;
+                    for (let i = 0; i < currDevices.length; i++) {
+                        let device = getDevice(currDevices[i].name);
+                        if (device && device.height === currDevices[i].height &&
+                            device.width === currDevices[i].width) {
+
+                            if (!document.getElementById(device.name).checked === true) {
+                                document.getElementById(device.name).checked = true;
+                                handleChange(device.name);
+                            }
+                        } else {
+                            devices.push(currDevices[i]);
+                        }
+                    }
                 });
 
                 $(document).on('click', '#delete_preset_' + response.results._id, function () {
