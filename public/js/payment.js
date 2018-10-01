@@ -1,5 +1,6 @@
 var email = '',
     planID = 1;
+let pay;
 $(function () {
     $('#admin').hide();
     if (getCookie("token") === "") {
@@ -24,19 +25,19 @@ $(function () {
                 // name = name.charAt(0).toUpperCase() + name.substr(1);
 
             }).fail(function (xhr, status, error) {
-            if (xhr.status === 0) {
-                $('.alert').hide(500);
-                $('#pass-msg').append(
-                    '<div class="alert alert-danger alert-dismissible fade show">' +
-                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                    '<strong>Oops! </strong>Network error.</div>'
-                );
-                return;
-            }
+                if (xhr.status === 0) {
+                    $('.alert').hide(500);
+                    $('#pass-msg').append(
+                        '<div class="alert alert-danger alert-dismissible fade show">' +
+                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                        '<strong>Oops! </strong>Network error.</div>'
+                    );
+                    return;
+                }
 
-            setCookie("token", "", -1);
-            window.location.href = "/login?action=login_required";
-        });
+                setCookie("token", "", -1);
+                window.location.href = "/login?action=login_required";
+            });
     }
 
     var handler = StripeCheckout.configure({
@@ -62,6 +63,12 @@ $(function () {
 
     $('.payment').on('click', function (e) {
         planID = parseInt(e.currentTarget.getAttribute("planId"));
+        $('#payContinue').attr('onclick', 'pay(' + planID + ')');
+        $("#myModal").modal("show");
+    });
+
+    pay = function(planID){
+        planID = parseInt(planID);
         let planAmount = 499;
         switch (planID) {
             case 1:
@@ -84,15 +91,14 @@ $(function () {
             amount: planAmount,
             email: email
         });
-        e.preventDefault();
-    });
+    };
 
     // Close Checkout on page navigation:
     window.addEventListener('popstate', function () {
         handler.close();
     });
 
-    setTimeout(function(){
+    setTimeout(function () {
         $('#loader').hide();
         $('nav').show();
         $('.body-container').show();
