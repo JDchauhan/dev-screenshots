@@ -9,6 +9,7 @@ var userController = require('../controllers/userController');
 var AuthoriseUser = require('../helper/authoriseUser');
 
 var responses = require('../helper/responses'); 
+var Mail = require('../helper/mail');
 
 var jsSHA = require("jssha");
 exports.payUMoneyPayment = function (req, res) {
@@ -82,6 +83,8 @@ exports.stripePayment = function (req, res) {
         });
 
         userController.addMoney(req, res, req.body.email, plan);
+
+        Mail.invoice(req.body.email, planAmount, plan);
     });
 };
 

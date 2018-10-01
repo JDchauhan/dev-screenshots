@@ -403,10 +403,16 @@
 								<p>Thank you for your request.</p>
 								<!-- Callout Panel -->
 								<% if(task == "Update Password"){ %>
-									<p>Your password has been updated successfully.</p>
+								<p>Your password has been updated successfully.</p>
+
+								<% } else if (task == "invoice") { %>
+
+								<p>Your Payment of <b>$<%= amount %></b> for <b><%= plan %></b> plan has been recorded successfully.</p>
+									
 								<% } else { %>
 								<p class="callout">
-									To <%= task %> <a href="<%= taskhref %>">Click here ! &raquo;</a>
+									To
+									<%= task %> <a href="<%= taskhref %>">Click here ! &raquo;</a>
 								</p><!-- /Callout Panel -->
 
 								<% } %>
