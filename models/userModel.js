@@ -34,6 +34,12 @@ var UserSchema = new Schema({
   password: {
     type: String,
   },
+  stripeCustId: {
+    type: String
+  },
+  stripeSubsId: {
+    type: String
+  },
   plan: {
     type : String
   },

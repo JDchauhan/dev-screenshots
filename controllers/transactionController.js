@@ -8,11 +8,11 @@ var stripe = require("stripe")(config.stripeKey);
 var userController = require('../controllers/userController');
 var AuthoriseUser = require('../helper/authoriseUser');
 
-var responses = require('../helper/responses'); 
+var responses = require('../helper/responses');
 var Mail = require('../helper/mail');
 
 var jsSHA = require("jssha");
-exports.payUMoneyPayment = function (req, res) {
+module.exports.payUMoneyPayment = function (req, res) {
     if (!req.body.txnid || !req.body.amount || !req.body.productinfo ||
         !req.body.firstname || !req.body.email) {
         res.send("Mandatory fields missing");
@@ -33,7 +33,7 @@ exports.payUMoneyPayment = function (req, res) {
     }
 };
 
-exports.stripePayment = function (req, res) {
+module.exports.stripePayment = function (req, res) {
     let planID = parseInt(req.params.planID);
     // Token is created using Checkout or Elements!
     // Get the payment token ID submitted by the form:
@@ -88,7 +88,7 @@ exports.stripePayment = function (req, res) {
     });
 };
 
-exports.payUMoneyPaymentResponse = function (req, res) {
+module.exports.payUMoneyPaymentResponse = function (req, res) {
     var pd = req.body;
     //Generate new Hash 
     var hashString = config.merchantSalt + '|' + pd.status + '||||||||||' + '|' + pd.email + '|' + pd.firstname + '|' + pd.productinfo + '|' + pd.amount + '|' + pd.txnid + '|' + config.merchantKey;
@@ -123,18 +123,66 @@ exports.payUMoneyPaymentResponse = function (req, res) {
     }
 }
 
-exports.getAllTransactions = function (req, res) {
+module.exports.getAllTransactions = function (req, res) {
     AuthoriseUser.getUser(req, res, function (user) {
-        Transaction.find({email: user.email}, {_id: 0, __v: 0}, function(err, transactions){
-            if(err){console.log(err);
+        Transaction.find({
+            email: user.email
+        }, {
+            _id: 0,
+            __v: 0
+        }, function (err, transactions) {
+            if (err) {
+                console.log(err);
                 return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
             }
-    
-            if(!transactions){
+
+            if (!transactions) {
                 return responses.errorMsg(res, 404, "Not Found", "transactions not found.", null);
             }
-    
+
             return responses.successMsg(res, transactions);
-        });    
-    });    
-}
+        });
+    });
+};
+
+module.exports.createSubscription = function (req, res, userId, email, custId, plan) {
+    stripe.subscriptions.create({
+        customer: custId,
+        items: [{
+            plan: plan,
+        }, ]
+    }, function (err, subscription) {
+        if (err) {
+            console.log(err);
+            return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+        }
+        userController.stripeSubscription(req, res, userId, subscription.id, email);
+    });
+};
+
+module.exports.createCust = function (req, res) {
+    AuthoriseUser.getUser(req, res, function (user) {
+        let plan = "plan_screenshot_lite";
+        if (!user.stripeCustId && !user.stripeSubsId) {
+            stripe.customers.create({
+                description: 'Screenshot customer',
+                email: user.email,
+                source: req.body.id,
+            }, function (err, customer) {
+                if (err) {
+                    console.log(err);
+                    return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+                }
+                
+                userController.stripeCust(req, res, customer.id, user._id, function(success){
+                    if(success){
+                        module.exports.createSubscription(req, res, user._id,  user.email, customer.id, plan);
+                    }
+                });
+                
+            });
+        }else{
+            module.exports.createSubscription(req, res, user._id, user.email, user.stripeCustId, plan);
+        }
+    });
+};

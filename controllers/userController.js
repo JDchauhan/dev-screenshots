@@ -590,7 +590,7 @@ module.exports.updateUser = function (req, res) {
 
         if (user.isAdmin) {
             let data = {};
-            
+
             if (req.body.plan && req.body.plan != "") {
                 data.plan = (req.body.plan).toLowerCase();
             }
@@ -605,10 +605,10 @@ module.exports.updateUser = function (req, res) {
                 if (val === "true") {
                     data.isAdmin = true;
                     data.plan = "enterprise";
-                    
+
                     let time = new Date();
-                    data.expires = time.setDate(time.getDate() + 36500);// approx 100 years
-                    
+                    data.expires = time.setDate(time.getDate() + 36500); // approx 100 years
+
                 } else {
                     data.isAdmin = false;
                 }
@@ -683,5 +683,34 @@ module.exports.updatePersonalInfo = function (req, res) {
 
             return responses.successMsg(res, null);
         });
+    });
+};
+
+module.exports.stripeCust = function (req, res, stripeCustId, userId, callback) {
+    User.findByIdAndUpdate(userId, {
+        stripeCustId: stripeCustId
+    }, function (err, result) {
+        if (err) {
+            console.log(err);
+            return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+        } else if (!result) {
+            return responses.errorMsg(res, 404, "Not Found", "user not found.", null);
+        }
+    });
+};
+
+module.exports.stripeSubscription = function (req, res, userId, stripeSubsId, email) {
+    User.findByIdAndUpdate(userId, {
+        stripeSubsId: stripeSubsId
+    }, function (err, result) {
+        if (err) {
+            console.log(err);
+            return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+        } else if (!result) {
+            return responses.errorMsg(res, 404, "Not Found", "user not found.", null);
+        }
+
+        //Mail.invoiceSubscribe(email, plan);
+        return responses.successMsg(res, null);
     });
 };
