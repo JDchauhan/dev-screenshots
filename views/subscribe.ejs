@@ -1,0 +1,64 @@
+<% include partials/header.ejs %>
+<script id="bolt" src="https://sboxcheckout-static.citruspay.com/bolt/run/bolt.min.js" bolt- color="<color-code>"
+ bolt-logo="<image path>"></script>
+
+<script src="https://checkout.stripe.com/checkout.js"></script>
+</head>
+
+<body>
+	<%- include('partials/navbar', {
+			home: true,
+			login: false,
+			plan: true,
+			account: true
+		}); %>
+
+	<div id="loader" class="container row">
+		<img class="hexerve" src="/hexerve.png" />
+	</div>
+
+	<div class="body-container" style="display:none">
+		<br />
+		<br />
+		<br />
+		<br />
+		
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6"></div>
+				<div class="col-md-6">
+					<div id="msg"></div>
+					<form>
+						<div class="input-group mb-3 input-group-lg container">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Plan</span>
+							</div>
+							<select class="form-control" id="plan">
+								<option value="plan_screenshot_lite">Lite ($4.99 per month)</option>
+								<option value="plan_screenshot_professional">Professional ($9.99 per month)</option>
+								<option value="plan_screenshot_enterprise">Enterprise ($19.99 per month)</option>
+							</select>
+						</div>
+						<div class="input-group mb-3 input-group-lg container checkbox">
+							<label class="white tc"><input type="checkbox" id="tc"> I have read and accepted all the
+								<a class="white tc" href="https://www.hexerve.com/terms-and-conditions">T &amp; C</a></label>
+						</div>
+						<div class="wrapper text-center">
+							<div class="btn-group btn-group-lg">
+								<button type="button" id="subscribe" class="btn wobble-vertical">Subscribe</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<footer class="footer fixed-bottom  text-light">
+		<% include partials/footer.ejs %>
+
+		<script src="/js/subscribe.js"></script>
+</body>
+
+</html>

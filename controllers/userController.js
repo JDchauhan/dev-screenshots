@@ -696,6 +696,8 @@ module.exports.stripeCust = function (req, res, stripeCustId, userId, callback) 
         } else if (!result) {
             return responses.errorMsg(res, 404, "Not Found", "user not found.", null);
         }
+
+        callback(true);
     });
 };
 

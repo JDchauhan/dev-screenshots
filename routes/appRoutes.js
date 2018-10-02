@@ -49,6 +49,10 @@ module.exports = function (app) {
         res.render("admin");
     });
 
+    app.get("/subscribe", function (req, res) {
+        res.render("subscribe");
+    });
+
     app.post("/login", User.login);
 
     app.post("/register", User.register);

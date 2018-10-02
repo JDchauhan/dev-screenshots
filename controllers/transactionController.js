@@ -162,7 +162,8 @@ module.exports.createSubscription = function (req, res, userId, email, custId, p
 
 module.exports.createCust = function (req, res) {
     AuthoriseUser.getUser(req, res, function (user) {
-        let plan = "plan_screenshot_lite";
+        let plan = req.body.plan;
+        
         if (!user.stripeCustId && !user.stripeSubsId) {
             stripe.customers.create({
                 description: 'Screenshot customer',
@@ -173,16 +174,18 @@ module.exports.createCust = function (req, res) {
                     console.log(err);
                     return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
                 }
-                
-                userController.stripeCust(req, res, customer.id, user._id, function(success){
-                    if(success){
-                        module.exports.createSubscription(req, res, user._id,  user.email, customer.id, plan);
+
+                userController.stripeCust(req, res, customer.id, user._id, function (success) {
+                    if (success) {
+                        module.exports.createSubscription(req, res, user._id, user.email, customer.id, plan);
                     }
                 });
-                
+
             });
-        }else{
+        } else if (!user.stripeSubsId) {
             module.exports.createSubscription(req, res, user._id, user.email, user.stripeCustId, plan);
+        } else {
+            return responses.errorMsg(res, 208, "Already Reported", "already reported.", null);
         }
     });
 };
