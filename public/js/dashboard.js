@@ -101,12 +101,18 @@ $(function () {
                 plan = data.results.user.plan;
                 getPlan = plan.charAt(0).toUpperCase() + plan.substr(1);
                 let daysLeft = parseInt((new Date(data.results.user.expires) - new Date()) / (3600 * 24 * 1000));
-
+                
+                $("#pro").attr("href", "./payment");
+                
                 if (getPlan) {
                     $("#pro").empty();
-                    $("#pro").append(getPlan + " ( " + daysLeft + " Days Left )");
+                    if (!data.results.user.stripeCustId) {
+                        $("#pro").append(getPlan + " ( " + daysLeft + " Days Left )");
+                    } else {
+                        $("#pro").append(getPlan);
+                        $("#pro").attr("href", "#");
+                    }
                 }
-                $("#pro").attr("href", "./payment");
                 if (data.results.user.isAdmin) {
                     $('#admin').show();
                     $('#pro').hide();
@@ -117,21 +123,21 @@ $(function () {
                 isGuest = false;
                 showBody();
             }).fail(function (xhr, status, error) {
-                if (xhr.status === 0) {
-                    $('.alert').hide(500);
-                    $('#pass-msg').append(
-                        '<div class="alert alert-danger alert-dismissible fade show">' +
-                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                        '<strong>Oops! </strong>Network error.</div>'
-                    );
-                    showBody();
-                    return;
-                }
-
-                setCookie("token", "", -1);
+            if (xhr.status === 0) {
+                $('.alert').hide(500);
+                $('#pass-msg').append(
+                    '<div class="alert alert-danger alert-dismissible fade show">' +
+                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                    '<strong>Oops! </strong>Network error.</div>'
+                );
                 showBody();
-                isGuest = true;
-            });
+                return;
+            }
+
+            setCookie("token", "", -1);
+            showBody();
+            isGuest = true;
+        });
     }
 });
 
@@ -615,8 +621,8 @@ function addViewports() {
 }
 
 function removeViewport(index) {
-    document.getElementById(devices[index].name).checked = false;
-    $('#' + devices[index].name).checked = false;
+    if (document.getElementById(devices[index].name))
+        document.getElementById(devices[index].name).checked = false;
     devices.splice(index, 1);
     viewViewports();
 }

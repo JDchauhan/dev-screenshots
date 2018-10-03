@@ -24,11 +24,18 @@ $(function () {
                 getPlan = getPlan.charAt(0).toUpperCase() + getPlan.substr(1);
                 let daysLeft = parseInt((new Date(data.results.user.expires) - new Date()) / (3600 * 24 * 1000));
 
+                $("#pro").attr("href", "./payment");
+                
                 if (getPlan) {
                     $("#pro").empty();
-                    $("#pro").append(getPlan + " ( " + daysLeft + " Days Left )");
+                    if (!data.results.user.stripeCustId) {
+                        $("#pro").append(getPlan + " ( " + daysLeft + " Days Left )");
+                    } else {
+                        $("#pro").append(getPlan);
+                        $("#pro").attr("href", "#");
+                    }
                 }
-                $("#pro").attr("href", "./payment");
+                
                 if (data.results.user.isAdmin) {
                     $('#admin').show();
                     $('#pro').hide();
