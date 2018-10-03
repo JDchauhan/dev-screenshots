@@ -21,12 +21,12 @@ $(function () {
                 email = data.results.user.email;
 
                 let getPlan = data.results.user.plan;
-                getPlan = getPlan.charAt(0).toUpperCase() + getPlan.substr(1);
-                let daysLeft = parseInt((new Date(data.results.user.expires) - new Date()) / (3600 * 24 * 1000));
 
                 $("#pro").attr("href", "./payment");
-                
+
                 if (getPlan) {
+                    getPlan = getPlan.charAt(0).toUpperCase() + getPlan.substr(1);
+                    let daysLeft = parseInt((new Date(data.results.user.expires) - new Date()) / (3600 * 24 * 1000));
                     $("#pro").empty();
                     if (!data.results.user.stripeCustId) {
                         $("#pro").append(getPlan + " ( " + daysLeft + " Days Left )");
@@ -35,29 +35,29 @@ $(function () {
                         $("#pro").attr("href", "#");
                     }
                 }
-                
+
                 if (data.results.user.isAdmin) {
                     $('#admin').show();
                     $('#pro').hide();
                 }
 
                 showBody();
-            
-            }).fail(function (xhr, status, error) {
-                if (xhr.status === 0) {
-                    $('.alert').hide(500);
-                    $('#pass-msg').append(
-                        '<div class="alert alert-danger alert-dismissible fade show">' +
-                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                        '<strong>Oops! </strong>Network error.</div>'
-                    );
-                    showBody();
-                    return;
-                }
 
-                setCookie("token", "", -1);
-                window.location.href = "/login?action=login_required";
-            });
+            }).fail(function (xhr, status, error) {
+            if (xhr.status === 0) {
+                $('.alert').hide(500);
+                $('#pass-msg').append(
+                    '<div class="alert alert-danger alert-dismissible fade show">' +
+                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                    '<strong>Oops! </strong>Network error.</div>'
+                );
+                showBody();
+                return;
+            }
+
+            setCookie("token", "", -1);
+            window.location.href = "/login?action=login_required";
+        });
     }
 
     var handler = StripeCheckout.configure({
@@ -101,5 +101,5 @@ $(function () {
     window.addEventListener('popstate', function () {
         handler.close();
     });
-    
+
 });

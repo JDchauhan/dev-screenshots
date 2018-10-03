@@ -99,11 +99,12 @@ $(function () {
                     });
                 }
                 plan = data.results.user.plan;
-                getPlan = plan.charAt(0).toUpperCase() + plan.substr(1);
-                let daysLeft = parseInt((new Date(data.results.user.expires) - new Date()) / (3600 * 24 * 1000));
-                
+                if (plan) {
+                    getPlan = plan.charAt(0).toUpperCase() + plan.substr(1);
+                    let daysLeft = parseInt((new Date(data.results.user.expires) - new Date()) / (3600 * 24 * 1000));
+                }
                 $("#pro").attr("href", "./payment");
-                
+
                 if (getPlan) {
                     $("#pro").empty();
                     if (!data.results.user.stripeCustId) {

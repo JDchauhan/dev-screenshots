@@ -12,18 +12,19 @@ $(function () {
             function (data, status, xhr) {
                 console.log(data);
                 let name = data.results.user.name;
-                
+
                 email = data.results.user.email;
 
                 name = name.charAt(0).toUpperCase() + name.substr(1);
                 $('#name').val(data.results.user.name);
                 $('#mobile').val(data.results.user.mobile);
                 plan = data.results.user.plan;
-                plan = plan.charAt(0).toUpperCase() + plan.substr(1);
-                let daysLeft = parseInt((new Date(data.results.user.expires) - new Date()) / (3600 * 24 * 1000));
-
+                if (plan) {
+                    getPlan = plan.charAt(0).toUpperCase() + plan.substr(1);
+                    let daysLeft = parseInt((new Date(data.results.user.expires) - new Date()) / (3600 * 24 * 1000));
+                }
                 $("#pro").attr("href", "./payment");
-                
+
                 if (getPlan) {
                     $("#pro").empty();
                     if (!data.results.user.stripeCustId) {
@@ -33,7 +34,7 @@ $(function () {
                         $("#pro").attr("href", "#");
                     }
                 }
-                
+
                 if (data.results.user.isAdmin) {
                     $('#admin').show();
                     $('#pro').hide();

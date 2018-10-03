@@ -16,11 +16,12 @@ $(function () {
                 email = data.results.user.email;
 
                 plan = data.results.user.plan;
-                plan = plan.charAt(0).toUpperCase() + plan.substr(1);
-                let daysLeft = parseInt((new Date(data.results.user.expires) - new Date()) / (3600 * 24 * 1000));
-
+                if (plan) {
+                    getPlan = plan.charAt(0).toUpperCase() + plan.substr(1);
+                    let daysLeft = parseInt((new Date(data.results.user.expires) - new Date()) / (3600 * 24 * 1000));
+                }
                 $("#pro").attr("href", "./payment");
-                
+
                 if (getPlan) {
                     $("#pro").empty();
                     if (!data.results.user.stripeCustId) {
@@ -57,23 +58,23 @@ $(function () {
         function (data, status, xhr) {
             console.log(data);
 
-            if(data.results.length === 0){
+            if (data.results.length === 0) {
                 $('.alert').hide(500);
                 $('#err-msg').append(
                     '<div class="alert alert-danger alert-dismissible fade show">' +
                     '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
                     '<strong>Oops! </strong>No record found.</div>'
                 );
-                return;    
+                return;
             }
 
-            for(let i = 0; i < data.results.length; i++){
+            for (let i = 0; i < data.results.length; i++) {
                 $('tbody').append(
                     '<tr>' +
-                        '<td>' + i + '</td>' +
-                        '<td class="break">' + data.results[i].txnID + '</td>' +
-                        '<td class=""><b>$ ' + (parseInt(data.results[i].amount) / 100) + '</b></td>' +
-                        '<td>' + (String)(new Date(data.results[i].generation_timestamp)).split(' GMT')[0] + '</td>' +
+                    '<td>' + i + '</td>' +
+                    '<td class="break">' + data.results[i].txnID + '</td>' +
+                    '<td class=""><b>$ ' + (parseInt(data.results[i].amount) / 100) + '</b></td>' +
+                    '<td>' + (String)(new Date(data.results[i].generation_timestamp)).split(' GMT')[0] + '</td>' +
                     '</tr>'
                 );
             }

@@ -156,7 +156,9 @@ module.exports.createSubscription = function (req, res, userId, email, custId, p
             console.log(err);
             return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
         }
-        userController.stripeSubscription(req, res, userId, subscription.id, email);
+
+        plan = plan.split('_')[2];
+        userController.stripeSubscription(req, res, userId, subscription.id, plan, email);
     });
 };
 

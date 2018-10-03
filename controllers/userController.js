@@ -701,9 +701,10 @@ module.exports.stripeCust = function (req, res, stripeCustId, userId, callback) 
     });
 };
 
-module.exports.stripeSubscription = function (req, res, userId, stripeSubsId, email) {
+module.exports.stripeSubscription = function (req, res, userId, stripeSubsId, plan, email) {
     User.findByIdAndUpdate(userId, {
-        stripeSubsId: stripeSubsId
+        stripeSubsId: stripeSubsId,
+        plan: plan
     }, function (err, result) {
         if (err) {
             console.log(err);
