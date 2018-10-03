@@ -39,6 +39,10 @@ $(function () {
                         let index = preset.findIndex(x => x._id === preset[i]._id);
                         //devices = preset[index].devices;
                         currDevices = preset[index].devices;
+                        devices = [];
+
+                        Object.values($('input[type=checkbox]')).map(x => x.checked = false);
+
                         for (let i = 0; i < currDevices.length; i++) {
                             let device = getDevice(currDevices[i].name);
                             if (device && device.height === currDevices[i].height &&
@@ -609,6 +613,8 @@ function addViewports() {
 }
 
 function removeViewport(index) {
+    document.getElementById(devices[index].name).checked = false;
+    $('#' + devices[index].name).checked = false;
     devices.splice(index, 1);
     viewViewports();
 }
@@ -841,6 +847,10 @@ $(document).ready(function () {
                     let index = preset.findIndex(x => x._id === response.results._id);
                     //devices = preset[index].devices;
                     currDevices = preset[index].devices;
+                    devices = [];
+
+                    Object.values($('input[type=checkbox]')).map(x => x.checked = false);
+
                     for (let i = 0; i < currDevices.length; i++) {
                         let device = getDevice(currDevices[i].name);
                         if (device && device.height === currDevices[i].height &&
