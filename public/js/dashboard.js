@@ -115,7 +115,7 @@ $(function () {
                 $(".guest").hide();
                 $(".logged").show();
                 isGuest = false;
-
+                showBody();
             }).fail(function (xhr, status, error) {
                 if (xhr.status === 0) {
                     $('.alert').hide(500);
@@ -124,10 +124,12 @@ $(function () {
                         '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
                         '<strong>Oops! </strong>Network error.</div>'
                     );
+                    showBody();
                     return;
                 }
 
                 setCookie("token", "", -1);
+                showBody();
                 isGuest = true;
             });
     }
@@ -949,9 +951,4 @@ $(document).ready(function () {
         }
     });
 
-    setTimeout(function () {
-        $('#loader').hide();
-        $('nav').show();
-        $('.body-container').show();
-    }, 100);
 });

@@ -1,3 +1,5 @@
+var showBody;
+
 function setCookie(cname, cvalue, exdays) {
     var d = new Date();
     d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
@@ -55,7 +57,16 @@ function isPass(pass) {
 }
 
 $(function () {
-    $(document).on('click', 'input', function(){
+
+    showBody = function () {
+        setTimeout(function () {
+            $('#loader').hide();
+            $('nav').show();
+            $('.body-container').show();
+        }, 0);
+    };
+
+    $(document).on('click', 'input', function () {
         $('.alert').hide(500);
     });
 
@@ -65,19 +76,19 @@ $(function () {
         }
     });
 
-    $(document).on('mouseover', '#preset_nav_list', function(){
+    $(document).on('mouseover', '#preset_nav_list', function () {
         $('#preset-list').addClass('show');
     });
 
-    $(document).on('mouseout', '#preset_nav_list', function(){
+    $(document).on('mouseout', '#preset_nav_list', function () {
         $('#preset-list').removeClass('show');
     });
 
-    $(document).on('mouseover', '#account-list', function(){
+    $(document).on('mouseover', '#account-list', function () {
         $('#account-list-menu').addClass('show')
     });
 
-    $(document).on('mouseout', '#account-list', function(){
+    $(document).on('mouseout', '#account-list', function () {
         $('#account-list-menu').removeClass('show');
     });
 });
