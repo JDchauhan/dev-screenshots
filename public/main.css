@@ -405,6 +405,11 @@ table
     padding-right: 2%;
 }
 
+.dropdown-menu {
+    left: -10%;
+    margin-top: 0;
+}
+
 .remove {
     width: 10%;
 }
