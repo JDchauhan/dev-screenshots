@@ -155,7 +155,7 @@ module.exports.current_user_preset = function (req, res) {
                     return responses.errorMsg(res, 404, "Not Found", "user not found.", null);
                 }
 
-                if (user.plan && user.expires < Date.now()) {
+                if (user.plan && !user.stripeSubsId && user.expires < Date.now()) {
                     User.findByIdAndUpdate(user._id, {
                         plan: undefined
                     }, function (err, user) {
