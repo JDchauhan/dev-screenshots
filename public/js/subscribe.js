@@ -73,10 +73,30 @@ $(function () {
                 data: JSON.stringify(source),
                 contentType: 'application/json',
                 success: function (source) {
-                    console.log("success");
+                    $('.alert').hide(500);
+                    $('#msg').append(
+                        '<div class="alert alert-success alert-dismissible fade show">' +
+                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                        '<strong>Congratulation! </strong>Your plan has been subscribed successfully.' +
+                        '</div>'
+                    );
                 },
                 error: function (xhr, textStatus, errorThrown) {
-                    console.log("error");
+                    var errMsg;
+                    if (xhr.status === 0) {
+                        errMsg = "Network error.";
+                    } else {
+                        errMsg = JSON.parse(xhr.responseText).message;
+                        errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
+
+                    }
+                    $('.alert').hide(500);
+                    $('#msg').append(
+                        '<div class="alert alert-danger alert-dismissible fade show">' +
+                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                        '<strong>Oops! </strong>' + errMsg +
+                        '</div>'
+                    );
                 }
             });
         }
