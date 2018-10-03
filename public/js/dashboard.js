@@ -49,7 +49,11 @@ $(function () {
                                     handleChange(device.name);
                                 }
                             } else {
-                                devices.push(currDevices[i]);
+                                let index = devices.findIndex(x => (x.name === currDevices[i].name && x.height === currDevices[i].height &&
+                                    x.width === currDevices[i].width));
+                                if (index === -1) {
+                                    devices.push(currDevices[i]);
+                                }
                             }
                         }
                     });
@@ -109,19 +113,19 @@ $(function () {
                 isGuest = false;
 
             }).fail(function (xhr, status, error) {
-            if (xhr.status === 0) {
-                $('.alert').hide(500);
-                $('#pass-msg').append(
-                    '<div class="alert alert-danger alert-dismissible fade show">' +
-                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                    '<strong>Oops! </strong>Network error.</div>'
-                );
-                return;
-            }
+                if (xhr.status === 0) {
+                    $('.alert').hide(500);
+                    $('#pass-msg').append(
+                        '<div class="alert alert-danger alert-dismissible fade show">' +
+                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                        '<strong>Oops! </strong>Network error.</div>'
+                    );
+                    return;
+                }
 
-            setCookie("token", "", -1);
-            isGuest = true;
-        });
+                setCookie("token", "", -1);
+                isGuest = true;
+            });
     }
 });
 
@@ -588,6 +592,7 @@ function addViewports() {
 
     $('#viewport_height').val('');
     $('#viewport_width').val('');
+    $('#viewport_name').val('');
     var item = {
         width: parseInt(width),
         height: parseInt(height),
@@ -596,7 +601,10 @@ function addViewports() {
     if (checkDeviceLimitations() == -1) {
         return;
     }
-    devices.push(item);
+    let index = devices.findIndex(x => (x.name === item.name && x.height === item.height && x.width === item.width));
+    if (index === -1) {
+        devices.push(item);
+    }
     viewViewports();
 }
 
@@ -843,7 +851,11 @@ $(document).ready(function () {
                                 handleChange(device.name);
                             }
                         } else {
-                            devices.push(currDevices[i]);
+                            let index = devices.findIndex(x => (x.name === currDevices[i].name && x.height === currDevices[i].height &&
+                                x.width === currDevices[i].width));
+                            if (index === -1) {
+                                devices.push(currDevices[i]);
+                            }
                         }
                     }
                 });
