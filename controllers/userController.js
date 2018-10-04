@@ -722,3 +722,22 @@ module.exports.stripeSubscription = function (req, res, userId, custId, stripeSu
         return responses.successMsg(res, null);
     });
 };
+
+module.exports.cancelSubscription = function (req, res, userId, custId, timestamp) {
+    User.findByIdAndUpdate(userId, {
+        subscription: {
+            stripeCustId :custId
+        },
+        expires: new Date(timestamp)
+    }, function (err, result) {
+        if (err) {
+            console.log(err);
+            return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+        } else if (!result) {
+            return responses.errorMsg(res, 404, "Not Found", "user not found.", null);
+        }
+
+        //Mail.invoiceCancelSubscrition(email, plan);
+        return responses.successMsg(res, null);
+    });
+};

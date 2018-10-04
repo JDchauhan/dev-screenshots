@@ -120,6 +120,9 @@ module.exports = function (app) {
     //app.post('/payment/payumoney/response', transactionController.payUMoneyPaymentResponse);
 
     app.post('/customer/subscription', VerifyToken, transactionController.createCust);
+    
+    app.delete('/customer/subscription', VerifyToken, transactionController.cancelSubscription);
+    
     // star routes
     app.get('*', function (req, res) {
         res.redirect(301, "../");

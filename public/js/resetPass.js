@@ -27,7 +27,7 @@ $(function () {
 
                 if (getPlan) {
                     $("#pro").empty();
-                    if (data.results.user.subscription && data.results.user.subscription.stripeCustId) {
+                    if (data.results.user.subscription && data.results.user.subscription.stripeSubsId) {
                         $("#pro").append(getPlan);
                         $("#pro").attr("href", "#");
                     } else {

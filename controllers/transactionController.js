@@ -165,8 +165,8 @@ module.exports.createSubscription = function (req, res, userId, email, custId, p
 module.exports.createCust = function (req, res) {
     AuthoriseUser.getUser(req, res, function (user) {
         let plan = req.body.plan;
-        
-        if (!user.stripeCustId && !user.stripeSubsId) {
+
+        if (!user.subscription.stripeCustId && !user.subscription.stripeSubsId) {
             stripe.customers.create({
                 description: 'Screenshot customer',
                 email: user.email,
@@ -184,10 +184,27 @@ module.exports.createCust = function (req, res) {
                 });
 
             });
-        } else if (!user.stripeSubsId) {
-            module.exports.createSubscription(req, res, user._id, user.email, user.stripeCustId, plan);
+        } else if (!user.subscription.stripeSubsId) {
+            module.exports.createSubscription(req, res, user._id, user.email, user.subscription.stripeCustId, plan);
         } else {
             return responses.errorMsg(res, 208, "Already Reported", "already reported.", null);
         }
+    });
+};
+
+module.exports.cancelSubscription = function (req, res) {
+    AuthoriseUser.getUser(req, res, function (user) {
+        stripe.subscriptions.del(
+            user.subscription.stripeSubsId,
+            function (err, confirmation) {
+                if (err) {
+                    console.log(err);
+                    return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+                }
+                
+                let timestamp = confirmation.current_period_end * 1000;
+                userController.cancelSubscription(req, res, user._id, user.subscription.stripeCustId, timestamp);
+            }
+        );
     });
 };
