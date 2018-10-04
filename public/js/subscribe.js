@@ -22,8 +22,6 @@ $(function () {
 
                 let getPlan = data.results.user.plan;
 
-                $("#pro").attr("href", "./payment");
-
                 if (getPlan) {
                     getPlan = getPlan.charAt(0).toUpperCase() + getPlan.substr(1);
                     let daysLeft = parseInt((new Date(data.results.user.expires) - new Date()) / (3600 * 24 * 1000));
