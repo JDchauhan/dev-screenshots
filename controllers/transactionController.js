@@ -158,7 +158,7 @@ module.exports.createSubscription = function (req, res, userId, email, custId, p
         }
 
         plan = plan.split('_')[2];
-        userController.stripeSubscription(req, res, userId, subscription.id, plan, email);
+        userController.stripeSubscription(req, res, userId, custId, subscription.id, plan, email);
     });
 };
 

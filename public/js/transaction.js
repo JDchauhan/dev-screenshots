@@ -16,6 +16,7 @@ $(function () {
                 email = data.results.user.email;
 
                 plan = data.results.user.plan;
+                let getPlan;
                 if (plan) {
                     getPlan = plan.charAt(0).toUpperCase() + plan.substr(1);
                 }
@@ -23,11 +24,11 @@ $(function () {
 
                 if (getPlan) {
                     $("#pro").empty();
-                    if (!data.results.user.stripeCustId) {
-                        $("#pro").append(getPlan + " ( " + daysLeft + " Days Left )");
-                    } else {
+                    if (data.results.user.subscription && data.results.user.subscription.stripeCustId) {
                         $("#pro").append(getPlan);
                         $("#pro").attr("href", "#");
+                    } else {
+                        $("#pro").append(getPlan + " ( " + daysLeft + " Days Left )");
                     }
                 }
 

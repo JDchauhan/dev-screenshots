@@ -155,7 +155,7 @@ module.exports.current_user_preset = function (req, res) {
                     return responses.errorMsg(res, 404, "Not Found", "user not found.", null);
                 }
 
-                if (user.plan && !user.stripeSubsId && user.expires < Date.now()) {
+                if (user.plan && !user.subscription.stripeSubsId && user.expires < Date.now()) {
                     User.findByIdAndUpdate(user._id, {
                         plan: undefined
                     }, function (err, user) {
@@ -688,7 +688,9 @@ module.exports.updatePersonalInfo = function (req, res) {
 
 module.exports.stripeCust = function (req, res, stripeCustId, userId, callback) {
     User.findByIdAndUpdate(userId, {
-        stripeCustId: stripeCustId
+        subscription: {
+            stripeCustId: stripeCustId
+        }
     }, function (err, result) {
         if (err) {
             console.log(err);
@@ -701,9 +703,12 @@ module.exports.stripeCust = function (req, res, stripeCustId, userId, callback) 
     });
 };
 
-module.exports.stripeSubscription = function (req, res, userId, stripeSubsId, plan, email) {
+module.exports.stripeSubscription = function (req, res, userId, custId, stripeSubsId, plan, email) {
     User.findByIdAndUpdate(userId, {
-        stripeSubsId: stripeSubsId,
+        subscription: {
+            stripeSubsId: stripeSubsId,
+            stripeCustId :custId
+        },
         plan: plan
     }, function (err, result) {
         if (err) {

@@ -2,6 +2,15 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+var Subscription = new Schema({
+  stripeCustId: {
+    type: String
+  },
+  stripeSubsId: {
+    type: String
+  }
+});
+
 var UserSchema = new Schema({
   name: {
     type: String,
@@ -34,14 +43,9 @@ var UserSchema = new Schema({
   password: {
     type: String,
   },
-  stripeCustId: {
-    type: String
-  },
-  stripeSubsId: {
-    type: String
-  },
+  subscription: Subscription,
   plan: {
-    type : String
+    type: String
   },
   preset: [{
     type: Schema.Types.ObjectId,

@@ -20,17 +20,20 @@ $(function () {
 
                 email = data.results.user.email;
 
-                let getPlan = data.results.user.plan;
+                plan = data.results.user.plan;
+                let getPlan;
+                if (plan) {
+                    getPlan = plan.charAt(0).toUpperCase() + plan.substr(1);
+                }
+                let daysLeft = parseInt((new Date(data.results.user.expires) - new Date()) / (3600 * 24 * 1000));
 
                 if (getPlan) {
-                    getPlan = getPlan.charAt(0).toUpperCase() + getPlan.substr(1);
-                    let daysLeft = parseInt((new Date(data.results.user.expires) - new Date()) / (3600 * 24 * 1000));
                     $("#pro").empty();
-                    if (!data.results.user.stripeCustId) {
-                        $("#pro").append(getPlan + " ( " + daysLeft + " Days Left )");
-                    } else {
+                    if (data.results.user.subscription && data.results.user.subscription.stripeCustId) {
                         $("#pro").append(getPlan);
                         $("#pro").attr("href", "#");
+                    } else {
+                        $("#pro").append(getPlan + " ( " + daysLeft + " Days Left )");
                     }
                 }
 
@@ -59,8 +62,8 @@ $(function () {
     }
 
     var handler = StripeCheckout.configure({
-        // key: 'pk_test_a09RA0CrRjZQFvHO1gcQ1way',
-        key: 'pk_live_pGVo3Zc9MjioSgQsHEtEJTSA',
+        key: 'pk_test_a09RA0CrRjZQFvHO1gcQ1way',
+        // key: 'pk_live_pGVo3Zc9MjioSgQsHEtEJTSA',
         image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
         locale: 'auto',
         source: function (source) {
