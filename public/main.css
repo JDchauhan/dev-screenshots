@@ -414,6 +414,12 @@ table
     width: 10%;
 }
 
+.video_container {
+    width: 90vw;
+    margin: 0 5% 5% 5%;
+    padding: 0 5% 5% 5%;
+}
+
 .removePlan, .tc {
     background-color: rgba(0, 0, 0, 0.4)
 }

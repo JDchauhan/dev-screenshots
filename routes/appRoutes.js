@@ -101,6 +101,10 @@ module.exports = function (app) {
         res.render("payment");
     });
 
+    app.get("/tutorial", function (req, res) {
+        res.render("tutorial");
+    });
+
     app.post('/verify/email', User.sendVerificationLink);
 
     app.get("/download/:filename", function (req, res) {

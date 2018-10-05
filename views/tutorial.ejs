@@ -1,0 +1,33 @@
+<% include partials/header.ejs %>
+<script src="/js/tutorial.js"></script>
+</head>
+
+<body>
+	<%- include('partials/navbar', {
+			home: true,
+			login: true,
+			plan: true,
+			account: true
+		}); %>
+
+	<div id="loader" class="container row" style="display:none">
+		<img class="hexerve" src="/hexerve.png" />
+	</div>
+
+	<div class="body-container video_container bg-white">
+		<div class="video">
+			<h1 class=" text-danger">New Here?</h1>
+			<h5 class="text-muted">Don't worry!</h4>
+				<div>This video tutorial is for you.</div>
+				<br />
+				<div class="embed-responsive embed-responsive-16by9">
+					<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/BbGVytgL3JM" allowfullscreen></iframe>
+				</div>
+		</div>
+	</div>
+
+	<footer class="footer fixed-bottom  text-light">
+		<% include partials/footer.ejs %>
+</body>
+
+</html>
