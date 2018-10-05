@@ -414,6 +414,10 @@ table
     width: 10%;
 }
 
+.removePlan, .tc {
+    background-color: rgba(0, 0, 0, 0.4)
+}
+
 #login-btn, #register {
     margin: 2%;
 }
