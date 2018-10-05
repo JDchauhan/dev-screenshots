@@ -11,6 +11,15 @@ $(function () {
     $(".logged").hide();
     if (getCookie("token") === "") {
         isGuest = true;
+        $("#videoModal").modal("show");
+
+        $(document).on('hidden.bs.modal', '#videoModal', function () {
+            $("#videoModal").remove();
+        });
+        setTimeout(function () {
+            $("#videoModal").modal("hide");
+        }, 180000);
+
         showBody();
     } else {
         $.ajaxSetup({
@@ -106,7 +115,7 @@ $(function () {
                 }
                 let daysLeft = parseInt((new Date(data.results.user.expires) - new Date()) / (3600 * 24 * 1000));
                 $("#pro").attr("href", "/payment");
-                
+
                 if (getPlan) {
                     $("#pro").empty();
                     if (data.results.user.subscription && data.results.user.subscription.stripeSubsId) {

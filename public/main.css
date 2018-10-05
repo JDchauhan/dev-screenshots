@@ -382,6 +382,10 @@ table
     max-width: 85% !important
 }
 
+.full_screen_modal {
+    max-width: 85% !important;
+}
+
 #list {
     padding: 0 2% 0 2%;
     margin-top: -2%;
@@ -715,6 +719,10 @@ hr {
     .addWidth {
         width: 100% !important;
     }
+
+    .full_screen_modal {
+        max-width: 100% !important;
+    }    
 
     .body-container {
         position: relative;
