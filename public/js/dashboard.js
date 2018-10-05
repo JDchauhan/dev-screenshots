@@ -105,11 +105,13 @@ $(function () {
                     getPlan = plan.charAt(0).toUpperCase() + plan.substr(1);
                 }
                 let daysLeft = parseInt((new Date(data.results.user.expires) - new Date()) / (3600 * 24 * 1000));
+                $("#pro").attr("href", "/payment");
+                
                 if (getPlan) {
                     $("#pro").empty();
                     if (data.results.user.subscription && data.results.user.subscription.stripeSubsId) {
                         $("#pro").append(getPlan);
-                        $("#pro").attr("href", "#");
+                        $("#pro").attr("href", "/subscribe");
                     } else {
                         $("#pro").append(getPlan + " ( " + daysLeft + " Days Left )");
                     }
