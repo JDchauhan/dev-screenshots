@@ -42,8 +42,8 @@ $(function () {
     }
 
     var handler = StripeCheckout.configure({
-        key: 'pk_test_a09RA0CrRjZQFvHO1gcQ1way',
-        // key: 'pk_live_pGVo3Zc9MjioSgQsHEtEJTSA',
+        // key: 'pk_test_a09RA0CrRjZQFvHO1gcQ1way',
+        key: 'pk_live_pGVo3Zc9MjioSgQsHEtEJTSA',
         image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
         locale: 'auto',
         token: function (token) {

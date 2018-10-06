@@ -59,7 +59,7 @@ $(function () {
         function (data, status, xhr) {
             console.log(data);
 
-            if (data.results.length === 0) {
+            if (!data.results.transactions || data.results.transactions.length === 0) {
                 $('.alert').hide(500);
                 $('#err-msg').append(
                     '<div class="alert alert-danger alert-dismissible fade show">' +
@@ -69,13 +69,13 @@ $(function () {
                 return;
             }
 
-            for (let i = 0; i < data.results.length; i++) {
+            for (let i = 0; i < data.results.transactions.length; i++) {
                 $('tbody').append(
                     '<tr>' +
                     '<td>' + i + '</td>' +
-                    '<td class="break">' + data.results[i].txnID + '</td>' +
-                    '<td class=""><b>$ ' + (parseInt(data.results[i].amount) / 100) + '</b></td>' +
-                    '<td>' + (String)(new Date(data.results[i].generation_timestamp)).split(' GMT')[0] + '</td>' +
+                    '<td class="break">' + data.results.transactions[i].txnID + '</td>' +
+                    '<td class=""><b>$ ' + (parseInt(data.results.transactions[i].amount) / 100) + '</b></td>' +
+                    '<td>' + (String)(new Date(data.results.transactions[i].generation_timestamp)).split(' GMT')[0] + '</td>' +
                     '</tr>'
                 );
             }
