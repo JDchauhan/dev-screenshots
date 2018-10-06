@@ -204,6 +204,7 @@ module.exports.cancelSubscription = function (req, res) {
                 
                 let prevSubs = {
                     stripeSubsId: user.subscription.stripeSubsId,
+                    plan: user.plan,
                     start: confirmation.current_period_start * 1000,
                     end: confirmation.current_period_end * 1000
                 };

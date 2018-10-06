@@ -6,6 +6,9 @@ var prevSubscriptions = new Schema({
   stripeSubsId: {
     type: String
   },
+  plan: {
+    type: String
+  },
   start: {
     type: Number
   },
