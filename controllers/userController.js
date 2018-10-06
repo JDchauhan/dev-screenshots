@@ -157,7 +157,7 @@ module.exports.current_user_preset = function (req, res) {
 
                 if (user.plan && ((user.subscription && !user.subscription.stripeSubsId) || !user.subscription) &&
                     user.expires < Date.now()) {
-                    
+
                     User.findByIdAndUpdate(user._id, {
                         plan: undefined
                     }, function (err, user) {
@@ -709,7 +709,7 @@ module.exports.stripeSubscription = function (req, res, userId, custId, stripeSu
     User.findByIdAndUpdate(userId, {
         subscription: {
             stripeSubsId: stripeSubsId,
-            stripeCustId :custId
+            stripeCustId: custId
         },
         plan: plan
     }, function (err, result) {
@@ -725,12 +725,15 @@ module.exports.stripeSubscription = function (req, res, userId, custId, stripeSu
     });
 };
 
-module.exports.cancelSubscription = function (req, res, userId, custId, timestamp) {
+module.exports.cancelSubscription = function (req, res, userId, custId, prevSubs) {
     User.findByIdAndUpdate(userId, {
         subscription: {
-            stripeCustId :custId
+            stripeCustId: custId
         },
-        expires: new Date(timestamp)
+        expires: new Date(prevSubs.end),
+        $push: {
+            previousSubscriptions: prevSubs
+        }
     }, function (err, result) {
         if (err) {
             console.log(err);

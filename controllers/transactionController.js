@@ -202,8 +202,12 @@ module.exports.cancelSubscription = function (req, res) {
                     return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
                 }
                 
-                let timestamp = confirmation.current_period_end * 1000;
-                userController.cancelSubscription(req, res, user._id, user.subscription.stripeCustId, timestamp);
+                let prevSubs = {
+                    stripeSubsId: user.subscription.stripeSubsId,
+                    start: confirmation.current_period_start * 1000,
+                    end: confirmation.current_period_end * 1000
+                };
+                userController.cancelSubscription(req, res, user._id, user.subscription.stripeCustId, prevSubs);
             }
         );
     });

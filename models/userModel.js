@@ -2,6 +2,18 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+var prevSubscriptions = new Schema({
+  stripeSubsId: {
+    type: String
+  },
+  start: {
+    type: Number
+  },
+  end: {
+    type: Number
+  }
+});
+
 var Subscription = new Schema({
   stripeCustId: {
     type: String
@@ -44,6 +56,7 @@ var UserSchema = new Schema({
     type: String,
   },
   subscription: Subscription,
+  previousSubscriptions: [ prevSubscriptions ],
   plan: {
     type: String
   },
