@@ -458,7 +458,7 @@ module.exports.sendVerificationLink = function (req, res) {
     });
 };
 
-module.exports.addMoney = function (req, res, email, plan) {
+module.exports.createTransaction = function (req, res, email, plan, transaction) {
 
     User.findOne({
         email: email,
@@ -478,7 +478,10 @@ module.exports.addMoney = function (req, res, email, plan) {
                     email: email,
                 }, {
                     plan: plan,
-                    expires: expires
+                    expires: expires,
+                    $push: {
+                        transactions: transaction
+                    }
                 },
                 function (err, user) {
                     if (err) {

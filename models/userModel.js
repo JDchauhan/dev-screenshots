@@ -63,6 +63,10 @@ var UserSchema = new Schema({
   plan: {
     type: String
   },
+  transactions: [{
+    type: Schema.Types.ObjectId,
+    ref: 'transaction'
+  }],
   preset: [{
     type: Schema.Types.ObjectId,
     ref: 'preset'

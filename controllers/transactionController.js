@@ -79,12 +79,14 @@ module.exports.stripePayment = function (req, res) {
         }, function (err, response) {
             if (err) {
                 console.log(err);
+                return;
             }
+
+            userController.createTransaction(req, res, req.body.email, plan, response._id);
+
+            Mail.invoice(req.body.email, planAmount, plan);
+    
         });
-
-        userController.addMoney(req, res, req.body.email, plan);
-
-        Mail.invoice(req.body.email, planAmount, plan);
     });
 };
 
@@ -123,27 +125,27 @@ module.exports.payUMoneyPaymentResponse = function (req, res) {
     }
 }
 
-module.exports.getAllTransactions = function (req, res) {
-    AuthoriseUser.getUser(req, res, function (user) {
-        Transaction.find({
-            email: user.email
-        }, {
-            _id: 0,
-            __v: 0
-        }, function (err, transactions) {
-            if (err) {
-                console.log(err);
-                return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
-            }
+// module.exports.getAllTransactions = function (req, res) {
+//     AuthoriseUser.getUser(req, res, function (user) {
+//         Transaction.find({
+//             email: user.email
+//         }, {
+//             _id: 0,
+//             __v: 0
+//         }, function (err, transactions) {
+//             if (err) {
+//                 console.log(err);
+//                 return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+//             }
 
-            if (!transactions) {
-                return responses.errorMsg(res, 404, "Not Found", "transactions not found.", null);
-            }
+//             if (!transactions) {
+//                 return responses.errorMsg(res, 404, "Not Found", "transactions not found.", null);
+//             }
 
-            return responses.successMsg(res, transactions);
-        });
-    });
-};
+//             return responses.successMsg(res, transactions);
+//         });
+//     });
+// };
 
 module.exports.createSubscription = function (req, res, userId, email, custId, plan) {
     stripe.subscriptions.create({
