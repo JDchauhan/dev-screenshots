@@ -123,29 +123,7 @@ module.exports.payUMoneyPaymentResponse = function (req, res) {
             'status': "Error occured"
         });
     }
-}
-
-// module.exports.getAllTransactions = function (req, res) {
-//     AuthoriseUser.getUser(req, res, function (user) {
-//         Transaction.find({
-//             email: user.email
-//         }, {
-//             _id: 0,
-//             __v: 0
-//         }, function (err, transactions) {
-//             if (err) {
-//                 console.log(err);
-//                 return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
-//             }
-
-//             if (!transactions) {
-//                 return responses.errorMsg(res, 404, "Not Found", "transactions not found.", null);
-//             }
-
-//             return responses.successMsg(res, transactions);
-//         });
-//     });
-// };
+};
 
 module.exports.createSubscription = function (req, res, userId, email, custId, plan) {
     stripe.subscriptions.create({
