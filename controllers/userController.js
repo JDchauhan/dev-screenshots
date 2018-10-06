@@ -464,6 +464,7 @@ module.exports.createTransaction = function (req, res, email, plan, transaction)
         email: email,
     }, function (err, user) {
         if (err) {
+            console.log(err);
             return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
         } else {
             var expires;
@@ -480,11 +481,12 @@ module.exports.createTransaction = function (req, res, email, plan, transaction)
                     plan: plan,
                     expires: expires,
                     $push: {
-                        transactions: transaction
+                        transactions: mongoose.Types.ObjectId(transaction)
                     }
                 },
                 function (err, user) {
                     if (err) {
+                        console.log(err);
                         return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
                     } else {
                         user.password = undefined;
@@ -747,5 +749,29 @@ module.exports.cancelSubscription = function (req, res, userId, custId, prevSubs
 
         //Mail.invoiceCancelSubscrition(email, plan);
         return responses.successMsg(res, null);
+    });
+};
+
+module.exports.getAllTransactions = function (req, res) {
+    AuthoriseUser.getUser(req, res, function (user) {
+        User.find({
+            email: user.email
+        }, {
+            _id: 0,
+            subscription: 1,
+            plan: 1,
+            subscriptions: 1
+        }).populate('transactions', '-_id -email -__v').exec(function (err, transactions) {
+            if (err) {
+                console.log(err);
+                return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+            }
+
+            if (transactions.length < 1) {
+                return responses.errorMsg(res, 404, "Not Found", "transactions not found.", null);
+            }
+
+            return responses.successMsg(res, transactions[0]);
+        });
     });
 };

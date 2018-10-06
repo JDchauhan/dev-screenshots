@@ -81,7 +81,7 @@ module.exports = function (app) {
 
     app.put("/user", VerifyToken, User.updatePersonalInfo);
 
-    app.get("/user/transaction", VerifyToken, Transaction.getAllTransactions);
+    app.get("/user/transaction", VerifyToken, User.getAllTransactions);
 
     app.get("/transaction", function (req, res) {
         res.render("transactions");
