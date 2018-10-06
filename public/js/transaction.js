@@ -22,7 +22,7 @@ $(function () {
                 }
                 let daysLeft = parseInt((new Date(data.results.user.expires) - new Date()) / (3600 * 24 * 1000));
                 $("#pro").attr("href", "/payment");
-                
+
                 if (getPlan) {
                     $("#pro").empty();
                     if (data.results.user.subscription && data.results.user.subscription.stripeSubsId) {
@@ -59,7 +59,8 @@ $(function () {
         function (data, status, xhr) {
             console.log(data);
 
-            if (!data.results.transactions || data.results.transactions.length === 0) {
+            if ((!data.results.transactions || data.results.transactions.length === 0) &&
+                (!data.results.previousSubscriptions || data.results.previousSubscriptions.length === 0)) {
                 $('.alert').hide(500);
                 $('#err-msg').append(
                     '<div class="alert alert-danger alert-dismissible fade show">' +
@@ -70,12 +71,26 @@ $(function () {
             }
 
             for (let i = 0; i < data.results.transactions.length; i++) {
-                $('tbody').append(
+                $('.transactions tbody').append(
                     '<tr>' +
                     '<td>' + i + '</td>' +
                     '<td class="break">' + data.results.transactions[i].txnID + '</td>' +
                     '<td class=""><b>$ ' + (parseInt(data.results.transactions[i].amount) / 100) + '</b></td>' +
                     '<td>' + (String)(new Date(data.results.transactions[i].generation_timestamp)).split(' GMT')[0] + '</td>' +
+                    '</tr>'
+                );
+            }
+
+            for (let i = 0; i < data.results.previousSubscriptions.length; i++) {
+                let subsPlan = data.results.previousSubscriptions[i].plan;
+                $('.subscriptions tbody').append(
+                    '<tr>' +
+                    '<td>' + i + '</td>' +
+                    '<td class="break">' + data.results.previousSubscriptions[i].stripeSubsId + '</td>' +
+                    '<td class=""><b>' + subsPlan + ' $ ' + ((subsPlan === "lite") ? 4.99 :
+                        (subsPlan === "professional") ? 9.99 : 19.99) + '</b></td>' +
+                    '<td>' + (String)(new Date(data.results.previousSubscriptions[i].start)).split(' GMT')[0] + '</td>' +
+                    '<td>' + (String)(new Date(data.results.previousSubscriptions[i].end)).split(' GMT')[0] + '</td>' +
                     '</tr>'
                 );
             }

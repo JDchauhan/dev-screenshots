@@ -760,7 +760,7 @@ module.exports.getAllTransactions = function (req, res) {
             _id: 0,
             subscription: 1,
             plan: 1,
-            subscriptions: 1
+            previousSubscriptions: 1
         }).populate('transactions', '-_id -email -__v').exec(function (err, transactions) {
             if (err) {
                 console.log(err);

@@ -1,38 +1,64 @@
 <% include partials/header.ejs %>
-<script src="/js/transaction.js"></script>
-</head>
+    <script src="/js/transaction.js"></script>
+    </head>
 
-<body>
-    <%- include('partials/navbar', {
+    <body>
+        <%- include('partials/navbar', {
             home: true,
             login: false,
             plan: true,
             account: true
         }); %>
 
-    <div id="loader" class="container row">
-        <img class="hexerve" src="/hexerve.png" />
-    </div>
+            <div id="loader" class="container row">
+                <img class="hexerve" src="/hexerve.png" />
+            </div>
 
-    <div class="body-container container mid-25" style="display:none">
-        <div id="err-msg"></div>
-        <div class="table-responsive table-dark">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>ID</th>
-                        <th class="">Amount</th>
-                        <th>Date/Time</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-        </div>
+            <div class="body-container container" style="display:none">
+                <div id="err-msg"></div>
+                <div class="mb-5">
 
-        <footer class="footer fixed-bottom text-light">
-            <% include partials/footer.ejs %>
-</body>
+                    <div class="table-responsive table-dark mb-2">
+                        <table class="table transactions">
+                            <thead>
+                                <tr>
+                                    <th class="text-center text-muted text-uppercase font-italic" colspan="4">Transactions</th>
+                                </tr>
+                                <tr>
+                                    <th>#</th>
+                                    <th>ID</th>
+                                    <th class="">Amount</th>
+                                    <th>Date/Time</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-responsive table-dark mb-5">
+                        <table class="table subscriptions">
+                            <thead>
+                                <tr>
+                                    <th class="text-center text-muted text-uppercase font-italic" colspan="5">subscriptions</th>
+                                </tr>
+                                <tr>
+                                    <th>#</th>
+                                    <th>ID</th>
+                                    <th>Plan</th>
+                                    <th class="">Start</th>
+                                    <th>End</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <br/>
 
-</html>
+
+                <footer class="footer fixed-bottom text-light">
+                    <% include partials/footer.ejs %>
+    </body>
+
+    </html>
