@@ -407,8 +407,20 @@
 
 								<% } else if (task == "invoice") { %>
 
-								<p>Your Payment of <b>$<%= amount %></b> for <b><%= plan %></b> plan has been recorded successfully.</p>
-									
+								<p>Your Payment of <b>$
+										<%= amount %></b> for <b>
+										<%= plan %></b> plan has been recorded successfully.</p>
+
+								<% } else if (task == "subscribe") { %>
+
+								<p>You have been successfully subscribed to <b>
+										<%= plan %></b> plan.</p>
+
+								<% } else if (task == "unsubscribe") { %>
+
+								<p>You have been successfully unsubscribed from <b>
+										<%= plan %> plan.</p>
+
 								<% } else { %>
 								<p class="callout">
 									To

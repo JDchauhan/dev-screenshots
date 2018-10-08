@@ -725,7 +725,7 @@ module.exports.stripeSubscription = function (req, res, userId, custId, stripeSu
             return responses.errorMsg(res, 404, "Not Found", "user not found.", null);
         }
 
-        //Mail.invoiceSubscribe(email, plan);
+        Mail.invoiceSubscribe(email, plan);
         return responses.successMsg(res, null);
     });
 };
@@ -747,7 +747,7 @@ module.exports.cancelSubscription = function (req, res, userId, custId, prevSubs
             return responses.errorMsg(res, 404, "Not Found", "user not found.", null);
         }
 
-        //Mail.invoiceCancelSubscrition(email, plan);
+        Mail.invoiceCancelSubscrition(result.email, prevSubs.plan);
         return responses.successMsg(res, null);
     });
 };
