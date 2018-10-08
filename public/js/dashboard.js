@@ -11,13 +11,10 @@ $(function () {
     $(".logged").hide();
     if (getCookie("token") === "") {
         isGuest = true;
-        $("#videoModal").modal("show");
-
-        setTimeout(function () {
-            $("#videoModal").modal("hide");
-        }, 180000);
 
         showBody();
+        $(".youtube-link").grtyoutube();
+        $('.youtube-link').trigger('click');
     } else {
         $.ajaxSetup({
             headers: {
@@ -27,7 +24,6 @@ $(function () {
         $.get("../user/preset", {},
             function (data, status, xhr) {
                 console.log(data);
-                $("#videoModal").remove();
                 // let name = data.results.user.name;
 
                 // name = name.charAt(0).toUpperCase() + name.substr(1);
@@ -71,26 +67,21 @@ $(function () {
                 isGuest = false;
                 showBody();
             }).fail(function (xhr, status, error) {
-                if (xhr.status === 0) {
-                    $('.alert').hide(500);
-                    $('#pass-msg').append(
-                        '<div class="alert alert-danger alert-dismissible fade show">' +
-                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                        '<strong>Oops! </strong>Network error.</div>'
-                    );
-                    $("#videoModal").remove();
-                    showBody();
-                    return;
-                }
-
-                setTimeout(function () {
-                    $("#videoModal").modal("hide");
-                }, 180000);        
-
-                setCookie("token", "", -1);
+            if (xhr.status === 0) {
+                $('.alert').hide(500);
+                $('#pass-msg').append(
+                    '<div class="alert alert-danger alert-dismissible fade show">' +
+                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                    '<strong>Oops! </strong>Network error.</div>'
+                );
                 showBody();
-                isGuest = true;
-            });
+                return;
+            }
+
+            setCookie("token", "", -1);
+            showBody();
+            isGuest = true;
+        });
     }
 });
 
@@ -846,10 +837,6 @@ $(document).ready(function () {
         }
     });
 
-    $(document).on('hidden.bs.modal', '#videoModal', function () {
-        $("#videoModal").remove();
-    });
-    
     $(document).on('click', '.remove_preset_button', function (e) {
         let data = {
             id: e.target.id.split('_')[2]

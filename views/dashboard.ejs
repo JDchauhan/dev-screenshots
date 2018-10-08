@@ -1,9 +1,13 @@
 <% include partials/header.ejs %>
+<link rel="stylesheet" href="https://grt107.github.io/grt-youtube-popup/grt-youtube-popup.css">
+<script src="https://grt107.github.io/grt-youtube-popup/grt-youtube-popup.js"></script>
 <script src="/js/dashboard.js"></script>
 
 </head>
 
 <body>
+
+    <span class="youtube-link" youtubeid="_UO0fiAZ8CI"></span>
     <%- include('partials/navbar', {
         home: false,
         login: true,
@@ -289,27 +293,6 @@
         </div>
     </div>
 
-
-    <!-- Video Modal -->
-    <div class="modal fade" id="videoModal">
-        <div class="modal-dialog modal-dialog-centered full_screen_modal">
-            <div class="modal-content">
-
-                <div class="modal-header">
-                    <h4 class="modal-title">How it works???</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-
-                <!-- Modal body -->
-                <div class="modal-body">
-                    <div class="embed-responsive embed-responsive-21by9">
-                        <iframe class="embed-responsive-item" id="welcome_video" src="https://www.youtube.com/embed/_UO0fiAZ8CI?&autoplay=1"
-                            allow="autoplay; encrypted-media" frameborder="0" allowfullscreen></iframe>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <% if(error) { %>
     <script>
         document.getElementById("message-heading").innerHTML = "Error";
