@@ -1,9 +1,13 @@
 <% include partials/header.ejs %>
+<link rel="stylesheet" href="https://grt107.github.io/grt-youtube-popup/grt-youtube-popup.css">
+<script src="https://grt107.github.io/grt-youtube-popup/grt-youtube-popup.js"></script>
 <script src="/js/dashboard.js"></script>
 
 </head>
 
 <body>
+
+    <span class="youtube-link" youtubeid="_UO0fiAZ8CI"></span>
     <%- include('partials/navbar', {
         home: false,
         login: true,
@@ -191,7 +195,7 @@
                                 <button type="button" class="btn btn-secondary add_button" onclick="addList()">Add</button>
                             </div>
                         </div>
-                        
+
                         <div class="col-md-12">
                             <div class="form-group input-group  panel">
                                 <input type="file" class="custom-file-input" name="File Upload" id="txtFileUpload"
@@ -288,6 +292,7 @@
             </div>
         </div>
     </div>
+
     <% if(error) { %>
     <script>
         document.getElementById("message-heading").innerHTML = "Error";

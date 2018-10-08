@@ -16,20 +16,28 @@ $(function () {
                 email = data.results.user.email;
 
                 plan = data.results.user.plan;
-                plan = plan.charAt(0).toUpperCase() + plan.substr(1);
-                let daysLeft = parseInt((new Date(data.results.user.expires) - new Date()) / (3600 * 24 * 1000));
-
+                let getPlan;
                 if (plan) {
-                    $("#pro").empty();
-                    $("#pro").append(plan + " ( " + daysLeft + " Days Left )");
+                    getPlan = plan.charAt(0).toUpperCase() + plan.substr(1);
                 }
-                $("#pro").attr("href", "./payment");
+                let daysLeft = parseInt((new Date(data.results.user.expires) - new Date()) / (3600 * 24 * 1000));
+                $("#pro").attr("href", "/payment");
+
+                if (getPlan) {
+                    $("#pro").empty();
+                    if (data.results.user.subscription && data.results.user.subscription.stripeSubsId) {
+                        $("#pro").append(getPlan);
+                        $("#pro").attr("href", "/subscription");
+                    } else {
+                        $("#pro").append(getPlan + " ( " + daysLeft + " Days Left )");
+                    }
+                }
 
                 if (data.results.user.isAdmin) {
                     $('#admin').show();
                     $('#pro').hide();
                 }
-
+                showBody();
             }).fail(function (xhr, status, error) {
             if (xhr.status === 0) {
                 $('.alert').hide(500);
@@ -38,6 +46,7 @@ $(function () {
                     '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
                     '<strong>Oops! </strong>Network error.</div>'
                 );
+                showBody();
                 return;
             }
 
@@ -50,23 +59,38 @@ $(function () {
         function (data, status, xhr) {
             console.log(data);
 
-            if(data.results.length === 0){
+            if ((!data.results.transactions || data.results.transactions.length === 0) &&
+                (!data.results.previousSubscriptions || data.results.previousSubscriptions.length === 0)) {
                 $('.alert').hide(500);
                 $('#err-msg').append(
                     '<div class="alert alert-danger alert-dismissible fade show">' +
                     '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
                     '<strong>Oops! </strong>No record found.</div>'
                 );
-                return;    
+                return;
             }
 
-            for(let i = 0; i < data.results.length; i++){
-                $('tbody').append(
+            for (let i = 0; i < data.results.transactions.length; i++) {
+                $('.transactions tbody').append(
                     '<tr>' +
-                        '<td>' + i + '</td>' +
-                        '<td class="break">' + data.results[i].txnID + '</td>' +
-                        '<td class=""><b>$ ' + (parseInt(data.results[i].amount) / 100) + '</b></td>' +
-                        '<td>' + (String)(new Date(data.results[i].generation_timestamp)).split(' GMT')[0] + '</td>' +
+                    '<td>' + i + '</td>' +
+                    '<td class="break">' + data.results.transactions[i].txnID + '</td>' +
+                    '<td class=""><b>$ ' + (parseInt(data.results.transactions[i].amount) / 100) + '</b></td>' +
+                    '<td>' + (String)(new Date(data.results.transactions[i].generation_timestamp)).split(' GMT')[0] + '</td>' +
+                    '</tr>'
+                );
+            }
+
+            for (let i = 0; i < data.results.previousSubscriptions.length; i++) {
+                let subsPlan = data.results.previousSubscriptions[i].plan;
+                $('.subscriptions tbody').append(
+                    '<tr>' +
+                    '<td>' + i + '</td>' +
+                    '<td class="break">' + data.results.previousSubscriptions[i].stripeSubsId + '</td>' +
+                    '<td class=""><b>' + subsPlan + ' $ ' + ((subsPlan === "lite") ? 4.99 :
+                        (subsPlan === "professional") ? 9.99 : 19.99) + '</b></td>' +
+                    '<td>' + (String)(new Date(data.results.previousSubscriptions[i].start)).split(' GMT')[0] + '</td>' +
+                    '<td>' + (String)(new Date(data.results.previousSubscriptions[i].end)).split(' GMT')[0] + '</td>' +
                     '</tr>'
                 );
             }
@@ -82,10 +106,4 @@ $(function () {
             return;
         }
     });
-
-    setTimeout(function () {
-        $('#loader').hide();
-        $('nav').show();
-        $('.body-container').show();
-    }, 100);
 });

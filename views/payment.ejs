@@ -85,6 +85,35 @@
 
 	</div>
 
+	<!-- The Modal -->
+	<div class="modal fade" id="myModal">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title" id="message-heading">
+						Terms and Conditions
+					</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body" id="message-body">
+					For making payments you need to agree with our <a target="_blank" href="https://www.hexerve.com/terms-and-conditions">Terms and
+						Conditions</a>.
+				</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success" data-dismiss="modal" id="payContinue">Accept and Continue</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
 	<footer class="footer fixed-bottom  text-light">
 		<% include partials/footer.ejs %>
 

@@ -382,6 +382,10 @@ table
     max-width: 85% !important
 }
 
+.full_screen_modal {
+    max-width: 85% !important;
+}
+
 #list {
     padding: 0 2% 0 2%;
     margin-top: -2%;
@@ -405,8 +409,27 @@ table
     padding-right: 2%;
 }
 
+.dropdown-menu {
+    left: -10%;
+    margin-top: 0;
+}
+
 .remove {
     width: 10%;
+}
+
+.video_container {
+    width: 90vw;
+    margin: 0 5% 5% 5%;
+    padding: 0 5% 5% 5%;
+}
+
+.removePlan, .tc {
+    background-color: rgba(0, 0, 0, 0.4)
+}
+
+#login-btn, #register {
+    margin: 2%;
 }
 
 .eqiWidthInput {
@@ -696,6 +719,10 @@ hr {
     .addWidth {
         width: 100% !important;
     }
+
+    .full_screen_modal {
+        max-width: 100% !important;
+    }    
 
     .body-container {
         position: relative;

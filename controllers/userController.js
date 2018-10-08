@@ -155,7 +155,9 @@ module.exports.current_user_preset = function (req, res) {
                     return responses.errorMsg(res, 404, "Not Found", "user not found.", null);
                 }
 
-                if (user.plan && user.expires < Date.now()) {
+                if (user.plan && ((user.subscription && !user.subscription.stripeSubsId) || !user.subscription) &&
+                    user.expires < Date.now()) {
+
                     User.findByIdAndUpdate(user._id, {
                         plan: undefined
                     }, function (err, user) {
@@ -456,12 +458,13 @@ module.exports.sendVerificationLink = function (req, res) {
     });
 };
 
-module.exports.addMoney = function (req, res, email, plan) {
+module.exports.createTransaction = function (req, res, email, plan, transaction) {
 
     User.findOne({
         email: email,
     }, function (err, user) {
         if (err) {
+            console.log(err);
             return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
         } else {
             var expires;
@@ -476,10 +479,14 @@ module.exports.addMoney = function (req, res, email, plan) {
                     email: email,
                 }, {
                     plan: plan,
-                    expires: expires
+                    expires: expires,
+                    $push: {
+                        transactions: mongoose.Types.ObjectId(transaction)
+                    }
                 },
                 function (err, user) {
                     if (err) {
+                        console.log(err);
                         return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
                     } else {
                         user.password = undefined;
@@ -590,7 +597,7 @@ module.exports.updateUser = function (req, res) {
 
         if (user.isAdmin) {
             let data = {};
-            
+
             if (req.body.plan && req.body.plan != "") {
                 data.plan = (req.body.plan).toLowerCase();
             }
@@ -605,10 +612,10 @@ module.exports.updateUser = function (req, res) {
                 if (val === "true") {
                     data.isAdmin = true;
                     data.plan = "enterprise";
-                    
+
                     let time = new Date();
-                    data.expires = time.setDate(time.getDate() + 36500);// approx 100 years
-                    
+                    data.expires = time.setDate(time.getDate() + 36500); // approx 100 years
+
                 } else {
                     data.isAdmin = false;
                 }
@@ -682,6 +689,89 @@ module.exports.updatePersonalInfo = function (req, res) {
             }
 
             return responses.successMsg(res, null);
+        });
+    });
+};
+
+module.exports.stripeCust = function (req, res, stripeCustId, userId, callback) {
+    User.findByIdAndUpdate(userId, {
+        subscription: {
+            stripeCustId: stripeCustId
+        }
+    }, function (err, result) {
+        if (err) {
+            console.log(err);
+            return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+        } else if (!result) {
+            return responses.errorMsg(res, 404, "Not Found", "user not found.", null);
+        }
+
+        callback(true);
+    });
+};
+
+module.exports.stripeSubscription = function (req, res, userId, custId, stripeSubsId, plan, email) {
+    User.findByIdAndUpdate(userId, {
+        subscription: {
+            stripeSubsId: stripeSubsId,
+            stripeCustId: custId
+        },
+        plan: plan
+    }, function (err, result) {
+        if (err) {
+            console.log(err);
+            return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+        } else if (!result) {
+            return responses.errorMsg(res, 404, "Not Found", "user not found.", null);
+        }
+
+        Mail.invoiceSubscribe(email, plan);
+        return responses.successMsg(res, null);
+    });
+};
+
+module.exports.cancelSubscription = function (req, res, userId, custId, prevSubs) {
+    User.findByIdAndUpdate(userId, {
+        subscription: {
+            stripeCustId: custId
+        },
+        expires: new Date(prevSubs.end),
+        $push: {
+            previousSubscriptions: prevSubs
+        }
+    }, function (err, result) {
+        if (err) {
+            console.log(err);
+            return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+        } else if (!result) {
+            return responses.errorMsg(res, 404, "Not Found", "user not found.", null);
+        }
+
+        Mail.invoiceCancelSubscrition(result.email, prevSubs.plan);
+        return responses.successMsg(res, null);
+    });
+};
+
+module.exports.getAllTransactions = function (req, res) {
+    AuthoriseUser.getUser(req, res, function (user) {
+        User.find({
+            email: user.email
+        }, {
+            _id: 0,
+            subscription: 1,
+            plan: 1,
+            previousSubscriptions: 1
+        }).populate('transactions', '-_id -email -__v').exec(function (err, transactions) {
+            if (err) {
+                console.log(err);
+                return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+            }
+
+            if (transactions.length < 1) {
+                return responses.errorMsg(res, 404, "Not Found", "transactions not found.", null);
+            }
+
+            return responses.successMsg(res, transactions[0]);
         });
     });
 };

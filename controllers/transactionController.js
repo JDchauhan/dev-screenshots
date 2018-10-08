@@ -8,10 +8,11 @@ var stripe = require("stripe")(config.stripeKey);
 var userController = require('../controllers/userController');
 var AuthoriseUser = require('../helper/authoriseUser');
 
-var responses = require('../helper/responses'); 
+var responses = require('../helper/responses');
+var Mail = require('../helper/mail');
 
 var jsSHA = require("jssha");
-exports.payUMoneyPayment = function (req, res) {
+module.exports.payUMoneyPayment = function (req, res) {
     if (!req.body.txnid || !req.body.amount || !req.body.productinfo ||
         !req.body.firstname || !req.body.email) {
         res.send("Mandatory fields missing");
@@ -32,7 +33,7 @@ exports.payUMoneyPayment = function (req, res) {
     }
 };
 
-exports.stripePayment = function (req, res) {
+module.exports.stripePayment = function (req, res) {
     let planID = parseInt(req.params.planID);
     // Token is created using Checkout or Elements!
     // Get the payment token ID submitted by the form:
@@ -78,14 +79,18 @@ exports.stripePayment = function (req, res) {
         }, function (err, response) {
             if (err) {
                 console.log(err);
+                return;
             }
-        });
 
-        userController.addMoney(req, res, req.body.email, plan);
+            userController.createTransaction(req, res, req.body.email, plan, response._id);
+
+            Mail.invoice(req.body.email, planAmount, plan);
+    
+        });
     });
 };
 
-exports.payUMoneyPaymentResponse = function (req, res) {
+module.exports.payUMoneyPaymentResponse = function (req, res) {
     var pd = req.body;
     //Generate new Hash 
     var hashString = config.merchantSalt + '|' + pd.status + '||||||||||' + '|' + pd.email + '|' + pd.firstname + '|' + pd.productinfo + '|' + pd.amount + '|' + pd.txnid + '|' + config.merchantKey;
@@ -118,20 +123,73 @@ exports.payUMoneyPaymentResponse = function (req, res) {
             'status': "Error occured"
         });
     }
-}
+};
 
-exports.getAllTransactions = function (req, res) {
+module.exports.createSubscription = function (req, res, userId, email, custId, plan) {
+    stripe.subscriptions.create({
+        customer: custId,
+        items: [{
+            plan: plan,
+        }, ]
+    }, function (err, subscription) {
+        if (err) {
+            console.log(err);
+            return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+        }
+
+        plan = plan.split('_')[2];
+        userController.stripeSubscription(req, res, userId, custId, subscription.id, plan, email);
+    });
+};
+
+module.exports.createCust = function (req, res) {
     AuthoriseUser.getUser(req, res, function (user) {
-        Transaction.find({email: user.email}, {_id: 0, __v: 0}, function(err, transactions){
-            if(err){console.log(err);
-                return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+        let plan = req.body.plan;
+
+        if (!user.subscription.stripeCustId && !user.subscription.stripeSubsId) {
+            stripe.customers.create({
+                description: 'Screenshot customer',
+                email: user.email,
+                source: req.body.id,
+            }, function (err, customer) {
+                if (err) {
+                    console.log(err);
+                    return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+                }
+
+                userController.stripeCust(req, res, customer.id, user._id, function (success) {
+                    if (success) {
+                        module.exports.createSubscription(req, res, user._id, user.email, customer.id, plan);
+                    }
+                });
+
+            });
+        } else if (!user.subscription.stripeSubsId) {
+            module.exports.createSubscription(req, res, user._id, user.email, user.subscription.stripeCustId, plan);
+        } else {
+            return responses.errorMsg(res, 208, "Already Reported", "already reported.", null);
+        }
+    });
+};
+
+module.exports.cancelSubscription = function (req, res) {
+    AuthoriseUser.getUser(req, res, function (user) {
+        stripe.subscriptions.del(
+            user.subscription.stripeSubsId,
+            function (err, confirmation) {
+                if (err) {
+                    console.log(err);
+                    return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+                }
+                
+                let prevSubs = {
+                    stripeSubsId: user.subscription.stripeSubsId,
+                    plan: user.plan,
+                    start: confirmation.current_period_start * 1000,
+                    end: confirmation.current_period_end * 1000
+                };
+                userController.cancelSubscription(req, res, user._id, user.subscription.stripeCustId, prevSubs);
             }
-    
-            if(!transactions){
-                return responses.errorMsg(res, 404, "Not Found", "transactions not found.", null);
-            }
-    
-            return responses.successMsg(res, transactions);
-        });    
-    });    
-}
+        );
+    });
+};

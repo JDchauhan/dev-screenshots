@@ -49,6 +49,10 @@ module.exports = function (app) {
         res.render("admin");
     });
 
+    app.get("/subscribe", function (req, res) {
+        res.render("subscribe");
+    });
+
     app.post("/login", User.login);
 
     app.post("/register", User.register);
@@ -77,7 +81,7 @@ module.exports = function (app) {
 
     app.put("/user", VerifyToken, User.updatePersonalInfo);
 
-    app.get("/user/transaction", VerifyToken, Transaction.getAllTransactions);
+    app.get("/user/transaction", VerifyToken, User.getAllTransactions);
 
     app.get("/transaction", function (req, res) {
         res.render("transactions");
@@ -95,6 +99,10 @@ module.exports = function (app) {
 
     app.get("/payment", function (req, res) {
         res.render("payment");
+    });
+
+    app.get("/tutorial", function (req, res) {
+        res.render("tutorial");
     });
 
     app.post('/verify/email', User.sendVerificationLink);
@@ -115,6 +123,10 @@ module.exports = function (app) {
 
     //app.post('/payment/payumoney/response', transactionController.payUMoneyPaymentResponse);
 
+    app.post('/customer/subscription', VerifyToken, transactionController.createCust);
+    
+    app.delete('/customer/subscription', VerifyToken, transactionController.cancelSubscription);
+    
     // star routes
     app.get('*', function (req, res) {
         res.redirect(301, "../");

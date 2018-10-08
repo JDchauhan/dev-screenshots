@@ -14,25 +14,33 @@ $(function () {
             function (data, status, xhr) {
                 console.log(data);
                 let name = data.results.user.name;
-                
+
                 email = data.results.user.email;
 
                 name = name.charAt(0).toUpperCase() + name.substr(1);
                 plan = data.results.user.plan;
-                plan = plan.charAt(0).toUpperCase() + plan.substr(1);
-                let daysLeft = parseInt((new Date(data.results.user.expires) - new Date()) / (3600 * 24 * 1000));
-
+                let getPlan;
                 if (plan) {
-                    $("#pro").empty();
-                    $("#pro").append(plan + " ( " + daysLeft + " Days Left )");
+                    getPlan = plan.charAt(0).toUpperCase() + plan.substr(1);
                 }
-                $("#pro").attr("href", "./payment");
-
+                let daysLeft = parseInt((new Date(data.results.user.expires) - new Date()) / (3600 * 24 * 1000));
+                $("#pro").attr("href", "/payment");
+                
+                if (getPlan) {
+                    $("#pro").empty();
+                    if (data.results.user.subscription && data.results.user.subscription.stripeSubsId) {
+                        $("#pro").append(getPlan);
+                        $("#pro").attr("href", "/subscribe");
+                    } else {
+                        $("#pro").append(getPlan + " ( " + daysLeft + " Days Left )");
+                    }
+                }
+                
                 if (data.results.user.isAdmin) {
                     $('#admin').show();
                     $('#pro').hide();
                 }
-
+                showBody();
             }).fail(function (xhr, status, error) {
             var errMsg;
 
@@ -43,6 +51,7 @@ $(function () {
                     '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
                     '<strong>Oops! </strong>Network error.</div>'
                 );
+                showBody();
                 return;
             }
 
@@ -133,9 +142,4 @@ $(function () {
         });
     });
 
-    setTimeout(function () {
-        $('#loader').hide();
-        $('nav').show();
-        $('.body-container').show();
-    }, 100);
 });

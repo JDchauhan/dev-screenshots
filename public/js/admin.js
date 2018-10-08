@@ -20,13 +20,14 @@ $(function () {
 
                 email = data.results.user.email;
                 plan = data.results.user.plan;
-                plan = plan.charAt(0).toUpperCase() + plan.substr(1);
-                let daysLeft = parseInt((new Date(data.results.user.expires) - new Date()) / (3600 * 24 * 1000));
-
+                if (plan) {
+                    plan = plan.charAt(0).toUpperCase() + plan.substr(1);
+                    let daysLeft = parseInt((new Date(data.results.user.expires) - new Date()) / (3600 * 24 * 1000));
+                }
                 $("#pro").hide();
-                
-                // name = name.charAt(0).toUpperCase() + name.substr(1);
 
+                // name = name.charAt(0).toUpperCase() + name.substr(1);
+                showBody();
             }).fail(function (xhr, status, error) {
             if (xhr.status === 0) {
                 $('.alert').hide(500);
@@ -35,6 +36,7 @@ $(function () {
                     '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
                     '<strong>Oops! </strong>Network error.</div>'
                 );
+                showBody();
                 return;
             }
 
@@ -126,9 +128,5 @@ $(function () {
             }
         });
     });
-    setTimeout(function () {
-        $('#loader').hide();
-        $('nav').show();
-        $('.body-container').show();
-    }, 100);
+
 });
