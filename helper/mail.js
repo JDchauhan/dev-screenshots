@@ -76,3 +76,79 @@ module.exports.passUpdate_mail = function (email) {
         }
     });
 };
+
+module.exports.invoice = function (email, amount, plan) {
+    ejs.renderFile(__dirname + "/email.ejs", {
+        task: 'invoice',
+        amount: amount,
+        plan: plan
+    }, function (err, data) {
+        if (err) {
+            console.log(err);
+        } else {
+            var mailOptions = {
+                to: email,
+                from: 'Hexerve Solutions <info@hexerve.com>',
+                subject: 'Payment Recieved',
+                html: data
+            };
+            transporter.sendMail(mailOptions, function (err, info) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log('Email sent: ' + info.response);
+                }
+            });
+        }
+    });
+};
+
+module.exports.invoiceSubscribe = function (email, plan) {
+    ejs.renderFile(__dirname + "/email.ejs", {
+        task: 'subscribe',
+        plan: plan
+    }, function (err, data) {
+        if (err) {
+            console.log(err);
+        } else {
+            var mailOptions = {
+                to: email,
+                from: 'Hexerve Solutions <info@hexerve.com>',
+                subject: 'Plan successfully subscribed',
+                html: data
+            };
+            transporter.sendMail(mailOptions, function (err, info) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log('Email sent: ' + info.response);
+                }
+            });
+        }
+    });
+};
+
+module.exports.invoiceCancelSubscrition = function (email, plan) {
+    ejs.renderFile(__dirname + "/email.ejs", {
+        task: 'unsubscribe',
+        plan: plan
+    }, function (err, data) {
+        if (err) {
+            console.log(err);
+        } else {
+            var mailOptions = {
+                to: email,
+                from: 'Hexerve Solutions <info@hexerve.com>',
+                subject: 'Plan unsubscribed successfully',
+                html: data
+            };
+            transporter.sendMail(mailOptions, function (err, info) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log('Email sent: ' + info.response);
+                }
+            });
+        }
+    });
+};

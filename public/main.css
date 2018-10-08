@@ -3,7 +3,7 @@ body {
 }
 
 .navbar {
-    background-color: rgba(0,0,0,0.7);
+    background-color: rgba(0, 0, 0, 0.7);
 }
 
 .navbar-toggler {
@@ -23,7 +23,7 @@ body {
 
 .nav-item {
     padding: 0px 10px !important;
-}
+}   
 
 /* nav animation begins */
 .effect {
@@ -140,8 +140,24 @@ ul.dropdown-menu.show .white {
     width: 33%;
 }
 
+.padding-0-2 {
+    padding-left: 0 2%
+}
+
+.add_button {
+    width: 100%;
+}
+
+.col-md-4, .col-md-1, .col-md-12 {
+    padding: 0px !important;
+}
+
+.nomar {
+    margin: 0% !important;
+}
+
 .btn {
-    margin-right: 5%;
+    margin-right: 1%;
 }
 
 .white {
@@ -188,8 +204,8 @@ td.visit_time_td {
 }
 
 .custom-file {
-    margin-left: 0.8%;
-    margin-right: 1.5%;
+    margin-left: 1%;
+    margin-right: 2%;
 }
 
 .stripeBtn {
@@ -299,8 +315,9 @@ table
     text-transform: uppercase;
 }
 
-footer, .checkbox-container {
-    background-color: rgba(0, 0, 0, 0.7) 
+footer,
+.checkbox-container {
+    background-color: rgba(0, 0, 0, 0.7)
 }
 
 footer ul {
@@ -344,8 +361,7 @@ table
 }
 
 .navbar-collapse {
-    background-color: rgba(0, 0, 0, 0.4)
-    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.4) width: 100vw;
     margin: 0%;
 }
 
@@ -366,6 +382,10 @@ table
     max-width: 85% !important
 }
 
+.full_screen_modal {
+    max-width: 85% !important;
+}
+
 #list {
     padding: 0 2% 0 2%;
     margin-top: -2%;
@@ -384,11 +404,32 @@ table
 }
 
 .half-width {
-    width: 55% !important;
+    width: 50% !important;
+    padding: 1%;
+    padding-right: 2%;
+}
+
+.dropdown-menu {
+    left: -10%;
+    margin-top: 0;
 }
 
 .remove {
     width: 10%;
+}
+
+.video_container {
+    width: 90vw;
+    margin: 0 5% 5% 5%;
+    padding: 0 5% 5% 5%;
+}
+
+.removePlan, .tc {
+    background-color: rgba(0, 0, 0, 0.4)
+}
+
+#login-btn, #register {
+    margin: 2%;
 }
 
 .eqiWidthInput {
@@ -678,6 +719,10 @@ hr {
     .addWidth {
         width: 100% !important;
     }
+
+    .full_screen_modal {
+        max-width: 100% !important;
+    }    
 
     .body-container {
         position: relative;

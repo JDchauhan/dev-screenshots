@@ -2,6 +2,30 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+var prevSubscriptions = new Schema({
+  stripeSubsId: {
+    type: String
+  },
+  plan: {
+    type: String
+  },
+  start: {
+    type: Number
+  },
+  end: {
+    type: Number
+  }
+});
+
+var Subscription = new Schema({
+  stripeCustId: {
+    type: String
+  },
+  stripeSubsId: {
+    type: String
+  }
+});
+
 var UserSchema = new Schema({
   name: {
     type: String,
@@ -34,16 +58,21 @@ var UserSchema = new Schema({
   password: {
     type: String,
   },
+  subscription: Subscription,
+  previousSubscriptions: [ prevSubscriptions ],
   plan: {
-    type : String
+    type: String
   },
+  transactions: [{
+    type: Schema.Types.ObjectId,
+    ref: 'transaction'
+  }],
   preset: [{
     type: Schema.Types.ObjectId,
     ref: 'preset'
   }],
   expires: {
-    type: Date,
-    default: Date.now
+    type: Date
   },
   active: {
     type: Boolean,
