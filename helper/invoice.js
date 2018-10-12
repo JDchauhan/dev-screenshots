@@ -1,6 +1,7 @@
 var ejs = require("ejs");
 var config = require('../config');
 var transporter = config.transporter;
+var rimraf = require('rimraf');
 
 var puppeteer = require('puppeteer');
 
@@ -22,7 +23,8 @@ async function create(email, type, Id, plan, amount, name) {
         console.log(err);
     }
     await page.pdf({
-        'path': 'downloads/invoice/' + name
+        'path': 'downloads/invoice/' + name,
+        printBackground: true
     });
     browser.close();
 }
