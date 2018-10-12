@@ -25,6 +25,16 @@ module.exports = function (app) {
         });
     });
 
+    app.get('/invoice/:email_1/:email_2/:type/:id/:plan/:amount', function(req, res){
+        res.render('invoice', {
+            email: req.params.email_1 + '@' + req.params.email_2,
+            subscription: req.params.type === 'subscription' ? true : false,
+            id: req.params.id,
+            plan: req.params.plan,
+            amount: req.params.amount
+        });
+    });
+
     app.post("/", screenshot.screenshotTaker);
 
     app.get("/login", function (req, res) {

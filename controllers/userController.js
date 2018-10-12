@@ -10,6 +10,7 @@ var bcrypt = require('bcryptjs');
 var config = require('../config');
 
 Mail = require('../helper/mail');
+var invoice = require('../helper/invoice');
 var responses = require('../helper/responses');
 var AuthoriseUser = require('../helper/authoriseUser');
 
@@ -724,8 +725,9 @@ module.exports.stripeSubscription = function (req, res, userId, custId, stripeSu
         } else if (!result) {
             return responses.errorMsg(res, 404, "Not Found", "user not found.", null);
         }
-
-        Mail.invoiceSubscribe(email, plan);
+        let amount = (plan = 'lite') ? 4.99 : (plan = 'professional') ? 9.99 : 19.99;
+        invoice.sendInvoice(email, "subscription", stripeSubsId, plan, amount);
+        
         return responses.successMsg(res, null);
     });
 };
