@@ -101,6 +101,8 @@ module.exports = function (app) {
 
     app.put("/adminAcesss/user", VerifyToken, User.updateUser);
 
+    app.post("/adminAcesss/register", VerifyToken, User.registerUserByAdmin);
+
     app.get("/user/preset", VerifyToken, User.current_user_preset);
 
     app.post("/preset", VerifyToken, Preset.create);

@@ -45,11 +45,24 @@ $(function () {
         });
     }
 
+    $(document).on('click', '#create', function () {
+        $('.update-users').css('display', 'none');
+        $('.create-users').css('display', 'block');
+    });
+
+    $(document).on('click', '#update', function () {
+        $('.update-users').css('display', 'block');
+        $('.create-users').css('display', 'none');
+    });
+
     $(document).on('click', '#search-btn', function () {
         let email = $('#email').val();
         $.get("../adminAcesss/user/" + email, {},
             function (data, status, xhr) {
                 console.log(data);
+
+                $('.create-users').css('display', 'none');
+                $('.update-users').css('display', 'block');
 
                 $('#email1').val(data.results.user.email);
                 $('#name').val(data.results.user.name);
@@ -120,6 +133,110 @@ $(function () {
 
                 $('.alert').hide(500);
                 $('#list-msg').append(
+                    '<div class="alert alert-danger alert-dismissible fade show">' +
+                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                    '<strong>Oops! </strong> ' + errMsg +
+                    '</div>'
+                );
+            }
+        });
+    });
+
+    $(document).on('click', '#create-btn', function () {
+        let data = {};
+        data.email = $('#email2').val();
+        data.name = $('#name2').val();
+        data.mobile = $('#mobile2').val();
+        data.password = $('#pass2').val();
+        data.plan = $('#plan2').val();
+        data.isAdmin = $('#isadmin2').val();
+        data.days = $('#days2').val();
+
+        if(data.days <= 0){
+            $('.alert').hide(500);
+            $('#register-msg').append(
+                '<div class="alert alert-danger alert-dismissible fade show">' +
+                '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                '<strong>Oops! </strong> Plan end must be atleast of 1 day' +
+                '</div>'
+            );
+            return;
+        }
+
+        if (!isText(data.name)) {
+            $('.alert').hide(500);
+            $('#register-msg').append(
+                '<div class="alert alert-danger alert-dismissible fade show">' +
+                '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                '<strong>Oops! </strong> Invalid name(must be greater than 3 characters)' +
+                '</div>'
+            );
+            return;
+        }
+
+        if (!isEmail(data.email)) {
+            $('.alert').hide(500);
+            $('#register-msg').append(
+                '<div class="alert alert-danger alert-dismissible fade show">' +
+                '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                '<strong>Oops! </strong> Invalid email.' +
+                '</div>'
+            );
+            return;
+        }
+
+        if (!isMobile(data.mobile)) {
+            $('.alert').hide(500);
+            $('#register-msg').append(
+                '<div class="alert alert-danger alert-dismissible fade show">' +
+                '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                '<strong>Oops! </strong> Invalid mobile.' +
+                '</div>'
+            );
+            return;
+        }
+
+        if (!isPass(data.password)) {
+            $('.alert').hide(500);
+            $('#register-msg').append(
+                '<div class="alert alert-danger alert-dismissible fade show">' +
+                '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                '<strong>Oops! </strong> Invalid password(password must be greater than 8 characters)' +
+                '</div>'
+            );
+            return;
+        }
+
+
+        $.ajax({
+            url: "../adminAcesss/register",
+            type: 'POST',
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            success: function (result) {
+                $('.alert').hide(500);
+                $('#register-msg').append(
+                    '<div class="alert alert-success alert-dismissible fade show">' +
+                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                    '<strong>Congratulations! </strong> User has been succesfully created.' +
+                    '</div>'
+                );
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                var errMsg;
+                if (xhr.status === 0) {
+                    errMsg = "Network error.";
+                } else {
+                    errMsg = JSON.parse(xhr.responseText).message;
+                    errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
+
+                    if (errMsg === 'Validation failed.') {
+                        errMsg += '<br/>Incorrect ' + JSON.parse(xhr.responseText).errors.index.join(", ");
+                    }
+                }
+
+                $('.alert').hide(500);
+                $('#register-msg').append(
                     '<div class="alert alert-danger alert-dismissible fade show">' +
                     '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
                     '<strong>Oops! </strong> ' + errMsg +
