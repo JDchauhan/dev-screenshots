@@ -135,6 +135,38 @@ module.exports.current_user = function (req, res) {
     });
 };
 
+module.exports.stats = function (req, res) {
+    AuthoriseUser.getUser(req, res, function (user) {
+        if (user.isAdmin) {
+            User.aggregate([{
+                $match: {}
+            },
+            {
+                $group: {
+                    _id: {
+                        admin: '$isAdmin',
+                        active: '$active',
+                        plan: '$plan'
+                    },
+                    count: {
+                        $sum: 1
+                    }
+                }
+            }
+            ], function (err, count) {
+                if (err) {
+                    console.log(err);
+                    return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+                }
+
+                return responses.successMsg(res, count);
+            });
+        } else {
+            return responses.errorMsg(res, 401, "Unauthorized", "failed to authenticate token.", null);
+        }
+    });
+};
+
 module.exports.current_user_preset = function (req, res) {
     if (!req.id || req.id.length !== 24) {
         return responses.errorMsg(res, 401, "Unauthorized", "failed to authenticate token.", null);

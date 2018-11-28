@@ -29,20 +29,47 @@ $(function () {
                 // name = name.charAt(0).toUpperCase() + name.substr(1);
                 showBody();
             }).fail(function (xhr, status, error) {
-            if (xhr.status === 0) {
-                $('.alert').hide(500);
-                $('#search-msg').append(
-                    '<div class="alert alert-danger alert-dismissible fade show">' +
-                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                    '<strong>Oops! </strong>Network error.</div>'
-                );
-                showBody();
-                return;
-            }
+                if (xhr.status === 0) {
+                    $('.alert').hide(500);
+                    $('#search-msg').append(
+                        '<div class="alert alert-danger alert-dismissible fade show">' +
+                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                        '<strong>Oops! </strong>Network error.</div>'
+                    );
+                    showBody();
+                    return;
+                }
 
-            setCookie("token", "", -1);
-            window.location.href = "/login?action=login_required";
-        });
+                setCookie("token", "", -1);
+                window.location.href = "/login?action=login_required";
+            });
+
+
+        $.get("../adminAcesss/stats", {},
+            function (data, status, xhr) {
+                console.log(data);
+                data.results.forEach(group => {
+                    console.log(group)
+                    $('#stats').append(
+                        '<tr>' +
+                        '<td>' + ((group._id.active !== undefined && group._id.active !== null) ? group._id.active : '') + '</td>' +
+                        '<td>' + ((group._id.admin !== undefined && group._id.admin !== null) ? group._id.admin : '') + '</td>' +
+                        '<td>' + ((group._id.plan !== undefined && group._id.plan !== null) ? group._id.plan : '') + '</td>' +
+                        '<td>' + group.count + '</td>' +
+                        '</tr>'
+                    );
+                });
+            }).fail(function (xhr, status, error) {
+                if (xhr.status === 0) {
+                    $('.alert').hide(500);
+                    $('#search-msg').append(
+                        '<div class="alert alert-danger alert-dismissible fade show">' +
+                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                        '<strong>Oops! </strong>Network error.</div>'
+                    );
+                    return;
+                }
+            });
     }
 
     $(document).on('click', '#create', function () {
@@ -73,28 +100,28 @@ $(function () {
                 $('[data-toggle="tooltip"]').tooltip();
 
             }).fail(function (xhr, status, error) {
-            if (xhr.status === 0) {
-                $('.alert').hide(500);
-                $('#search-msg').append(
-                    '<div class="alert alert-danger alert-dismissible fade show">' +
-                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                    '<strong>Oops! </strong>Network error.</div>'
-                );
-                return;
-            } else {
-                errMsg = JSON.parse(xhr.responseText).message;
-                errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
+                if (xhr.status === 0) {
+                    $('.alert').hide(500);
+                    $('#search-msg').append(
+                        '<div class="alert alert-danger alert-dismissible fade show">' +
+                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                        '<strong>Oops! </strong>Network error.</div>'
+                    );
+                    return;
+                } else {
+                    errMsg = JSON.parse(xhr.responseText).message;
+                    errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
 
-                $('.alert').hide(500);
-                $('#search-msg').append(
-                    '<div class="alert alert-danger alert-dismissible fade show">' +
-                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                    '<strong>Oops! </strong>' + errMsg + '</div>'
-                );
-            }
+                    $('.alert').hide(500);
+                    $('#search-msg').append(
+                        '<div class="alert alert-danger alert-dismissible fade show">' +
+                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                        '<strong>Oops! </strong>' + errMsg + '</div>'
+                    );
+                }
 
-            console.log(xhr);
-        });
+                console.log(xhr);
+            });
     });
 
     $(document).on('click', '#update-btn', function () {
@@ -152,7 +179,7 @@ $(function () {
         data.isAdmin = $('#isadmin2').val();
         data.days = $('#days2').val();
 
-        if(data.days <= 0){
+        if (data.days <= 0) {
             $('.alert').hide(500);
             $('#register-msg').append(
                 '<div class="alert alert-danger alert-dismissible fade show">' +
