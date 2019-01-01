@@ -39,18 +39,18 @@ module.exports.stripePayment = function (req, res) {
     // Get the payment token ID submitted by the form:
     const token = req.body.id; // Using Express
 
-    let planAmount = 499;
+    let planAmount = 999;
     let plan = "lite";
     switch (planID) {
         case 1:
             break;
         case 2:
             plan = "professional";
-            planAmount = 999;
+            planAmount = 1999;
             break;
         case 3:
             plan = "enterprise";
-            planAmount = 1999;
+            planAmount = 2999;
             break;
         default:
             console.log(err);

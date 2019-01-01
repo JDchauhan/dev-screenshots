@@ -42,7 +42,8 @@ $(function () {
     }
 
     var handler = StripeCheckout.configure({
-        // key: 'pk_test_a09RA0CrRjZQFvHO1gcQ1way',
+        // key: 'pk_test_a09RA0CrRjZQFvHO1gcQ1way'//JD,
+        // key: 'pk_test_TkqpOPCDMiRHHaSnKbP7b7ed',
         key: 'pk_live_pGVo3Zc9MjioSgQsHEtEJTSA',
         image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
         locale: 'auto',
@@ -70,15 +71,15 @@ $(function () {
 
     pay = function(planID){
         planID = parseInt(planID);
-        let planAmount = 499;
+        let planAmount = 999;
         switch (planID) {
             case 1:
                 break;
             case 2:
-                planAmount = 999;
+                planAmount = 1999;
                 break;
             case 3:
-                planAmount = 1999;
+                planAmount = 2999;
                 break;
             default:
                 alert("error");

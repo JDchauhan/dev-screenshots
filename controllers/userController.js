@@ -501,11 +501,11 @@ module.exports.createTransaction = function (req, res, email, plan, transaction)
             return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
         } else {
             var expires;
-            if (user.expires < Date.now()) {
-                let time = new Date();
+            if (user.expires > Date.now()) {
+                let time = user.expires;
                 expires = time.setDate(time.getDate() + 30);
             } else {
-                let time = user.expires;
+                let time = new Date();
                 expires = time.setDate(time.getDate() + 30);
             }
             User.findOneAndUpdate({
