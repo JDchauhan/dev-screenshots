@@ -97,7 +97,7 @@ module.exports = function (app) {
         res.render("transactions");
     });
 
-    app.get("/adminAcesss/user/:email", VerifyToken, User.getUserData);
+    app.get("/adminAcesss/user/:info/:value", VerifyToken, User.getUserData);
 
     app.get("/adminAcesss/stats", VerifyToken, User.stats);
 

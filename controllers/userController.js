@@ -138,22 +138,7 @@ module.exports.current_user = function (req, res) {
 module.exports.stats = function (req, res) {
     AuthoriseUser.getUser(req, res, function (user) {
         if (user.isAdmin) {
-            User.aggregate([{
-                $match: {}
-            },
-            {
-                $group: {
-                    _id: {
-                        admin: '$isAdmin',
-                        active: '$active',
-                        plan: '$plan'
-                    },
-                    count: {
-                        $sum: 1
-                    }
-                }
-            }
-            ], function (err, count) {
+            User.find({}, { plan: 1, name: 1, email: 1, expires: 1, mobile: 1 }, function (err, count) {
                 if (err) {
                     console.log(err);
                     return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
@@ -580,11 +565,23 @@ module.exports.getUserData = function (req, res) {
         user.password = undefined;
         user.__v = undefined;
 
+        let data = {
+        };
+
+        if (req.params.info == "email") {
+            data[req.params.info] = req.params.value;
+        } else if (req.params.info == "mobile") {
+            data[req.params.info] = req.params.value;
+        } else {
+            return responses.errorMsg(res, 422, "Unprocessable Entity", "invalid data.", null);
+        }
+
         if (user.isAdmin) {
-            User.findOne({
-                email: req.params.email
-            }, {
+            User.findOne(
+                data,
+                {
                     email: 1,
+                    mobile: 1,
                     name: 1,
                     expires: 1,
                     plan: 1,
@@ -607,6 +604,7 @@ module.exports.getUserData = function (req, res) {
                     return responses.successMsg(res, {
                         user: {
                             email: user.email,
+                            mobile: user.mobile,
                             name: user.name,
                             expires: temp,
                             expiresOn: user.expires,

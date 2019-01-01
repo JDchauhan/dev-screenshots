@@ -1,3 +1,4 @@
+var display;
 $(function () {
     $('#admin').hide();
 
@@ -48,14 +49,14 @@ $(function () {
         $.get("../adminAcesss/stats", {},
             function (data, status, xhr) {
                 console.log(data);
-                data.results.forEach(group => {
-                    console.log(group)
+                data.results.forEach(user => {
                     $('#stats').append(
                         '<tr>' +
-                        '<td>' + ((group._id.active !== undefined && group._id.active !== null) ? group._id.active : '') + '</td>' +
-                        '<td>' + ((group._id.admin !== undefined && group._id.admin !== null) ? group._id.admin : '') + '</td>' +
-                        '<td>' + ((group._id.plan !== undefined && group._id.plan !== null) ? group._id.plan : '') + '</td>' +
-                        '<td>' + group.count + '</td>' +
+                        '<td>' + user.plan + '</td>' +
+                        '<td class="update" onclick=display("' + user.email + '")>' + user.email + '</td>' +
+                        '<td class="update" onclick=display("' + user.email + '")>' + user.mobile + '</td>' +
+                        '<td>' + user.name + '</td>' +
+                        '<td>' + (String)(new Date(user.expires)) + '</td>' +
                         '</tr>'
                     );
                 });
@@ -84,7 +85,50 @@ $(function () {
 
     $(document).on('click', '#search-btn', function () {
         let email = $('#email').val();
-        $.get("../adminAcesss/user/" + email, {},
+        $.get("../adminAcesss/user/email/" + email, {},
+            function (data, status, xhr) {
+                console.log(data);
+
+                $('.create-users').css('display', 'none');
+                $('.update-users').css('display', 'block');
+
+                $('#email1').val(data.results.user.email);
+                $('#mob1').val(data.results.user.mobile);
+                $('#name').val(data.results.user.name);
+                $('#plan').val(data.results.user.plan);
+                $('#isadmin').val("" + data.results.user.isAdmin);
+                $('#days').val(data.results.user.expires);
+                $('#timestamp').attr('title', "" + new Date(data.results.user.expiresOn));
+                $('[data-toggle="tooltip"]').tooltip();
+
+            }).fail(function (xhr, status, error) {
+                if (xhr.status === 0) {
+                    $('.alert').hide(500);
+                    $('#search-msg').append(
+                        '<div class="alert alert-danger alert-dismissible fade show">' +
+                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                        '<strong>Oops! </strong>Network error.</div>'
+                    );
+                    return;
+                } else {
+                    errMsg = JSON.parse(xhr.responseText).message;
+                    errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
+
+                    $('.alert').hide(500);
+                    $('#search-msg').append(
+                        '<div class="alert alert-danger alert-dismissible fade show">' +
+                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                        '<strong>Oops! </strong>' + errMsg + '</div>'
+                    );
+                }
+
+                console.log(xhr);
+            });
+    });
+
+    $(document).on('click', '#search-btn-mob', function () {
+        let mobile = $('#mob').val();
+        $.get("../adminAcesss/user/mobile/" + mobile, {},
             function (data, status, xhr) {
                 console.log(data);
 
@@ -272,5 +316,11 @@ $(function () {
             }
         });
     });
+
+    display = function(email){
+        $('#email').val(email);
+        $('#search-btn').click();
+        window.scrollTo(0, 0);
+    }
 
 });
