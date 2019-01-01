@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.DB_CONNECTION_SCREENSHOT, {
+mongoose.connect("mongodb://localhost:27017/screenshot", {
     useNewUrlParser: true
 });
 

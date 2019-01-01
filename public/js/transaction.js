@@ -87,8 +87,8 @@ $(function () {
                     '<tr>' +
                     '<td>' + i + '</td>' +
                     '<td class="break">' + data.results.previousSubscriptions[i].stripeSubsId + '</td>' +
-                    '<td class=""><b>' + subsPlan + ' $ ' + ((subsPlan === "lite") ? 4.99 :
-                        (subsPlan === "professional") ? 9.99 : 19.99) + '</b></td>' +
+                    '<td class=""><b>' + subsPlan + ' $ ' + ((subsPlan === "lite") ? 9.99 :
+                        (subsPlan === "professional") ? 19.99 : 29.99) + '</b></td>' +
                     '<td>' + (String)(new Date(data.results.previousSubscriptions[i].start)).split(' GMT')[0] + '</td>' +
                     '<td>' + (String)(new Date(data.results.previousSubscriptions[i].end)).split(' GMT')[0] + '</td>' +
                     '</tr>'

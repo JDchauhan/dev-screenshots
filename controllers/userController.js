@@ -803,7 +803,7 @@ module.exports.stripeSubscription = function (req, res, userId, custId, stripeSu
         } else if (!result) {
             return responses.errorMsg(res, 404, "Not Found", "user not found.", null);
         }
-        let amount = (plan = 'lite') ? 4.99 : (plan = 'professional') ? 9.99 : 19.99;
+        let amount = (plan = 'lite') ? 9.99 : (plan = 'professional') ? 19.99 : 29.99;
         invoice.sendInvoice(email, "subscription", stripeSubsId, plan, amount);
 
         return responses.successMsg(res, null);
