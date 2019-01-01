@@ -25,6 +25,16 @@ module.exports = function (app) {
         });
     });
 
+    app.get('/invoice/:email_1/:email_2/:type/:id/:plan/:amount', function(req, res){
+        res.render('invoice', {
+            email: req.params.email_1 + '@' + req.params.email_2,
+            subscription: req.params.type === 'subscription' ? true : false,
+            id: req.params.id,
+            plan: req.params.plan,
+            amount: req.params.amount
+        });
+    });
+
     app.post("/", screenshot.screenshotTaker);
 
     app.get("/login", function (req, res) {
@@ -87,9 +97,13 @@ module.exports = function (app) {
         res.render("transactions");
     });
 
-    app.get("/adminAcesss/user/:email", VerifyToken, User.getUserData);
+    app.get("/adminAcesss/user/:info/:value", VerifyToken, User.getUserData);
+
+    app.get("/adminAcesss/stats", VerifyToken, User.stats);
 
     app.put("/adminAcesss/user", VerifyToken, User.updateUser);
+
+    app.post("/adminAcesss/register", VerifyToken, User.registerUserByAdmin);
 
     app.get("/user/preset", VerifyToken, User.current_user_preset);
 

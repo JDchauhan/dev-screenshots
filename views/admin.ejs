@@ -16,7 +16,7 @@
 	<br />
 	<br />
 	<div class="body-container container" style="display:none">
-		<div class="row">
+		<div class="row pb-5">
 			<div class="col-md-6">
 				<div id="search-msg"></div>
 				<form>
@@ -32,12 +32,22 @@
 						</div>
 					</div>
 				</form>
-				<br />
-				<br />
-				<br />
+				<form class="pt-5 pb-5">
+					<div class="input-group mb-3 input-group-lg container">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Mobile</span>
+						</div>
+						<input type="text" class="form-control" name="mob" id="mob" placeholder="9999999999">
+					</div>
+					<div class="wrapper text-center">
+						<div class="btn-group btn-group-lg">
+							<button type="button" id="search-btn-mob" class="btn wobble-vertical">Search</button>
+						</div>
+					</div>
+				</form>
 			</div>
 
-			<div class="col-md-6">
+			<div class="col-md-6 update-users pb-5" style="display:none">
 				<div id="list-msg"></div>
 				<form>
 					<div class="input-group mb-3 input-group-lg container">
@@ -45,6 +55,12 @@
 							<span class="input-group-text">Email</span>
 						</div>
 						<input type="text" class="form-control" name="email1" id="email1" placeholder="example@gmail.com">
+					</div>
+					<div class="input-group mb-3 input-group-lg container">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Mobile</span>
+						</div>
+						<input type="text" class="form-control" name="mob1" id="mob1" placeholder="9999999999">
 					</div>
 					<div class="input-group mb-3 input-group-lg container">
 						<div class="input-group-prepend">
@@ -83,11 +99,98 @@
 					</div>
 					<div class="wrapper text-center">
 						<div class="btn-group btn-group-lg">
+							<button type="button" id="create" class="btn wobble-vertical">Create</button>
 							<button type="button" id="update-btn" class="btn wobble-vertical">Update</button>
 						</div>
 					</div>
 				</form>
 
+			</div>
+
+			<div class="col-md-6 create-users pb-5">
+				<div id="register-msg"></div>
+				<form>
+					<div class="input-group mb-3 input-group-lg container">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Email</span>
+						</div>
+						<input type="text" class="form-control" name="email" id="email2" placeholder="example@gmail.com">
+					</div>
+					<div class="input-group mb-3 input-group-lg container">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Name</span>
+						</div>
+						<input type="text" class="form-control" name="name" id="name2" placeholder="name">
+					</div>
+					<div class="input-group mb-3 input-group-lg container">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Mobile</span>
+						</div>
+						<input type="text" class="form-control" name="mobile" id="mobile2" placeholder="+1 800 274 0561">
+					</div>
+					<div class="input-group mb-3 input-group-lg container">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Password</span>
+						</div>
+						<input type="password" class="form-control" name="pass" id="pass2" placeholder="password">
+					</div>
+					<div class="input-group mb-3 input-group-lg container">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Plan</span>
+						</div>
+						<select class="form-control" id="plan2">
+							<option value="lite">Lite</option>
+							<option value="professional">Professional</option>
+							<option value="enterprise">Enterprise</option>
+						</select>
+					</div>
+					<div class="input-group mb-3 input-group-lg container">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Plan Ends (Days)</span>
+						</div>
+						<input type="number" class="form-control" name="days" id="days2" placeholder="30">
+						<div class="input-group-append">
+							<span class="input-group-text"><a href="#" id="timestamp" data-toggle="tooltip" title="">Date?</a></span>
+						</div>
+						
+					</div>
+					<div class="input-group mb-3 input-group-lg container">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Make Admin</span>
+						</div>
+						<select class="form-control" id="isadmin2">
+							<option value="true">Yes</option>
+							<option value="false">No</option>
+						</select>
+					</div>
+					<div class="wrapper text-center">
+						<div class="btn-group btn-group-lg">
+							<button type="button" id="create-btn" class="btn wobble-vertical">Create</button>
+							<!-- <button type="button" id="update" class="btn wobble-vertical">Update</button> -->
+						</div>
+					</div>
+				</form>
+
+			</div>
+
+			<div class="col-md-12 mb-5">
+				<div>
+					<div class="table-responsive table-dark mt-4">
+                        <table class="table transactions">
+                            <thead>
+                                <tr>
+                                    <th>Plan</th>
+                                    <th>Email</th>
+                                    <th>Mobile</th>
+                                    <th>Name</th>
+                                    <th>End Date</th>
+                                </tr>
+                            </thead>
+                            <tbody id="stats">
+                            </tbody>
+                        </table>
+                    </div>
+				</div>
 			</div>
 		</div>
 

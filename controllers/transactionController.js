@@ -9,7 +9,7 @@ var userController = require('../controllers/userController');
 var AuthoriseUser = require('../helper/authoriseUser');
 
 var responses = require('../helper/responses');
-var Mail = require('../helper/mail');
+var invoice = require('../helper/invoice');
 
 var jsSHA = require("jssha");
 module.exports.payUMoneyPayment = function (req, res) {
@@ -39,18 +39,18 @@ module.exports.stripePayment = function (req, res) {
     // Get the payment token ID submitted by the form:
     const token = req.body.id; // Using Express
 
-    let planAmount = 499;
+    let planAmount = 999;
     let plan = "lite";
     switch (planID) {
         case 1:
             break;
         case 2:
             plan = "professional";
-            planAmount = 999;
+            planAmount = 1999;
             break;
         case 3:
             plan = "enterprise";
-            planAmount = 1999;
+            planAmount = 2999;
             break;
         default:
             console.log(err);
@@ -84,8 +84,7 @@ module.exports.stripePayment = function (req, res) {
 
             userController.createTransaction(req, res, req.body.email, plan, response._id);
 
-            Mail.invoice(req.body.email, planAmount, plan);
-    
+            invoice.sendInvoice(req.body.email, "plan", charge.id, plan, planAmount);
         });
     });
 };

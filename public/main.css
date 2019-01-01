@@ -96,6 +96,10 @@ ul.dropdown-menu.show .white {
     height: 30px;
 }
 
+.update {
+    cursor: pointer;
+}
+
 .resend_link {
     color: #007bff !important;
 }

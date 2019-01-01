@@ -354,6 +354,32 @@ function checkDeviceLimitations() {
     }
 }
 
+function selectAll() {
+    if(plan === 'lite'){
+        $('#selectAll').prop('checked', false);
+        return limitError(5);
+    }
+    if (isGuest){
+        $('#selectAll').prop('checked', false);
+        return limitError(1);
+    }
+    let val = false;
+    if(document.getElementById('selectAll').checked){
+        val = true;
+    }
+    let checkboxes = $('input[type=checkbox]');
+    for(i = 0; i < checkboxes.length; i++){
+        if($(checkboxes[i]).attr('id') !== 'selectAll'){
+            $(checkboxes[i]).trigger('click').prop('checked', val);
+        }
+    }
+    
+    // Object.values($('input[type=checkbox]')).map(x => 
+    //     (typeof(x) === 'object' && $(x) !== ) ?  $(x).trigger('click').prop('checked', true) : ""
+    // );
+
+}
+
 function checkUrlLimitations() {
     if (isGuest) {
         if (list.length > 0) {

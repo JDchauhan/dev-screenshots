@@ -10,6 +10,7 @@ var bcrypt = require('bcryptjs');
 var config = require('../config');
 
 Mail = require('../helper/mail');
+var invoice = require('../helper/invoice');
 var responses = require('../helper/responses');
 var AuthoriseUser = require('../helper/authoriseUser');
 
@@ -48,13 +49,13 @@ module.exports.register = function (req, res) {
             var token = jwt.sign({
                 id: user._id
             }, config.secret, {
-                expiresIn: 86400 // expires in 24 hours
-            });
+                    expiresIn: 86400 // expires in 24 hours
+                });
 
             Verification.create({
-                    userID: user._id,
-                    key: token
-                },
+                userID: user._id,
+                key: token
+            },
                 function (err, verification) {
                     if (err) {
                         return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
@@ -111,8 +112,8 @@ module.exports.login = function (req, res) {
         var token = jwt.sign({
             id: user._id
         }, config.secret, {
-            expiresIn: 86400 // expires in 24 hours
-        });
+                expiresIn: 86400 // expires in 24 hours
+            });
 
         results = {
             auth: true,
@@ -134,15 +135,32 @@ module.exports.current_user = function (req, res) {
     });
 };
 
+module.exports.stats = function (req, res) {
+    AuthoriseUser.getUser(req, res, function (user) {
+        if (user.isAdmin) {
+            User.find({}, { plan: 1, name: 1, email: 1, expires: 1, mobile: 1 }, function (err, count) {
+                if (err) {
+                    console.log(err);
+                    return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+                }
+
+                return responses.successMsg(res, count);
+            });
+        } else {
+            return responses.errorMsg(res, 401, "Unauthorized", "failed to authenticate token.", null);
+        }
+    });
+};
+
 module.exports.current_user_preset = function (req, res) {
     if (!req.id || req.id.length !== 24) {
         return responses.errorMsg(res, 401, "Unauthorized", "failed to authenticate token.", null);
     }
 
     User.findById(req.id, {
-            password: 0,
-            __v: 0
-        })
+        password: 0,
+        __v: 0
+    })
         .populate("preset", "-__v")
         .exec(
             function (err, user) {
@@ -265,8 +283,8 @@ module.exports.verify = function (req, res) {
                         auth: true,
                         type: "pass"
                     }, config.secret, {
-                        expiresIn: 86400 // expires in 24 hours
-                    });
+                            expiresIn: 86400 // expires in 24 hours
+                        });
                     results = {
                         auth: true,
                         token: token
@@ -282,25 +300,25 @@ module.exports.verify = function (req, res) {
                 User.findOneAndUpdate({
                     _id: req.id
                 }, {
-                    isVerifiedEmail: true,
-                    expires: expires
-                }, function (err, user) {
-                    if (err) {
-                        // return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
-                        res.render('login', {
-                            message: 'err',
-                            errText: 'Some error occured'
-                        });
-                    }
+                        isVerifiedEmail: true,
+                        expires: expires
+                    }, function (err, user) {
+                        if (err) {
+                            // return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+                            res.render('login', {
+                                message: 'err',
+                                errText: 'Some error occured'
+                            });
+                        }
 
-                    if (!user) {
-                        return responses.errorMsg(res, 404, "Not Found", "user not found.", null);
-                    }
-                    user.email_verification = true;
-                    return res.render("login", {
-                        message: "verified"
+                        if (!user) {
+                            return responses.errorMsg(res, 404, "Not Found", "user not found.", null);
+                        }
+                        user.email_verification = true;
+                        return res.render("login", {
+                            message: "verified"
+                        });
                     });
-                });
             }
         }
     });
@@ -309,8 +327,8 @@ module.exports.verify = function (req, res) {
 function updatePassword(id, pass, callback) {
     var hashedPassword = bcrypt.hashSync(pass, 8);
     User.findOneAndUpdate({
-            _id: id,
-        }, {
+        _id: id,
+    }, {
             password: hashedPassword
         },
         function (err, user) {
@@ -367,12 +385,12 @@ module.exports.forgetPassword = function (req, res) {
         var token = jwt.sign({
             id: user._id
         }, config.secret, {
-            expiresIn: 86400 // expires in 24 hours
-        });
+                expiresIn: 86400 // expires in 24 hours
+            });
 
         Verification.findOneAndUpdate({
-                userID: user._id
-            }, {
+            userID: user._id
+        }, {
                 key: token,
                 type: "pass"
             },
@@ -382,10 +400,10 @@ module.exports.forgetPassword = function (req, res) {
                 } else {
                     if (!verification) {
                         Verification.create({
-                                key: token,
-                                userID: user._id,
-                                type: "pass"
-                            },
+                            key: token,
+                            userID: user._id,
+                            type: "pass"
+                        },
                             function (err, verification) {
                                 if (err) {
                                     return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
@@ -434,12 +452,12 @@ module.exports.sendVerificationLink = function (req, res) {
             var token = jwt.sign({
                 id: user._id
             }, config.secret, {
-                expiresIn: 86400 // expires in 24 hours
-            });
+                    expiresIn: 86400 // expires in 24 hours
+                });
 
             Verification.findOneAndUpdate({
-                    email: req.body.email
-                }, {
+                email: req.body.email
+            }, {
                     key: token
                 },
                 function (err, verification) {
@@ -468,16 +486,16 @@ module.exports.createTransaction = function (req, res, email, plan, transaction)
             return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
         } else {
             var expires;
-            if (user.expires < Date.now()) {
-                let time = new Date();
+            if (user.expires > Date.now()) {
+                let time = user.expires;
                 expires = time.setDate(time.getDate() + 30);
             } else {
-                let time = user.expires;
+                let time = new Date();
                 expires = time.setDate(time.getDate() + 30);
             }
             User.findOneAndUpdate({
-                    email: email,
-                }, {
+                email: email,
+            }, {
                     plan: plan,
                     expires: expires,
                     $push: {
@@ -547,41 +565,54 @@ module.exports.getUserData = function (req, res) {
         user.password = undefined;
         user.__v = undefined;
 
+        let data = {
+        };
+
+        if (req.params.info == "email") {
+            data[req.params.info] = req.params.value;
+        } else if (req.params.info == "mobile") {
+            data[req.params.info] = req.params.value;
+        } else {
+            return responses.errorMsg(res, 422, "Unprocessable Entity", "invalid data.", null);
+        }
+
         if (user.isAdmin) {
-            User.findOne({
-                email: req.params.email
-            }, {
-                email: 1,
-                name: 1,
-                expires: 1,
-                plan: 1,
-                isAdmin: 1
-            }, function (err, user) {
-                if (err) {
-                    console.log(err);
-                    return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
-                }
-
-                if (!user) {
-                    return responses.errorMsg(res, 404, "Not Found", "user not found.", null);
-                }
-
-                let temp = user.expires;
-                temp = user.expires - (new Date());
-                temp = parseInt(temp / (3600000 * 24));
-                // let time = new Date();
-                // let expires = time.setDate(time.getDate() + 15);
-                return responses.successMsg(res, {
-                    user: {
-                        email: user.email,
-                        name: user.name,
-                        expires: temp,
-                        expiresOn: user.expires,
-                        plan: user.plan,
-                        isAdmin: user.isAdmin
+            User.findOne(
+                data,
+                {
+                    email: 1,
+                    mobile: 1,
+                    name: 1,
+                    expires: 1,
+                    plan: 1,
+                    isAdmin: 1
+                }, function (err, user) {
+                    if (err) {
+                        console.log(err);
+                        return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
                     }
+
+                    if (!user) {
+                        return responses.errorMsg(res, 404, "Not Found", "user not found.", null);
+                    }
+
+                    let temp = user.expires;
+                    temp = user.expires - (new Date());
+                    temp = parseInt(temp / (3600000 * 24));
+                    // let time = new Date();
+                    // let expires = time.setDate(time.getDate() + 15);
+                    return responses.successMsg(res, {
+                        user: {
+                            email: user.email,
+                            mobile: user.mobile,
+                            name: user.name,
+                            expires: temp,
+                            expiresOn: user.expires,
+                            plan: user.plan,
+                            isAdmin: user.isAdmin
+                        }
+                    });
                 });
-            });
 
         } else {
             return responses.errorMsg(res, 401, "Unauthorized", "failed to authenticate token.", null);
@@ -622,8 +653,8 @@ module.exports.updateUser = function (req, res) {
             }
 
             User.findOneAndUpdate({
-                    email: req.body.email
-                },
+                email: req.body.email
+            },
                 data,
                 function (err, user) {
                     if (err) {
@@ -657,39 +688,85 @@ module.exports.updateUser = function (req, res) {
     });
 };
 
+module.exports.registerUserByAdmin = function (req, res) {
+    AuthoriseUser.getUser(req, res, function (user) {
+        user.password = undefined;
+        user.__v = undefined;
+
+        if (user.isAdmin) {
+
+            var hashedPassword = bcrypt.hashSync(req.body.password, 8);
+
+            req.body.password = hashedPassword;
+            req.body.isVerifiedEmail = true;
+
+            User.create(req.body,
+                function (err, user) {
+                    if (err) {
+
+                        if ((err.name && err.name == "UserExistsError") || (err.code && err.code == 11000)) {
+                            return responses.errorMsg(res, 409, "Conflict", "user already exists.", null);
+
+                        } else if (err.name && err.name == "ValidationError") {
+                            errors = {
+                                "index": Object.keys(err.errors)
+                            };
+                            return responses.errorMsg(res, 400, "Bad Request", "validation failed.", errors);
+
+                        } else if (err.name && err.name == "CastError") {
+                            errors = {
+                                "index": err.path
+                            };
+                            return responses.errorMsg(res, 400, "Bad Request", "cast error.", errors);
+
+                        } else {
+                            console.log(err);
+                            return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+                        }
+                    }
+
+                    return responses.successMsg(res, null);
+                });
+
+        } else {
+            return responses.errorMsg(res, 401, "Unauthorized", "failed to authenticate token.", null);
+        }
+    });
+};
+
 module.exports.updatePersonalInfo = function (req, res) {
     AuthoriseUser.getUser(req, res, function (user) {
         User.findOneAndUpdate({
             _id: user._id
         }, {
-            name: req.body.name,
-            mobile: req.body.mobile
-        }, function (err, user) {
-            if (err) {
-                if (err.name && err.name == "ValidationError") {
-                    errors = {
-                        "index": Object.keys(err.errors)
-                    };
-                    return responses.errorMsg(res, 400, "Bad Request", "validation failed.", errors);
+                name: req.body.name,
+                mobile: req.body.mobile
+            }, function (err, user) {
+                if (err) {
+                    if (err.name && err.name == "ValidationError") {
+                        errors = {
+                            "index": Object.keys(err.errors)
+                        };
+                        return responses.errorMsg(res, 400, "Bad Request", "validation failed.", errors);
 
-                } else if (err.name && err.name == "CastError") {
-                    errors = {
-                        "index": err.path
-                    };
-                    return responses.errorMsg(res, 400, "Bad Request", "cast error.", errors);
+                    } else if (err.name && err.name == "CastError") {
+                        errors = {
+                            "index": err.path
+                        };
+                        return responses.errorMsg(res, 400, "Bad Request", "cast error.", errors);
 
-                } else {
-                    console.log(err);
-                    return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+                    } else {
+                        console.log(err);
+                        return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+                    }
                 }
-            }
 
-            if (!user) {
-                return responses.errorMsg(res, 404, "Not Found", "user not found.", null);
-            }
+                if (!user) {
+                    return responses.errorMsg(res, 404, "Not Found", "user not found.", null);
+                }
 
-            return responses.successMsg(res, null);
-        });
+                return responses.successMsg(res, null);
+            });
     });
 };
 
@@ -724,8 +801,9 @@ module.exports.stripeSubscription = function (req, res, userId, custId, stripeSu
         } else if (!result) {
             return responses.errorMsg(res, 404, "Not Found", "user not found.", null);
         }
+        let amount = (plan = 'lite') ? 9.99 : (plan = 'professional') ? 19.99 : 29.99;
+        invoice.sendInvoice(email, "subscription", stripeSubsId, plan, amount);
 
-        Mail.invoiceSubscribe(email, plan);
         return responses.successMsg(res, null);
     });
 };
@@ -757,21 +835,21 @@ module.exports.getAllTransactions = function (req, res) {
         User.find({
             email: user.email
         }, {
-            _id: 0,
-            subscription: 1,
-            plan: 1,
-            previousSubscriptions: 1
-        }).populate('transactions', '-_id -email -__v').exec(function (err, transactions) {
-            if (err) {
-                console.log(err);
-                return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
-            }
+                _id: 0,
+                subscription: 1,
+                plan: 1,
+                previousSubscriptions: 1
+            }).populate('transactions', '-_id -email -__v').exec(function (err, transactions) {
+                if (err) {
+                    console.log(err);
+                    return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+                }
 
-            if (transactions.length < 1) {
-                return responses.errorMsg(res, 404, "Not Found", "transactions not found.", null);
-            }
+                if (transactions.length < 1) {
+                    return responses.errorMsg(res, 404, "Not Found", "transactions not found.", null);
+                }
 
-            return responses.successMsg(res, transactions[0]);
-        });
+                return responses.successMsg(res, transactions[0]);
+            });
     });
 };
