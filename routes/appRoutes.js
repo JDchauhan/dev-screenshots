@@ -65,6 +65,8 @@ module.exports = function (app) {
 
     app.post("/login", User.login);
 
+    app.get("/logout", VerifyToken, User.logout);
+
     app.post("/register", User.register);
 
     app.post("/reverify", User.sendVerificationLink);

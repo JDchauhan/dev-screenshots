@@ -1,4 +1,4 @@
-var showBody;
+var showBody, logout;
 
 function setCookie(cname, cvalue, exdays) {
     var d = new Date();
@@ -21,10 +21,6 @@ function getCookie(cname) {
         }
     }
     return "";
-}
-
-function logout() {
-    setCookie("token", "", -1);
 }
 
 function isEmail(email) {
@@ -58,6 +54,39 @@ function isPass(pass) {
 
 $(function () {
 
+    logout = function() {
+        $.ajaxSetup({
+            headers: {
+                'authorization': getCookie("token")
+            }
+        });
+        $.get("../logout", {},
+            function (data, status, xhr) {
+    
+                setCookie("token", "", -1);
+    
+            }).fail(function (xhr, status, error) {
+                if (xhr.status === 0) {
+                    $('.alert').hide(500);
+                    $('#err').append(
+                        '<div class="alert alert-danger alert-dismissible fade show">' +
+                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                        '<strong>Oops! </strong>Network error.</div>'
+                    );
+                    showBody();
+                    return;
+                }
+                $('.alert').hide(500);
+                $('#err').append(
+                    '<div class="alert alert-danger alert-dismissible fade show">' +
+                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                    '<strong>Oops! </strong>Some error occured.</div>'
+                );
+                showBody();
+                return;
+            });
+    };
+    
     showBody = function () {
         setTimeout(function () {
             $('#loader').hide();

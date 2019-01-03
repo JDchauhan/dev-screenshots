@@ -109,6 +109,18 @@ module.exports.login = function (req, res) {
             return responses.errorMsg(res, 401, "Unauthorized", "Verify your account to login.", errors);
         }
 
+        if (new Date(user.last_login_timestamp).getTime() > Date.now() - 24 * 60 * 60 * 1000) {
+            return responses.errorMsg(res, 412, "Precondition Failed", "You are already logged in on another device.", null);
+        }
+
+        User.findByIdAndUpdate(user._id, {
+            last_login_timestamp: Date.now()
+        }, function (err, res) {
+            if (err) {
+                console.log(err);
+            }
+        });
+
         var token = jwt.sign({
             id: user._id
         }, config.secret, {
@@ -123,6 +135,26 @@ module.exports.login = function (req, res) {
         return responses.successMsg(res, results);
     });
 };
+
+module.exports.logout = function (req, res) {
+    AuthoriseUser.getUser(req, res, function (user) {
+        user.password = undefined;
+        user.__v = undefined;
+        results = {
+            user: user
+        };
+        User.findByIdAndUpdate(user._id, {
+            last_login_timestamp: undefined
+        }, function (err, result) {
+            if (err) {
+                console.log(err);
+                return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+            }
+            return responses.successMsg(res, null);
+        });
+    });
+};
+
 
 module.exports.current_user = function (req, res) {
     AuthoriseUser.getUser(req, res, function (user) {
