@@ -618,7 +618,8 @@ module.exports.getUserData = function (req, res) {
                     expires: 1,
                     plan: 1,
                     isAdmin: 1,
-                    last_login_timestamp: 1
+                    last_login_timestamp: 1,
+                    revoke_count: 1
                 }, function (err, user) {
                     if (err) {
                         console.log(err);
@@ -643,7 +644,8 @@ module.exports.getUserData = function (req, res) {
                             expiresOn: user.expires,
                             plan: user.plan,
                             isAdmin: user.isAdmin,
-                            last_login_timestamp: new Date(user.last_login_timestamp).getTime()
+                            last_login_timestamp: new Date(user.last_login_timestamp).getTime(),
+                            revoke_count: user.revoke_count
                         }
                     });
                 });
@@ -732,7 +734,10 @@ module.exports.revoke = function (req, res) {
                 email: req.params.email
             },
                 {
-                    last_login_timestamp: undefined
+                    last_login_timestamp: undefined,
+                    $inc: {
+                        revoke_count: 1
+                    }
                 },
                 function (err, user) {
                     if (err) {

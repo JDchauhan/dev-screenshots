@@ -136,6 +136,7 @@ $(function () {
                 $('#isadmin').val("" + data.results.user.isAdmin);
                 $('#days').val(data.results.user.expires);
                 $('#revoke').val((last_login === 0) ? "" : new Date(last_login).toLocaleString());
+                $('#revoke_count').text("revoke(" + data.results.user.revoke_count + ")?")
                 $('#timestamp').attr('title', "" + new Date(data.results.user.expiresOn));
                 $('[data-toggle="tooltip"]').tooltip();
 

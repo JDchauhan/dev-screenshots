@@ -78,6 +78,10 @@ var UserSchema = new Schema({
     type: Boolean,
     default: true
   },
+  revoke_count: {
+    type: Number,
+    default: 0
+  },
   registration_timestamp: {
     type: Date,
     default: Date.now
