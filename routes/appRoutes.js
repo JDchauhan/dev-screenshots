@@ -103,6 +103,8 @@ module.exports = function (app) {
 
     app.get("/adminAcesss/stats", VerifyToken, User.stats);
 
+    app.get("/adminAcesss/revoke/:email", VerifyToken, User.revoke);
+
     app.put("/adminAcesss/user", VerifyToken, User.updateUser);
 
     app.post("/adminAcesss/register", VerifyToken, User.registerUserByAdmin);

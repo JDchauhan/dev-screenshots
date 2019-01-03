@@ -1,4 +1,5 @@
-var display;
+var display, revoke;
+
 $(function () {
     $('#admin').hide();
 
@@ -73,6 +74,40 @@ $(function () {
             });
     }
 
+    revoke = function () {
+        let email = $("#email1").val();
+        if ($("#revoke").val() && $("#revoke").val() !== "" && email && email !== "") {
+            $.get("../adminAcesss/revoke/" + email, {},
+                function (data, status, xhr) {
+                    console.log(data);
+                    $("#revoke").val("");
+                    alert("revoked successfully");
+                }).fail(function (xhr, status, error) {
+                    if (xhr.status === 0) {
+                        $('.alert').hide(500);
+                        $('#search-msg').append(
+                            '<div class="alert alert-danger alert-dismissible fade show">' +
+                            '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                            '<strong>Oops! </strong>Network error.</div>'
+                        );
+                        return;
+                    } else {
+                        errMsg = JSON.parse(xhr.responseText).message;
+                        errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
+
+                        $('.alert').hide(500);
+                        $('#search-msg').append(
+                            '<div class="alert alert-danger alert-dismissible fade show">' +
+                            '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                            '<strong>Oops! </strong>' + errMsg + '</div>'
+                        );
+                    }
+
+                    console.log(xhr);
+                });
+        }
+    };
+
     $(document).on('click', '#create', function () {
         $('.update-users').css('display', 'none');
         $('.create-users').css('display', 'block');
@@ -89,6 +124,8 @@ $(function () {
             function (data, status, xhr) {
                 console.log(data);
 
+                let last_login = data.results.user.last_login_timestamp;
+
                 $('.create-users').css('display', 'none');
                 $('.update-users').css('display', 'block');
 
@@ -98,6 +135,7 @@ $(function () {
                 $('#plan').val(data.results.user.plan);
                 $('#isadmin').val("" + data.results.user.isAdmin);
                 $('#days').val(data.results.user.expires);
+                $('#revoke').val((last_login === 0) ? "" : new Date(last_login).toLocaleString());
                 $('#timestamp').attr('title', "" + new Date(data.results.user.expiresOn));
                 $('[data-toggle="tooltip"]').tooltip();
 
@@ -317,7 +355,7 @@ $(function () {
         });
     });
 
-    display = function(email){
+    display = function (email) {
         $('#email').val(email);
         $('#search-btn').click();
         window.scrollTo(0, 0);

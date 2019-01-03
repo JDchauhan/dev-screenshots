@@ -617,7 +617,8 @@ module.exports.getUserData = function (req, res) {
                     name: 1,
                     expires: 1,
                     plan: 1,
-                    isAdmin: 1
+                    isAdmin: 1,
+                    last_login_timestamp: 1
                 }, function (err, user) {
                     if (err) {
                         console.log(err);
@@ -641,7 +642,8 @@ module.exports.getUserData = function (req, res) {
                             expires: temp,
                             expiresOn: user.expires,
                             plan: user.plan,
-                            isAdmin: user.isAdmin
+                            isAdmin: user.isAdmin,
+                            last_login_timestamp: new Date(user.last_login_timestamp).getTime()
                         }
                     });
                 });
@@ -717,6 +719,48 @@ module.exports.updateUser = function (req, res) {
             return responses.errorMsg(res, 401, "Unauthorized", "failed to authenticate token.", null);
         }
 
+    });
+};
+
+module.exports.revoke = function (req, res) {
+    AuthoriseUser.getUser(req, res, function (user) {
+        user.password = undefined;
+        user.__v = undefined;
+
+        if (user.isAdmin) {
+            User.findOneAndUpdate({
+                email: req.params.email
+            },
+                {
+                    last_login_timestamp: undefined
+                },
+                function (err, user) {
+                    if (err) {
+                        if (err.name && err.name == "ValidationError") {
+                            errors = {
+                                "index": Object.keys(err.errors)
+                            };
+                            return responses.errorMsg(res, 400, "Bad Request", "validation failed.", errors);
+
+                        } else if (err.name && err.name == "CastError") {
+                            errors = {
+                                "index": err.path
+                            };
+                            return responses.errorMsg(res, 400, "Bad Request", "cast error.", errors);
+
+                        } else {
+                            console.log(err);
+                            return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+                        }
+                    }
+                    if (!user) {
+                        return responses.errorMsg(res, 404, "Not Found", "user not found", null);
+                    }
+                    return responses.successMsg(res, null);
+                });
+        } else {
+            return responses.errorMsg(res, 401, "Unauthorized", "failed to authenticate token.", null);
+        }
     });
 };
 
