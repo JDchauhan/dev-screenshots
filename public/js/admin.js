@@ -74,38 +74,35 @@ $(function () {
             });
     }
 
-    revoke = function () {
-        let email = $("#email1").val();
-        if ($("#revoke").val() && $("#revoke").val() !== "" && email && email !== "") {
-            $.get("../adminAcesss/revoke/" + email, {},
-                function (data, status, xhr) {
-                    console.log(data);
-                    $("#revoke").val("");
-                    alert("revoked successfully");
-                }).fail(function (xhr, status, error) {
-                    if (xhr.status === 0) {
-                        $('.alert').hide(500);
-                        $('#search-msg').append(
-                            '<div class="alert alert-danger alert-dismissible fade show">' +
-                            '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                            '<strong>Oops! </strong>Network error.</div>'
-                        );
-                        return;
-                    } else {
-                        errMsg = JSON.parse(xhr.responseText).message;
-                        errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
+    revoke = function (email) {
+        $.get("../adminAcesss/revoke/" + email, {},
+            function (data, status, xhr) {
+                console.log(data);
+                $("#revoke").val("");
+                alert("revoked successfully");
+            }).fail(function (xhr, status, error) {
+                if (xhr.status === 0) {
+                    $('.alert').hide(500);
+                    $('#search-msg').append(
+                        '<div class="alert alert-danger alert-dismissible fade show">' +
+                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                        '<strong>Oops! </strong>Network error.</div>'
+                    );
+                    return;
+                } else {
+                    errMsg = JSON.parse(xhr.responseText).message;
+                    errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
 
-                        $('.alert').hide(500);
-                        $('#search-msg').append(
-                            '<div class="alert alert-danger alert-dismissible fade show">' +
-                            '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                            '<strong>Oops! </strong>' + errMsg + '</div>'
-                        );
-                    }
+                    $('.alert').hide(500);
+                    $('#search-msg').append(
+                        '<div class="alert alert-danger alert-dismissible fade show">' +
+                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                        '<strong>Oops! </strong>' + errMsg + '</div>'
+                    );
+                }
 
-                    console.log(xhr);
-                });
-        }
+                console.log(xhr);
+            });
     };
 
     activate = function (email) {
@@ -185,6 +182,7 @@ $(function () {
                 $('[data-toggle="tooltip"]').tooltip();
 
                 let func = data.results.user.active ? "deactivate" : "activate";
+                $('#revoke_count').attr("onclick", 'revoke("' + data.results.user.email + '")')
                 $('#status').attr("onclick", func + '("' + data.results.user.email + '")')
 
             }).fail(function (xhr, status, error) {
