@@ -3,6 +3,12 @@ var display, revoke, activate, deactivate, changeStatus;
 $(function () {
     $('#admin').hide();
 
+    $('#footer-list').prepend(
+        '<li class="list-inline-item">' +
+        '<a class="white" href="/payment"><b>Pricing</b></a>' +
+        '</li>'
+    )
+
     if (getCookie("token") === "") {
         window.location.href = "/login?action=login_required";
     } else {
