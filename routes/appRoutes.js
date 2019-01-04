@@ -101,6 +101,8 @@ module.exports = function (app) {
 
     app.get("/adminAcesss/user/:info/:value", VerifyToken, User.getUserData);
 
+    app.get("/adminAcesss/status/:email/:status", VerifyToken, User.changeStatus);
+
     app.get("/adminAcesss/stats", VerifyToken, User.stats);
 
     app.get("/adminAcesss/revoke/:email", VerifyToken, User.revoke);

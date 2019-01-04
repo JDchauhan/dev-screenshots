@@ -1,4 +1,4 @@
-var display, revoke;
+var display, revoke, activate, deactivate, changeStatus;
 
 $(function () {
     $('#admin').hide();
@@ -108,6 +108,49 @@ $(function () {
         }
     };
 
+    activate = function (email) {
+        changeStatus(email, true);
+    }
+
+    deactivate = function (email) {
+        changeStatus(email, false);
+    }
+
+    changeStatus = function (email, user_status) {
+        $.get("../adminAcesss/status/" + email + "/" + user_status, {},
+            function (data, status, xhr) {
+                console.log(data);
+                $('#status').text(user_status ? "active" : "deactive");
+                let func = user_status ? "deactivate" : "activate";
+                $('#status').attr("onclick", func + '("' + email + '")')
+
+                alert("status updated!");
+            }).fail(function (xhr, status, error) {
+                if (xhr.status === 0) {
+                    $('.alert').hide(500);
+                    $('#search-msg').append(
+                        '<div class="alert alert-danger alert-dismissible fade show">' +
+                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                        '<strong>Oops! </strong>Network error.</div>'
+                    );
+                    return;
+                } else {
+                    errMsg = JSON.parse(xhr.responseText).message;
+                    errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
+
+                    $('.alert').hide(500);
+                    $('#search-msg').append(
+                        '<div class="alert alert-danger alert-dismissible fade show">' +
+                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                        '<strong>Oops! </strong>' + errMsg + '</div>'
+                    );
+                }
+
+                console.log(xhr);
+            });
+    };
+
+
     $(document).on('click', '#create', function () {
         $('.update-users').css('display', 'none');
         $('.create-users').css('display', 'block');
@@ -137,8 +180,12 @@ $(function () {
                 $('#days').val(data.results.user.expires);
                 $('#revoke').val((last_login === 0) ? "" : new Date(last_login).toLocaleString());
                 $('#revoke_count').text("revoke(" + data.results.user.revoke_count + ")?")
+                $('#status').text(data.results.user.active ? "active" : "deactive");
                 $('#timestamp').attr('title', "" + new Date(data.results.user.expiresOn));
                 $('[data-toggle="tooltip"]').tooltip();
+
+                let func = data.results.user.active ? "deactivate" : "activate";
+                $('#status').attr("onclick", func + '("' + data.results.user.email + '")')
 
             }).fail(function (xhr, status, error) {
                 if (xhr.status === 0) {

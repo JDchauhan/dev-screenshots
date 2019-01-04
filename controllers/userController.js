@@ -109,6 +109,15 @@ module.exports.login = function (req, res) {
             return responses.errorMsg(res, 401, "Unauthorized", "Verify your account to login.", errors);
         }
 
+        if (!user.active) {
+            errors = {
+                auth: false,
+                token: null,
+                "msg": null
+            };
+            return responses.errorMsg(res, 401, "Unauthorized", "Your account has been deactivated.", errors);
+        }
+
         if (new Date(user.last_login_timestamp).getTime() > Date.now() - 24 * 60 * 60 * 1000) {
             return responses.errorMsg(res, 412, "Precondition Failed", "You are already logged in on another device.", null);
         }
@@ -619,7 +628,8 @@ module.exports.getUserData = function (req, res) {
                     plan: 1,
                     isAdmin: 1,
                     last_login_timestamp: 1,
-                    revoke_count: 1
+                    revoke_count: 1,
+                    active: 1
                 }, function (err, user) {
                     if (err) {
                         console.log(err);
@@ -645,7 +655,8 @@ module.exports.getUserData = function (req, res) {
                             plan: user.plan,
                             isAdmin: user.isAdmin,
                             last_login_timestamp: new Date(user.last_login_timestamp).getTime(),
-                            revoke_count: user.revoke_count
+                            revoke_count: user.revoke_count,
+                            active: user.active
                         }
                     });
                 });
@@ -738,6 +749,48 @@ module.exports.revoke = function (req, res) {
                     $inc: {
                         revoke_count: 1
                     }
+                },
+                function (err, user) {
+                    if (err) {
+                        if (err.name && err.name == "ValidationError") {
+                            errors = {
+                                "index": Object.keys(err.errors)
+                            };
+                            return responses.errorMsg(res, 400, "Bad Request", "validation failed.", errors);
+
+                        } else if (err.name && err.name == "CastError") {
+                            errors = {
+                                "index": err.path
+                            };
+                            return responses.errorMsg(res, 400, "Bad Request", "cast error.", errors);
+
+                        } else {
+                            console.log(err);
+                            return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+                        }
+                    }
+                    if (!user) {
+                        return responses.errorMsg(res, 404, "Not Found", "user not found", null);
+                    }
+                    return responses.successMsg(res, null);
+                });
+        } else {
+            return responses.errorMsg(res, 401, "Unauthorized", "failed to authenticate token.", null);
+        }
+    });
+};
+
+module.exports.changeStatus = function (req, res) {
+    AuthoriseUser.getUser(req, res, function (user) {
+        user.password = undefined;
+        user.__v = undefined;
+
+        if (user.isAdmin) {
+            User.findOneAndUpdate({
+                email: req.params.email
+            },
+                {
+                    active: req.params.status
                 },
                 function (err, user) {
                     if (err) {
